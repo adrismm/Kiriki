@@ -110,35 +110,35 @@ public class Controlador implements WindowListener, ActionListener
 		{
 			System.exit(0);
 		}
-		else if(botonPulsado.equals(vmi.btnRanking)) //Ejecutar al pulsar el botï¿½n "Ranking"
+		else if(botonPulsado.equals(vmi.btnRanking)) //Ejecutar al pulsar el botón "Ranking"
 		{
 			vr = new Ranking(); //Crear el Objeto vr, antes declarado
-			vr.addWindowListener(this); //Aï¿½adir listener para poder cerrar la ventana
-			vr.btnVolver.addActionListener(this); //Aï¿½adir listener al botï¿½n "Volver"
+			vr.addWindowListener(this); //Añadir listener para poder cerrar la ventana
+			vr.btnVolver.addActionListener(this); //Añadir listener al botón "Volver"
 			vr.MostrarRanking(); //Muestra la ventana
 		}
-		else if(botonPulsado.equals(vr.btnVolver)) //Gestionar el botï¿½n "Volver" de la nueva ventana Ranking
+		else if(botonPulsado.equals(vr.btnVolver)) //Gestionar el botón "Volver" de la nueva ventana Ranking
 		{
 			vr.OcultarRanking();
 		}
-		else if(botonPulsado.equals(vmi.btnNuevaPartida)) //Al pulsar el botï¿½n "Partida Nueva", mostrar el diï¿½logo para pedir el nï¿½mero de jugadores mediante un desplegable
+		else if(botonPulsado.equals(vmi.btnNuevaPartida)) //Al pulsar el botón "Partida Nueva", mostrar el diálogo para pedir el número de jugadores mediante un desplegable
 		{
 			vnp.pedirNumeroJugadores.addWindowListener(this);
 			vnp.btnContinuar.addActionListener(this);
 			MostrarDialogNumeroJugadores();
 		}
-		else if(botonPulsado.equals(vnp.btnContinuar)) //Si ha pulsado el botï¿½n "Continuar" del diï¿½logo anterior, se llama al mï¿½todo que prepara el siguiente diï¿½logo pasï¿½ndole como parï¿½metro el nï¿½mero de jugadores
+		else if(botonPulsado.equals(vnp.btnContinuar)) //Si ha pulsado el botón "Continuar" del diálogo anterior, se llama al método que prepara el siguiente diálogo pasándole como parámetro el número de jugadores
 		{
-			if(!vnp.choNumeroJugadores.getSelectedItem().equals("Elegir nï¿½mero de jugadores...")) //Este mï¿½todo prepara el contenido del diï¿½logo en funciï¿½n de este valor pasado y muestra dicho diï¿½logo
+			if(!vnp.choNumeroJugadores.getSelectedItem().equals("Elegir nï¿½mero de jugadores...")) //Este método prepara el contenido del diálogo en función de este valor pasado y muestra dicho diálogo
 			{
 				vnp.pedirNombresJugadores.addWindowListener(this);
 				vnp.btnComenzarPartida.addActionListener(this);
 				PrepararDialogNombresJugadores(Integer.parseInt(vnp.choNumeroJugadores.getSelectedItem()));
 			}
 		}
-		else if(botonPulsado.equals(vnp.btnComenzarPartida)) //Si ha pulsado el botï¿½n "Comenzar Partida" del diï¿½logo anterior, ya una vez escritos los nombres de los jugadores
+		else if(botonPulsado.equals(vnp.btnComenzarPartida)) //Si ha pulsado el botón "Comenzar Partida" del diálogo anterior, ya una vez escritos los nombres de los jugadores
 		{
-			if((!vnp.txfNombre1.getText().equals("")) //Si se queda algï¿½n nombre en blanco no se puede comenzar la partida
+			if((!vnp.txfNombre1.getText().equals("")) //Si se queda algún nombre en blanco no se puede comenzar la partida
 				&& (!vnp.txfNombre2.getText().equals(""))
 				&& (!vnp.txfNombre3.getText().equals(""))
 				&& (!vnp.txfNombre4.getText().equals("")))

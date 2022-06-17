@@ -13,10 +13,10 @@ public class NuevaPartida extends Frame
 {
 	private static final long serialVersionUID = 1L;
 
-	//Declaramos elementos grï¿½ficos de la vista, diï¿½logos y variables auxiliares
+	//Declaramos elementos gráficos de la vista, diálogos y variables auxiliares
 	Dialog pedirNumeroJugadores = new Dialog(this, "Kiriki: Nueva Partida", true);
 	Dialog pedirNombresJugadores = new Dialog(this, "Kiriki: Nueva Partida", true);
-	int NumerosJugadores = 0; //Guarda el nÃºmero de jugadores
+	int NumerosJugadores = 0; //Guarda el número de jugadores
 	String[] nombresJugadores = null; //Guarda los nombres de los jugadores
 	Choice choNumeroJugadores = new Choice();
 	Button btnContinuar = new Button("Continuar");
@@ -35,10 +35,10 @@ public class NuevaPartida extends Frame
 	
 	public NuevaPartida() //Constructor de la clase
 	{
-		//Preguntamos el nï¿½mero de jugadores
+		//Preguntamos el número de jugadores
 		pedirNumeroJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
 		pedirNumeroJugadores.setLayout(new FlowLayout()); //Layout del Dialog
-		pedirNumeroJugadores.setSize(240,100); //Tamaï¿½o del Dialog
+		pedirNumeroJugadores.setSize(240,100); //Tamaño del Dialog
 		pedirNumeroJugadores.setLocationRelativeTo(null); //Centrar el Dialog
 		pedirNumeroJugadores.setResizable(false); //Evitar redimensionado
 		
