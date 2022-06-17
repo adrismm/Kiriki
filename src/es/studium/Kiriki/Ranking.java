@@ -12,7 +12,7 @@ public class Ranking extends Frame
 	
 	TextArea txaRanking = new TextArea(20,10);
 	Button btnVolver = new Button("Volver");
-	
+
 	public Ranking()
 	{
 		setTitle("Kiriki: Ranking"); //Título

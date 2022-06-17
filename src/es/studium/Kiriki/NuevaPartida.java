@@ -5,10 +5,11 @@ import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 import java.awt.Label;
 import java.awt.TextField;
 
-public class NuevaPartida
+public class NuevaPartida extends Frame
 {
 	private static final long serialVersionUID = 1L;
 

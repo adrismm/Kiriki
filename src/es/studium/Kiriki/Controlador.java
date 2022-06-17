@@ -176,7 +176,7 @@ public class Controlador implements WindowListener, ActionListener
 		{
 			this.vnp.pedirNumeroJugadores.removeWindowListener(this); //Eliminar Listener Dialog
 			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botï¿½n
-			this.vnp.OcultarDialogNumeroJugadores();
+			this.OcultarDialogNumeroJugadores();
 			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botón
 			this.OcultarDialogNumeroJugadores();
 		}
@@ -186,8 +186,8 @@ public class Controlador implements WindowListener, ActionListener
 			vnp.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Botï¿½n
 			vnp.choNumeroJugadores.select(0); //Reseteamos el desplegable
 			//vnp.removeAll();
-			vnp.OcultarDialogNombresJugadores();
-			removeAll();
+			OcultarDialogNombresJugadores();
+			//removeAll();
 			OcultarDialogNombresJugadores();
 		}
 		else
