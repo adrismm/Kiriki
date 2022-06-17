@@ -23,16 +23,6 @@ public class Controlador implements WindowListener, ActionListener
 		vm.btnNuevaPartida.addActionListener(this);
 	}
 	
-	public void MostrarDialogNumeroJugadores() //Método para mostrar diálogo que nos preguntará por el número de jugadores de la partida
-	{
-		vnp.pedirNumeroJugadores.setVisible(true);
-	}
-	
-	public void OcultarDialogNumeroJugadores() //Método para ocultar el diálogo anterior
-	{
-		vnp.pedirNumeroJugadores.setVisible(false);
-	}
-	
 	public void PrepararDialogNombresJugadores(int numero) //Método que prepara el diálogo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrá definida por lo que se haya elegido en el cuadro del diálogo despegable
 	{
 		vnp.pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
@@ -99,6 +89,16 @@ public class Controlador implements WindowListener, ActionListener
 	public void OcultarDialogNombresJugadores() //Método que oculta el diálogo anterior
 	{
 		vnp.pedirNombresJugadores.setVisible(false);
+	}
+	
+	public void MostrarDialogNumeroJugadores() //Método para mostrar diálogo que nos preguntará por el número de jugadores de la partida
+	{
+		vnp.pedirNumeroJugadores.setVisible(true);
+	}
+	
+	public void OcultarDialogNumeroJugadores() //Método para ocultar el diálogo anterior
+	{
+		vnp.pedirNumeroJugadores.setVisible(false);
 	}
 
 	@Override
@@ -175,26 +175,20 @@ public class Controlador implements WindowListener, ActionListener
 		else if(vnp.pedirNumeroJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo nï¿½mero jugadores
 		{
 			this.vnp.pedirNumeroJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-<<<<<<< HEAD
 			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botï¿½n
 			this.vnp.OcultarDialogNumeroJugadores();
-=======
 			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botón
 			this.OcultarDialogNumeroJugadores();
->>>>>>> 0abe90a1410dc687808506d32fbe7bf2e0099d5d
 		}
 		else if(vnp.pedirNombresJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo nombres jugadores
 		{
 			vnp.pedirNombresJugadores.removeWindowListener(this); //Eliminar Listener Dialog
 			vnp.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Botï¿½n
 			vnp.choNumeroJugadores.select(0); //Reseteamos el desplegable
-<<<<<<< HEAD
 			//vnp.removeAll();
 			vnp.OcultarDialogNombresJugadores();
-=======
 			removeAll();
 			OcultarDialogNombresJugadores();
->>>>>>> 0abe90a1410dc687808506d32fbe7bf2e0099d5d
 		}
 		else
 		{
