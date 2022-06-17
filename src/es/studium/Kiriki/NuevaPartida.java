@@ -30,7 +30,7 @@ public class NuevaPartida
 	Label lblEtiqueta4 = new Label("Jugador 4:");
 	Button btnComenzarPartida = new Button("Comenzar Partida");
 	
-	// Me cago en la mierda de trabajo grupal
+	
 	
 	public NuevaPartida() //Constructor de la clase
 	{
