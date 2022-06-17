@@ -30,6 +30,7 @@ public class NuevaPartida
 	Label lblEtiqueta4 = new Label("Jugador 4:");
 	Button btnComenzarPartida = new Button("Comenzar Partida");
 	
+	
 	public NuevaPartida() //Constructor de la clase
 	{
 		//Preguntamos el número de jugadores
