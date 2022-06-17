@@ -15,14 +15,15 @@ public class Controlador implements WindowListener, ActionListener
 	Ayuda va;
 	Jugando vj;
 	
-	public Controlador(Modelo m, MenuInicio vm, NuevaPartida vn, Ranking vr, Ayuda va, Jugando vj)
+	public Controlador(Modelo m, MenuInicio vmi, NuevaPartida vnp, Ranking vr, Ayuda va, Jugando vj)
 	{
-		vm.addWindowListener(this); // Damos funcionalidad a los botones de las ventanas
-		vm.btnSalir.addActionListener(this);
-		vm.btnRanking.addActionListener(this);
-		vm.btnNuevaPartida.addActionListener(this);
+		vmi.addWindowListener(this); // Damos funcionalidad a los botones de las ventanas
+		vmi.btnSalir.addActionListener(this);
+		vmi.btnRanking.addActionListener(this);
+		vmi.btnNuevaPartida.addActionListener(this);
 	}
 	
+	// Diálogos Nueva Partida
 	public void PrepararDialogNombresJugadores(int numero) //Método que prepara el diálogo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrá definida por lo que se haya elegido en el cuadro del diálogo despegable
 	{
 		vnp.pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
@@ -172,21 +173,17 @@ public class Controlador implements WindowListener, ActionListener
 		{
 			vr.OcultarRanking();
 		}
-		else if(vnp.pedirNumeroJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo nï¿½mero jugadores
+		else if(vnp.pedirNumeroJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo número jugadores
 		{
 			this.vnp.pedirNumeroJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botï¿½n
-			this.OcultarDialogNumeroJugadores();
 			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botón
 			this.OcultarDialogNumeroJugadores();
 		}
 		else if(vnp.pedirNombresJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo nombres jugadores
 		{
 			vnp.pedirNombresJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-			vnp.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Botï¿½n
+			vnp.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Botón
 			vnp.choNumeroJugadores.select(0); //Reseteamos el desplegable
-			//vnp.removeAll();
-			OcultarDialogNombresJugadores();
 			//removeAll();
 			OcultarDialogNombresJugadores();
 		}
