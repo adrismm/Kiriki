@@ -1,5 +1,7 @@
 package es.studium.Kiriki;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -19,6 +21,84 @@ public class Controlador implements WindowListener, ActionListener
 		vm.btnSalir.addActionListener(this);
 		vm.btnRanking.addActionListener(this);
 		vm.btnNuevaPartida.addActionListener(this);
+	}
+	
+	public void MostrarDialogNumeroJugadores() //Método para mostrar diálogo que nos preguntará por el número de jugadores de la partida
+	{
+		vnp.pedirNumeroJugadores.setVisible(true);
+	}
+	
+	public void OcultarDialogNumeroJugadores() //Método para ocultar el diálogo anterior
+	{
+		vnp.pedirNumeroJugadores.setVisible(false);
+	}
+	
+	public void PrepararDialogNombresJugadores(int numero) //Método que prepara el diálogo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrá definida por lo que se haya elegido en el cuadro del diálogo despegable
+	{
+		vnp.pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
+		vnp.pedirNombresJugadores.setLayout(new FlowLayout()); //Layout del Dialog
+		vnp.pedirNombresJugadores.setSize(240,200); //Tamaño del Dialog
+		vnp.pedirNombresJugadores.setLocationRelativeTo(null); //Centrar el Dialog
+		vnp.pedirNombresJugadores.setResizable(false); //Evitar redimensionado
+		
+		//Preguntamos los nombres
+		//Jugador 1, siempre existe
+		vnp.pedirNombresJugadores.add(vnp.lblEtiqueta1);
+		vnp.txfNombre1.selectAll(); //Reseteamos los cuadros de texto
+		vnp.txfNombre1.setText("");
+		vnp.pedirNombresJugadores.add(vnp.txfNombre1);
+		//Jugador 2, siempre existe
+		vnp.pedirNombresJugadores.add(vnp.lblEtiqueta2);
+		vnp.txfNombre2.selectAll(); //Reseteamos los cuadros de texto
+		vnp.txfNombre2.setText("");
+		vnp.pedirNombresJugadores.add(vnp.txfNombre2);
+		
+		//Si existe Jugador 3
+		if(numero == 3)
+		{
+			vnp.pedirNombresJugadores.add(vnp.lblEtiqueta3);
+			vnp.txfNombre3.selectAll(); //Reseteamos los cuadros de texto
+			vnp.txfNombre3.setText("");
+			vnp.pedirNombresJugadores.add(vnp.txfNombre3);
+		}
+		else
+		{
+			vnp.pedirNombresJugadores.remove(vnp.lblEtiqueta3);
+			vnp.txfNombre3.selectAll(); //Reseteamos los cuadros de texto
+			vnp.txfNombre3.setText("");
+			vnp.pedirNombresJugadores.remove(vnp.txfNombre3);
+		}
+		if(numero == 4)
+		{
+			vnp.pedirNombresJugadores.add(vnp.lblEtiqueta3);
+			vnp.txfNombre3.selectAll(); //Reseteamos los cuadros de texto
+			vnp.txfNombre3.setText("");
+			vnp.pedirNombresJugadores.add(vnp.txfNombre3);
+			vnp.pedirNombresJugadores.add(vnp.lblEtiqueta4);
+			vnp.txfNombre3.selectAll(); //Reseteamos los cuadros de texto
+			vnp.txfNombre3.setText("");
+			vnp.pedirNombresJugadores.add(vnp.txfNombre4);
+		}
+		else
+		{
+			vnp.pedirNombresJugadores.remove(vnp.lblEtiqueta4);
+			vnp.txfNombre3.selectAll(); //Reseteamos los cuadros de texto
+			vnp.txfNombre3.setText("");
+			vnp.pedirNombresJugadores.remove(vnp.txfNombre4);
+		}
+		
+		vnp.pedirNombresJugadores.add(vnp.btnComenzarPartida);
+		this.MostrarDialogNombresJugadores(); //Llamamos al método que muestra el diálogo
+	}
+	
+	public void MostrarDialogNombresJugadores() //Método que muestra el diálogo que pregunta los nombres de los jugadores
+	{
+		vnp.pedirNombresJugadores.setVisible(true);
+	}
+		
+	public void OcultarDialogNombresJugadores() //Método que oculta el diálogo anterior
+	{
+		vnp.pedirNombresJugadores.setVisible(false);
 	}
 
 	@Override
@@ -44,7 +124,7 @@ public class Controlador implements WindowListener, ActionListener
 		{
 			vnp.pedirNumeroJugadores.addWindowListener(this);
 			vnp.btnContinuar.addActionListener(this);
-			vnp.MostrarDialogNumeroJugadores();
+			MostrarDialogNumeroJugadores();
 		}
 		else if(botonPulsado.equals(vnp.btnContinuar)) //Si ha pulsado el botï¿½n "Continuar" del diï¿½logo anterior, se llama al mï¿½todo que prepara el siguiente diï¿½logo pasï¿½ndole como parï¿½metro el nï¿½mero de jugadores
 		{
@@ -52,7 +132,7 @@ public class Controlador implements WindowListener, ActionListener
 			{
 				vnp.pedirNombresJugadores.addWindowListener(this);
 				vnp.btnComenzarPartida.addActionListener(this);
-				vnp.PrepararDialogNombresJugadores(Integer.parseInt(vnp.choNumeroJugadores.getSelectedItem()));
+				PrepararDialogNombresJugadores(Integer.parseInt(vnp.choNumeroJugadores.getSelectedItem()));
 			}
 		}
 		else if(botonPulsado.equals(vnp.btnComenzarPartida)) //Si ha pulsado el botï¿½n "Comenzar Partida" del diï¿½logo anterior, ya una vez escritos los nombres de los jugadores
@@ -95,16 +175,26 @@ public class Controlador implements WindowListener, ActionListener
 		else if(vnp.pedirNumeroJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo nï¿½mero jugadores
 		{
 			this.vnp.pedirNumeroJugadores.removeWindowListener(this); //Eliminar Listener Dialog
+<<<<<<< HEAD
 			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botï¿½n
 			this.vnp.OcultarDialogNumeroJugadores();
+=======
+			this.vnp.btnContinuar.removeActionListener(this); //Eliminar Listener Botón
+			this.OcultarDialogNumeroJugadores();
+>>>>>>> 0abe90a1410dc687808506d32fbe7bf2e0099d5d
 		}
 		else if(vnp.pedirNombresJugadores.isActive()) //Cerrar ventana PartidaNueva pidiendo nombres jugadores
 		{
 			vnp.pedirNombresJugadores.removeWindowListener(this); //Eliminar Listener Dialog
 			vnp.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Botï¿½n
 			vnp.choNumeroJugadores.select(0); //Reseteamos el desplegable
+<<<<<<< HEAD
 			//vnp.removeAll();
 			vnp.OcultarDialogNombresJugadores();
+=======
+			removeAll();
+			OcultarDialogNombresJugadores();
+>>>>>>> 0abe90a1410dc687808506d32fbe7bf2e0099d5d
 		}
 		else
 		{

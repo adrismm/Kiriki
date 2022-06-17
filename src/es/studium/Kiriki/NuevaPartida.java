@@ -46,6 +46,7 @@ public class NuevaPartida
 		pedirNumeroJugadores.add(choNumeroJugadores);
 		pedirNumeroJugadores.add(btnContinuar);
 	}
+<<<<<<< HEAD
 	
 	public void MostrarDialogNumeroJugadores() //Método para mostrar di�logo que nos preguntar� por el n�mero de jugadores de la partida
 	{
@@ -123,4 +124,6 @@ public class NuevaPartida
 	{
 		pedirNombresJugadores.setVisible(false);
 	}
+=======
+>>>>>>> 0abe90a1410dc687808506d32fbe7bf2e0099d5d
 }
