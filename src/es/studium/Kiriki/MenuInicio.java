@@ -12,9 +12,9 @@ public class MenuInicio extends Frame
 {
 private static final long serialVersionUID = 1L;
 	
-	Label lblMenuPrincipal = new Label ("MENÚ PRINCIPAL", 1); //El 1 para que salga centrado
+	Label lblMenuPrincipal = new Label ("MENÃš PRINCIPAL", 1); //El 1 para que salga centrado
 	Panel pnlBotonera = new Panel(); //Panel para botonera principal
-	Panel pnlBotoneraSalir = new Panel(); //Panel para botón Salir
+	Panel pnlBotoneraSalir = new Panel(); //Panel para botÃ³n Salir
 	Button btnNuevaPartida = new Button ("Nueva Partida");
 	Button btnRanking = new Button ("Ranking");
 	Button btnAyuda = new Button("Ayuda");
@@ -22,18 +22,18 @@ private static final long serialVersionUID = 1L;
 	
 	public MenuInicio()
 	{
-		setTitle("Kiriki"); //Título
+		setTitle("Kiriki"); //TÃ­tulo
 		setBackground(Color.YELLOW); //Color del fondo del Frame
 		setLayout(new BorderLayout()); //Layout del Frame
 		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
-		pnlBotonera.add(lblMenuPrincipal); //Añadir Botón a Panel
-		pnlBotonera.add(btnNuevaPartida); //Añadir Botón a Panel 	
-		pnlBotonera.add(btnRanking); //Añadir Botón a Panel
-		pnlBotonera.add(btnAyuda); //Añadir Botón a Panel
-		add(pnlBotonera, "Center"); //Añadir Panel a Frame
-		pnlBotoneraSalir.add(btnSalir); //Añadir Botón a Panel
-		add(pnlBotoneraSalir, "South"); //Añadir Panel a Frame
-		setSize(400,200); //Tamaño de Frame
+		pnlBotonera.add(lblMenuPrincipal); //AÃ±adir Botï¿½n a Panel
+		pnlBotonera.add(btnNuevaPartida); //Aï¿½adir Botï¿½n a Panel 	
+		pnlBotonera.add(btnRanking); //Aï¿½adir Botï¿½n a Panel
+		pnlBotonera.add(btnAyuda); //Aï¿½adir Botï¿½n a Panel
+		add(pnlBotonera, "Center"); //Aï¿½adir Panel a Frame
+		pnlBotoneraSalir.add(btnSalir); //AÃ±adir BotÃ³n a Panel
+		add(pnlBotoneraSalir, "South"); //AÃ±adir Panel a Frame
+		setSize(400,200); //TamaÃ±o de Frame
 		setLocationRelativeTo(null); //Centrar la ventana
 		setResizable(false); //Evitar redimensionado
 		MostrarPrincipal(); //Mostrarlo
