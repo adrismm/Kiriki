@@ -11,7 +11,7 @@ import java.awt.Toolkit;
 
 public class Jugando extends Frame
 {
-	private static final long servialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	Toolkit herramientas;
 	Image tapete;

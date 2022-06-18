@@ -16,7 +16,7 @@ public class NuevaPartida extends Frame
 	// Declaramos elementos gráficos de la vista, diálogos y variables auxiliares
 	Dialog pedirNumeroJugadores = new Dialog(this, "Kiriki: Nueva Partida", true);
 	Dialog pedirNombresJugadores = new Dialog(this, "Kiriki: Nueva Partida", true);
-	int NumerosJugadores = 0; // Guarda el número de jugadores
+	int numJugadores = 0; // Guarda el número de jugadores
 	String[] nombresJugadores = null; // Guarda los nombres de los jugadores
 	Choice choNumeroJugadores = new Choice();
 	Button btnContinuar = new Button("Continuar");
@@ -61,7 +61,7 @@ public class NuevaPartida extends Frame
 	}
 	
 	// Diálogos Nueva Partida
-	public void PrepararDialogNombresJugadores(int numero) //Método que prepara el diálogo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrá definida por lo que se haya elegido en el cuadro del diálogo despegable
+	public void PrepararDialogNombresJugadores(int numJugadores) //Método que prepara el diálogo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrá definida por lo que se haya elegido en el cuadro del diálogo despegable
 	{
 		pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
 		pedirNombresJugadores.setLayout(new FlowLayout()); //Layout del Dialog
@@ -82,7 +82,7 @@ public class NuevaPartida extends Frame
 		pedirNombresJugadores.add(txfNombre2);
 		
 		//Si existe Jugador 3
-		if(numero == 3)
+		if(numJugadores == 3)
 		{
 			pedirNombresJugadores.add(lblEtiqueta3);
 			txfNombre3.selectAll(); //Reseteamos los cuadros de texto
@@ -96,7 +96,7 @@ public class NuevaPartida extends Frame
 			txfNombre3.setText("");
 			pedirNombresJugadores.remove(txfNombre3);
 		}
-		if(numero == 4)
+		if(numJugadores == 4)
 		{
 			pedirNombresJugadores.add(lblEtiqueta3);
 			txfNombre3.selectAll(); //Reseteamos los cuadros de texto
@@ -127,16 +127,6 @@ public class NuevaPartida extends Frame
 	public void OcultarDialogNombresJugadores() //Método que oculta el diálogo anterior
 	{
 		pedirNombresJugadores.setVisible(false);
-	}
-	
-	public void MostrarNuevaPartida()
-	{
-		this.setVisible(true);
-	}
-	
-	public void OcultarNuevaPartida()
-	{
-		this.setVisible(false);
 	}
 
 }

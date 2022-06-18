@@ -46,8 +46,8 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vnp.pedirNombresJugadores.addWindowListener(this);
 		vnp.btnComenzarPartida.addActionListener(this);
 		
-		this.vistaJugando.addWindowListener(this);
-		this.vistaJugando.addMouseListener(this);
+		vj.addWindowListener(this);
+		vj.addMouseListener(this);
 	}
 
 	@Override
@@ -88,9 +88,10 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				&& (!this.vistaNuevaPartida.txfNombre3.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre4.getText().equals("")))
 			{
-				 this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
-				 this.vistaJugando.MostrarJugando();
-				 this.vistaNuevaPartida.OcultarNuevaPartida();
+				 	new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
+				 	this.vistaJugando.MostrarJugando();
+					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 			}
 			else if((numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
@@ -98,14 +99,16 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			{
 				this.vistaJugando = new Jugando(3, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), "");
 				this.vistaJugando.MostrarJugando();
-				this.vistaNuevaPartida.OcultarNuevaPartida();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 			}
 			else if((numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
 				this.vistaJugando.MostrarJugando();
-				this.vistaNuevaPartida.OcultarNuevaPartida();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 			}
 			else
 			{
@@ -138,24 +141,20 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		}
 		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo número jugadores
 		{
-			this.vistaNuevaPartida.pedirNumeroJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-			this.vistaNuevaPartida.btnContinuar.removeActionListener(this); //Eliminar Listener Botón
 			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+			this.vistaMenuInicio.MostrarInicio();
 		}
 		else if(this.vistaNuevaPartida.pedirNombresJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo nombres jugadores
 		{
-			this.vistaNuevaPartida.pedirNombresJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-			this.vistaNuevaPartida.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Botón
 			this.vistaNuevaPartida.choNumeroJugadores.select(0); //Reseteamos el desplegable
 			this.vistaNuevaPartida.removeAll();
 			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 		}
 		else if((this.vistaJugando != null) && (this.vistaJugando.isActive()))
 		{
-			this.vistaJugando.removeWindowListener(this);
-			this.vistaJugando.removeMouseListener(this);
 			this.vistaJugando.OcultarJugando();
 			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
+			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 			this.vistaMenuInicio.MostrarInicio();
 		}
 		else

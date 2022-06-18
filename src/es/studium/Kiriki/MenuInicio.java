@@ -21,11 +21,10 @@ public class MenuInicio extends Frame
 	Button btnAyuda = new Button("Ayuda");
 	Button btnSalir = new Button("Salir");
 	
-	
 	public MenuInicio()
 	{
 		setTitle("Kiriki"); //Título
-		setBackground(Color.yellow);
+		setBackground(Color.YELLOW); //Color del fondo del Frame
 		setLayout(new BorderLayout()); //Layout del Frame
 		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
 		pnlBotonera.add(lblMenuPrincipal); //Añadir Botón a Panel
