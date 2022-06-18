@@ -21,6 +21,7 @@ public class MenuInicio extends Frame
 	Button btnAyuda = new Button("Ayuda");
 	Button btnSalir = new Button("Salir");
 	
+	
 	public MenuInicio()
 	{
 		setTitle("Kiriki"); //Título
