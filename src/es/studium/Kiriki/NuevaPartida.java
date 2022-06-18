@@ -42,7 +42,7 @@ public class NuevaPartida extends Frame
 		pedirNumeroJugadores.setLocationRelativeTo(null); // Centrar el Dialog
 		pedirNumeroJugadores.setResizable(false); // Evitar redimensionado
 		
-		choNumeroJugadores.add("Elegir nï¿½mero de jugadores..."); // Contenido desplegable
+		choNumeroJugadores.add("Elegir número de jugadores..."); // Contenido desplegable
 		choNumeroJugadores.add("2");
 		choNumeroJugadores.add("3");
 		choNumeroJugadores.add("4");

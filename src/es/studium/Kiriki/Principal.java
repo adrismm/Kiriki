@@ -8,7 +8,7 @@ public class Principal
 		MenuInicio vistaMenuInicio = new MenuInicio();
 		NuevaPartida vistaNuevaPartida = new NuevaPartida();
 		Ranking vistaRanking = new Ranking();
-		Jugando vistaJugando = new Jugando(int, "", "", "", "");
+		Jugando vistaJugando = new Jugando(0, "", "", "", "");
 		new Controlador (modelo, vistaMenuInicio, vistaNuevaPartida, vistaRanking, vistaJugando);
 	}
 }
