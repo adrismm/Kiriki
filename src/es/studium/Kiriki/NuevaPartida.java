@@ -36,7 +36,7 @@ public class NuevaPartida extends Frame
 	public NuevaPartida() // Constructor de la clase
 	{
 		// Preguntamos el número de jugadores
-		pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
+		//pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
 		pedirNumeroJugadores.setLayout(new FlowLayout()); // Layout del Dialog
 		pedirNumeroJugadores.setSize(240,100); // Tamaño del Dialog
 		pedirNumeroJugadores.setLocationRelativeTo(null); // Centrar el Dialog

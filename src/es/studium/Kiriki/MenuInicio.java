@@ -12,6 +12,7 @@ public class MenuInicio extends Frame
 {
 	private static final long serialVersionUID = 1L;
 	
+	// Ventana menú principal
 	Label lblMenuPrincipal = new Label ("MENÚ PRINCIPAL", 1); //El 1 para que salga centrado
 	Panel pnlBotonera = new Panel(); //Panel para botonera principal
 	Panel pnlBotoneraSalir = new Panel(); //Panel para botón Salir
@@ -23,7 +24,7 @@ public class MenuInicio extends Frame
 	public MenuInicio()
 	{
 		setTitle("Kiriki"); //Título
-		setBackground(Color.YELLOW); //Color del fondo del Frame
+		setBackground(Color.yellow);
 		setLayout(new BorderLayout()); //Layout del Frame
 		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
 		pnlBotonera.add(lblMenuPrincipal); //Añadir Botón a Panel
