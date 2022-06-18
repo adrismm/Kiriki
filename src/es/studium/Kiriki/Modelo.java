@@ -1,5 +1,6 @@
 package es.studium.Kiriki;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -91,19 +92,50 @@ public class Modelo
 	}
 	
 	
-	public String consultarRanking()
-	{
-		// "SELECT * FROM jugadores ORDER BY puntos ASC";
-		return null;
-	}
-	
+	//insertar jugaroes que han ganado en la base de datos junto a sus puntos
 	public void insertarJugador(String jugador, int puntos)
 	{
-		// INSERT INTO ...
+		Statement statement = null; 
+		sentencia = "INSERT INTO Jugadores (nombreJugador, puntosJugador) VALUES ('"+jugador+"', '"+puntos+"');";
+		
+		try
+			{
+				statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				statement.executeUpdate(sentencia);
+			}
+		catch (SQLException sqle)
+			{
+				System.out.println(sqle.getMessage());
+				
+			}
 	}
-	
+	//desconectar de la base de datos
 	public void desconectar(Connection c)
 	{
-		
+		try
+		{
+			if(connection!=null)
+			{
+				connection.close();
+				System.out.println("Se cerro la conexion");
+			}
+		}
+	catch (SQLException error)
+		{
+			System.out.println(error.getMessage());
+		}
+	}
+	
+	//Programa ayuda del juego
+	public void ayuda (Connection connection)
+	{
+		try
+			{
+				Runtime.getRuntime().exec("hh.exe Ayuda.chm");
+			}
+		catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 	}
 }
