@@ -10,7 +10,7 @@ import java.awt.Panel;
 
 public class MenuInicio extends Frame
 {
-private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	Label lblMenuPrincipal = new Label ("MENÚ PRINCIPAL", 1); //El 1 para que salga centrado
 	Panel pnlBotonera = new Panel(); //Panel para botonera principal
@@ -28,7 +28,7 @@ private static final long serialVersionUID = 1L;
 		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
 		pnlBotonera.add(lblMenuPrincipal); //Añadir Botón a Panel
 		pnlBotonera.add(btnNuevaPartida); //Añadir Botón a Panel 	
-		pnlBotonera.add(btnRanking); //Aï¿½adir Botón a Panel
+		pnlBotonera.add(btnRanking); //Añadir Botón a Panel
 		pnlBotonera.add(btnAyuda); //Añadir Botón a Panel
 		add(pnlBotonera, "Center"); //Añadir Panel a Frame
 		pnlBotoneraSalir.add(btnSalir); //Añadir Botón a Panel
@@ -36,15 +36,15 @@ private static final long serialVersionUID = 1L;
 		setSize(400,200); //Tamaño de Frame
 		setLocationRelativeTo(null); //Centrar la ventana
 		setResizable(false); //Evitar redimensionado
-		MostrarPrincipal(); //Mostrarlo
+		MostrarInicio(); //Mostrarlo
 	}
 	
-	public void MostrarPrincipal()
+	public void MostrarInicio()
 	{
 		this.setVisible(true);
 	}
 	
-	public void OcultarPrincipal()
+	public void OcultarInicio()
 	{
 		this.setVisible(false);
 	}
