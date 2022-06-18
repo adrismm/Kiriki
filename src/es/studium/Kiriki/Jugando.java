@@ -26,15 +26,14 @@ public class Jugando extends Frame
 	Frame ventanaJuego = new Frame("Kiriki: Jugando");
 	Dialog dialogoTurno = new Dialog(this, "Turno", true);
 	Dialog dialogoAnunciarValor = new Dialog(this, "El valor de la tirada es...");
-	Dialog dialogoRecibirValor = new Dialog(this, "¿Desatapas el cubilete o superas la tirada?");
-	Dialog dialogoVictoria = new Dialog(this, "¡Has ganado!");
-	Dialog dialogoComenzar = new Dialog(this, "¡La partida ha comenzado!");
+	Dialog dialogoRecibirValor = new Dialog(this, "Â¿Destapas el cubilete o superas la tirada?");
+	Dialog dialogoVictoria = new Dialog(this, "Â¡Has ganado!");
+	Dialog dialogoComenzar = new Dialog(this, "Â¡La partida ha comenzado!");
 	Label lblTurno = new Label();
 	Label lblComienzo = new Label();
 	Label lblVictoria = new Label();
 	Label lblMentira = new Label();
 	Label lblVerdad = new Label();
-	
 	
 	int xAmarilla = 100, yAmarilla = 380;
 	int xAzul=95, yAzul=380;
@@ -50,8 +49,8 @@ public class Jugando extends Frame
 		jugador4 = j4;
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		setTitle("Jugando a Kiriki"); // Título
-		setSize(600,420); // Tamaño del Frame
+		setTitle("Jugando a Kiriki"); // TÃ­tulo
+		setSize(600,420); // TamaÃ±o del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 	}

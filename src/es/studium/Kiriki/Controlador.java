@@ -210,7 +210,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					this.vistaRanking.lblJugador10.setText(completarRanking[18]);
 					this.vistaRanking.lblPuntos10.setText(completarRanking[19]);
 				}
-			
+			this.modelo.desconectar(conexion);
 		}
 		
 		//Lanzar ventana de AYUDA al pulsar el botón de ayuda 
@@ -240,29 +240,28 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		}
 		else if(botonPulsado.equals(this.vistaNuevaPartida.btnComenzarPartida)) //Si ha pulsado el bot�n "Comenzar Partida" del di�logo anterior, ya una vez escritos los nombres de los jugadores
 		{
-			if((numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda alg�n nombre en blanco no se puede comenzar la partida
+			this.vistaJugando.MostrarJugando();
+			this.vistaNuevaPartida.OcultarNuevaPartida();
+			if((numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda algún nombre en blanco no se puede comenzar la partida
 				&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre3.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre4.getText().equals("")))
 			{
 				 this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
-				 this.vistaJugando.MostrarJugando();
-				 this.vistaNuevaPartida.OcultarNuevaPartida();
+
 			}
 			else if((numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre3.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(3, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), "");
-				this.vistaJugando.MostrarJugando();
-				this.vistaNuevaPartida.OcultarNuevaPartida();
+				
 			}
 			else if((numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
-				this.vistaJugando.MostrarJugando();
-				this.vistaNuevaPartida.OcultarNuevaPartida();
+				
 			}
 			else
 			{
