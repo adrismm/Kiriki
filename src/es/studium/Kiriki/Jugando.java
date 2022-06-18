@@ -23,17 +23,17 @@ public class Jugando extends Frame
 	Font fuenteTurno = new Font("Jokerman", Font.BOLD, 24);
 	Font fuenteJugadores = new Font("Jokerman", Font.BOLD, 22);
 	
-	public Frame ventanaJuego = new Frame("Kiriki: Jugando");
-	public Dialog dialogoTurno = new Dialog(this, "Turno", true);
-	public Dialog dialogoAnunciarValor = new Dialog(this, "El valor de la tirada es...");
-	public Dialog dialogoRecibirValor = new Dialog(this, "¿Desatapas el cubilete o superas la tirada?");
-	public Dialog dialogoVictoria = new Dialog(this, "¡Has ganado!");
-	public Dialog dialogoComenzar = new Dialog(this, "¡La partida ha comenzado!");
-	public Label lblTurno = new Label();
-	public Label lblComienzo = new Label();
-	public Label lblVictoria = new Label();
-	public Label lblMentira = new Label();
-	public Label lblVerdad = new Label();
+	Frame ventanaJuego = new Frame("Kiriki: Jugando");
+	Dialog dialogoTurno = new Dialog(this, "Turno", true);
+	Dialog dialogoAnunciarValor = new Dialog(this, "El valor de la tirada es...");
+	Dialog dialogoRecibirValor = new Dialog(this, "¿Desatapas el cubilete o superas la tirada?");
+	Dialog dialogoVictoria = new Dialog(this, "¡Has ganado!");
+	Dialog dialogoComenzar = new Dialog(this, "¡La partida ha comenzado!");
+	Label lblTurno = new Label();
+	Label lblComienzo = new Label();
+	Label lblVictoria = new Label();
+	Label lblMentira = new Label();
+	Label lblVerdad = new Label();
 	
 	
 	int xAmarilla = 100, yAmarilla = 380;

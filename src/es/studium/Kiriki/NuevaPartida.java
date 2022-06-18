@@ -36,13 +36,13 @@ public class NuevaPartida extends Frame
 	public NuevaPartida() // Constructor de la clase
 	{
 		// Preguntamos el número de jugadores
-		pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
+		//pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
 		pedirNumeroJugadores.setLayout(new FlowLayout()); // Layout del Dialog
 		pedirNumeroJugadores.setSize(240,100); // Tamaño del Dialog
 		pedirNumeroJugadores.setLocationRelativeTo(null); // Centrar el Dialog
 		pedirNumeroJugadores.setResizable(false); // Evitar redimensionado
 		
-		choNumeroJugadores.add("Elegir nï¿½mero de jugadores..."); // Contenido desplegable
+		choNumeroJugadores.add("Elegir número de jugadores..."); // Contenido desplegable
 		choNumeroJugadores.add("2");
 		choNumeroJugadores.add("3");
 		choNumeroJugadores.add("4");
