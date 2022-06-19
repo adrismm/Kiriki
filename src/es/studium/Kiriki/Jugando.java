@@ -89,10 +89,10 @@ public class Jugando extends Frame
 		
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		cubilete = herramientas.getImage("cubilete.png");
+		//cubilete = herramientas.getImage("cubilete.png");
 		
 		setTitle("Jugando a Kiriki"); // T�tulo
-		setSize(600,420); // Tama�o del Frame
+		setSize(620,446); // Tama�o del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
