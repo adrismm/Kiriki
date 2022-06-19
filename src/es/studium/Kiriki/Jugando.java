@@ -16,7 +16,7 @@ public class Jugando extends Frame
 	
 	Toolkit herramientas;
 	Image tapete, cubilete;
-	Image D1, D2, D3, D4, D5, D6; // Imágenes de las caras de los dados
+	Image D1, D2, D3, D4, D5, D6; // Imï¿½genes de las caras de los dados
 	
 	int dadosTapados = 0;
 	int cargarDados = 0;
@@ -39,7 +39,7 @@ public class Jugando extends Frame
 	Dialog dlgTurno = new Dialog(this, "Turno", true);
 	Label lblTurno = new Label();
 	
-	Dialog dlgMensajeComienzoPartida = new Dialog(this, "¡La partida ha comenzado!", true);
+	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Â¡La partida ha comenzado!", true);
 	Label lblMensajeComienzoPartida = new Label();
 	
 	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada");
@@ -49,7 +49,7 @@ public class Jugando extends Frame
 	Label lblMensajeValorAnunciado = new Label("El valor anunciado por " + " es: "); // + jugadorActual + valorAnunciado
 	
 	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
-	Label lblMensajeValorRecibido = new Label("¿Destapas el cubilete o superas el valor recibido?"); // + btnAceptarValor + btnRechazarValor
+	Label lblMensajeValorRecibido = new Label("ï¿½Destapas el cubilete o superas el valor recibido?"); // + btnAceptarValor + btnRechazarValor
 	
 	Dialog dlgMensajeValorAceptado = new Dialog(this, "Resultado Aceptado");
 	Label lblMensajeValorAceptado = new Label(" ha aceptado el valor anunciado por " + " de: "); // jugadorActual + jugadorAnterior + valorAnunciado
@@ -63,8 +63,8 @@ public class Jugando extends Frame
 	Dialog dlgMensajeValorFalso = new Dialog(this, "Resultado Falso");
 	Label lblMensajeValorFalso = new Label("El valor anunciado es mentira, " + " ha perdido 1 vida."); // + jugadorAnterior
 	
-	Dialog dlgMensajeKiriki = new Dialog(this, "¡Kiriki!");
-	Label lblMensajeKiriki = new Label("¡Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
+	Dialog dlgMensajeKiriki = new Dialog(this, "ï¿½Kiriki!");
+	Label lblMensajeKiriki = new Label("ï¿½Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
 	
 	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
 	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
@@ -91,8 +91,8 @@ public class Jugando extends Frame
 		tapete = herramientas.getImage("tapete612x408.jpg");
 		cubilete = herramientas.getImage("cubilete.png");
 		
-		setTitle("Jugando a Kiriki"); // Título
-		setSize(600,420); // Tamaño del Frame
+		setTitle("Jugando a Kiriki"); // Tï¿½tulo
+		setSize(600,420); // Tamaï¿½o del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -102,7 +102,7 @@ public class Jugando extends Frame
 		dlgMensajeComienzoPartida.setResizable(false);
 		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida);
 		
-		dlgMensajeComienzoPartida.setLayout(new FlowLayout()); // Diálogo turno
+		dlgMensajeComienzoPartida.setLayout(new FlowLayout()); // Diï¿½logo turno
 		dlgMensajeComienzoPartida.setSize(200, 100);
 		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
 		dlgMensajeComienzoPartida.setResizable(false);

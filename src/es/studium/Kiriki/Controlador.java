@@ -25,7 +25,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	int tiradasRojo = 0;
 	
 	Connection conexion = null;
-	String consulta = "";
 	
 	public Controlador(Modelo m, MenuInicio vmi, NuevaPartida vnp, Ranking vr, Jugando vj)
 	{
@@ -63,13 +62,12 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		{
 			System.exit(0);
 		}
-		else if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) //Ejecutar al pulsar el botón Ranking
+		if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) //Ejecutar al pulsar el botón Ranking
 		{
 			this.vistaRanking.MostrarRanking(); //Muestra la ventana
 			this.vistaMenuInicio.OcultarInicio();
 			
 			conexion = this.modelo.conectar();// Conectar con la base de datos
-			consulta = this.modelo.mejoresJugadores(conexion);
 			//this.vistaRanking.listadoJugadores.append(consulta);
 			
 			String cogerRanking = this.modelo.mejoresJugadores(conexion);
