@@ -16,8 +16,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	Ranking vistaRanking; // Top 10 jugadores
 	Jugando vistaJugando; // Tapete de juego
 	
-	Ayuda va;
-	
 	int numJugadores;
 	int turno = 1;
 	int tirada;
@@ -27,6 +25,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	int tiradasRojo = 0;
 	
 	Connection conexion = null;
+	String consulta = "";
 	
 	public Controlador(Modelo m, MenuInicio vmi, NuevaPartida vnp, Ranking vr, Jugando vj)
 	{
@@ -49,9 +48,10 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vnp.btnContinuar.addActionListener(this);
 		vnp.pedirNombresJugadores.addWindowListener(this);
 		vnp.btnComenzarPartida.addActionListener(this);
+		vnp.dlgMensajeFaltanNombres.addWindowListener(this);
 		
-		this.vistaJugando.addWindowListener(this);
-		this.vistaJugando.addMouseListener(this);
+		vj.addWindowListener(this);
+		vj.addMouseListener(this);
 	}
 
 	@Override
@@ -66,10 +66,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		else if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) //Ejecutar al pulsar el botón Ranking
 		{
 			this.vistaRanking.MostrarRanking(); //Muestra la ventana
-			this.vistaMenuInicio.OcultarInicio(); 
+			this.vistaMenuInicio.OcultarInicio();
+			
 			conexion = this.modelo.conectar();// Conectar con la base de datos
-			String cogerRanking = this.modelo.puntosGuardados(conexion);
+			consulta = this.modelo.mejoresJugadores(conexion);
+			//this.vistaRanking.listadoJugadores.append(consulta);
+			
+			String cogerRanking = this.modelo.mejoresJugadores(conexion);
 			String[] completarRanking = cogerRanking.split("/");
+			
 			if(completarRanking.length >=2 && completarRanking.length <4)
 				{
 					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
@@ -216,7 +221,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		//Lanzar ventana de AYUDA al pulsar el botón de ayuda 
 		if(botonPulsado.equals(this.vistaMenuInicio.btnAyuda))
 			{
-			System.out.println("me estás pulsado");
 				this.modelo.ayuda(conexion);
 				this.modelo.desconectar(conexion);
 			}
@@ -234,38 +238,43 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		else if(botonPulsado.equals(this.vistaNuevaPartida.btnContinuar)) //Si ha pulsado el bot�n "Continuar" del di�logo anterior, se llama al m�todo que prepara el siguiente di�logo pas�ndole como par�metro el n�mero de jugadores
 		{
 			if(!this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem().equals("Elegir n�mero de jugadores...")) //Este m�todo prepara el contenido del di�logo en funci�n de este valor pasado y muestra dicho di�logo
-			{	 
+			{
 				this.vistaNuevaPartida.PrepararDialogNombresJugadores(Integer.parseInt(this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem()));
 			}
 		}
 		else if(botonPulsado.equals(this.vistaNuevaPartida.btnComenzarPartida)) //Si ha pulsado el bot�n "Comenzar Partida" del di�logo anterior, ya una vez escritos los nombres de los jugadores
-		{
-			this.vistaJugando.MostrarJugando();
-			this.vistaNuevaPartida.OcultarNuevaPartida();
-			if((numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda algún nombre en blanco no se puede comenzar la partida
+		{			
+			if((this.vistaNuevaPartida.numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda alg�n nombre en blanco no se puede comenzar la partida
 				&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre3.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre4.getText().equals("")))
 			{
-				 this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
+					this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
+				 	this.vistaJugando.MostrarJugando();
+					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 
 			}
-			else if((numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
+			else if((this.vistaNuevaPartida.numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre3.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(3, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), "");
-				
+				this.vistaJugando.MostrarJugando();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 			}
-			else if((numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
+			else if((this.vistaNuevaPartida.numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
-				
+				this.vistaJugando.MostrarJugando();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 			}
 			else
 			{
-				this.vistaNuevaPartida.txfNombre1.requestFocus();
+				this.vistaNuevaPartida.MensajeErrorFaltanNombres();
 			}
 		}
 	}
@@ -294,26 +303,43 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		}
 		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo n�mero jugadores
 		{
-			this.vistaNuevaPartida.pedirNumeroJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-			this.vistaNuevaPartida.btnContinuar.removeActionListener(this); //Eliminar Listener Bot�n
 			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+			this.vistaMenuInicio.MostrarInicio();
 		}
 		else if(this.vistaNuevaPartida.pedirNombresJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo nombres jugadores
 		{
-			this.vistaNuevaPartida.pedirNombresJugadores.removeWindowListener(this); //Eliminar Listener Dialog
-			this.vistaNuevaPartida.btnComenzarPartida.removeActionListener(this); //Eliminar Listener Bot�n
 			this.vistaNuevaPartida.choNumeroJugadores.select(0); //Reseteamos el desplegable
 			this.vistaNuevaPartida.removeAll();
 			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 		}
+		else if(this.vistaNuevaPartida.dlgMensajeFaltanNombres.isActive())
+		{
+			this.vistaNuevaPartida.OcultarMensajeError();
+			this.vistaNuevaPartida.txfNombre1.requestFocus();
+		}
 		else if((this.vistaJugando != null) && (this.vistaJugando.isActive()))
 		{
-			this.vistaJugando.removeWindowListener(this);
-			this.vistaJugando.removeMouseListener(this);
 			this.vistaJugando.OcultarJugando();
 			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
+			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 			this.vistaMenuInicio.MostrarInicio();
 		}
+		/*else if(this.vistaJugando.dlgMensajeFinPartida.isActive())
+		{
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(false);
+			
+			// Reinicio
+			vidasActualesJugador1 = 10;
+			vidasActualesJugador2 = 10;
+			this.vistaJugando.resetearContadores();
+			turno = 0;
+			this.vistaJugando.esconderDados();
+			this.modelo.agitar(cubilete);
+		}
+		else if(this.vistaJugando.dlgMensajeRonda.isActive())
+		{
+			this.vistaJugando.dlgMensajeRonda.setvisible(false);
+		} */
 		else
 		{
 			System.exit(0);
@@ -351,14 +377,15 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	@Override
 	public void mouseClicked(MouseEvent click)
 	{
-		int x = click.getX();
-		int y = click.getY();
+		// int x = click.getX();
+		// int y = click.getY();
 		
 		// Pulsamos sobre el cubilete
-		if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
+	/*	if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
 		{
-			tirada = this.modelo.tirada();
-			this.vistaJugando.mostrarTirada(tirada);
+			tirada = this.modelo.tirada(); // agitar cubilete, realizar tirada dados
+			this.vistaJugando.mostrarTirada(tirada); //Mostrar tirada dados
+			turno = 1;
 			
 			if(true) // Analizar tirada
 			{
@@ -454,8 +481,29 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				}
 				
 				this.vistaJugando.actualizarTurno(turno);
-			}
+			} 
+		} */
+		
+	/*	if((vidasJugador1 > 0) && (vidasJugador2 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador1 + "ha ganado!"); // Gana el jugador 1
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
 		}
+		else if((vidasJugador2 > 0) && (vidasJugador1 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador2 + "ha ganado!"); // Gana el jugador 2
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+		}
+		else if((vidasJugador3 > 0) && (vidasJugador1 = 0) && (vidasJugador2 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador3 + "ha ganado!"); // Gana el jugador 3
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+		}
+		else if((vidasJugador4 > 0) && (vidasJugador1 = 0) && (vidasJugador2 = 0) && (vidasJugador3 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador4 + "ha ganado!"); // Gana el jugador 4
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+		} */
 	}
 
 	@Override

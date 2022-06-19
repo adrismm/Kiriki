@@ -13,10 +13,10 @@ public class NuevaPartida extends Frame
 {
 	private static final long serialVersionUID = 1L;
 
-	// Declaramos elementos grï¿½ficos de la vista, diï¿½logos y variables auxiliares
+	// Declaramos elementos gráficos de la vista, diálogos y variables auxiliares
 	Dialog pedirNumeroJugadores = new Dialog(this, "Kiriki: Nueva Partida", true);
 	Dialog pedirNombresJugadores = new Dialog(this, "Kiriki: Nueva Partida", true);
-	int NumerosJugadores = 0; // Guarda el nï¿½mero de jugadores
+	int numJugadores = 0; // Guarda el número de jugadores
 	String[] nombresJugadores = null; // Guarda los nombres de los jugadores
 	Choice choNumeroJugadores = new Choice();
 	Button btnContinuar = new Button("Continuar");
@@ -31,18 +31,19 @@ public class NuevaPartida extends Frame
 	Label lblEtiqueta4 = new Label("Jugador 4:");
 	Button btnComenzarPartida = new Button("Comenzar Partida");
 	
-	
+	Dialog dlgMensajeFaltanNombres = new Dialog(this, "ERROR: Faltan datos", true);
+	Label lblFaltanNombres = new Label("Por favor, introduzca el nombre de todos los jugadores.");
 	
 	public NuevaPartida() // Constructor de la clase
 	{
-		// Preguntamos el nï¿½mero de jugadores
-		//pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
+		// Preguntamos el número de jugadores
+		pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
 		pedirNumeroJugadores.setLayout(new FlowLayout()); // Layout del Dialog
-		pedirNumeroJugadores.setSize(240,100); // Tamaï¿½o del Dialog
+		pedirNumeroJugadores.setSize(240,100); // Tamaño del Dialog
 		pedirNumeroJugadores.setLocationRelativeTo(null); // Centrar el Dialog
 		pedirNumeroJugadores.setResizable(false); // Evitar redimensionado
 		
-		choNumeroJugadores.add("Elegir nï¿½mero de jugadores..."); // Contenido desplegable
+		choNumeroJugadores.add("Elegir número de jugadores..."); // Contenido desplegable
 		choNumeroJugadores.add("2");
 		choNumeroJugadores.add("3");
 		choNumeroJugadores.add("4");
@@ -50,22 +51,22 @@ public class NuevaPartida extends Frame
 		pedirNumeroJugadores.add(btnContinuar);
 	}
 	
-	public void MostrarDialogNumeroJugadores() //Mï¿½todo para mostrar diï¿½logo que nos preguntarï¿½ por el nï¿½mero de jugadores de la partida
+	public void MostrarDialogNumeroJugadores() //Método para mostrar diálogo que nos preguntará por el número de jugadores de la partida
 	{
 		pedirNumeroJugadores.setVisible(true);
 	}
 	
-	public void OcultarDialogNumeroJugadores() //Mï¿½todo para ocultar el diï¿½logo anterior
+	public void OcultarDialogNumeroJugadores() //Método para ocultar el diálogo anterior
 	{
 		pedirNumeroJugadores.setVisible(false);
 	}
 	
-	// Diï¿½logos Nueva Partida
-	public void PrepararDialogNombresJugadores(int numero) //Mï¿½todo que prepara el diï¿½logo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrï¿½ definida por lo que se haya elegido en el cuadro del diï¿½logo despegable
+	// Diálogos Nueva Partida
+	public void PrepararDialogNombresJugadores(int numero) //Métodos diálogos para preparar una nueva partida
 	{
 		pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
 		pedirNombresJugadores.setLayout(new FlowLayout()); //Layout del Dialog
-		pedirNombresJugadores.setSize(300,200); //Tamaï¿½o del Dialog
+		pedirNombresJugadores.setSize(300,200); //Tamaño del Dialog
 		pedirNombresJugadores.setLocationRelativeTo(null); //Centrar el Dialog
 		pedirNombresJugadores.setResizable(false); //Evitar redimensionado
 		
@@ -115,28 +116,41 @@ public class NuevaPartida extends Frame
 			pedirNombresJugadores.remove(txfNombre4);
 		}
 		
+		numJugadores = numero;
 		pedirNombresJugadores.add(btnComenzarPartida);
-		this.MostrarDialogNombresJugadores(); //Llamamos al mï¿½todo que muestra el diï¿½logo
+		this.MostrarDialogNombresJugadores(); //Llamamos al método que muestra el diálogo
 	}
 	
-	public void MostrarDialogNombresJugadores() //Mï¿½todo que muestra el diï¿½logo que pregunta los nombres de los jugadores
+	public void MostrarDialogNombresJugadores() //Método que muestra el diálogo que pregunta los nombres de los jugadores
 	{
 		pedirNombresJugadores.setVisible(true);
 	}
 		
-	public void OcultarDialogNombresJugadores() //Mï¿½todo que oculta el diï¿½logo anterior
+	public void OcultarDialogNombresJugadores() //Método que oculta el diálogo anterior
 	{
 		pedirNombresJugadores.setVisible(false);
 	}
 	
-	public void MostrarNuevaPartida()
+	public void MensajeErrorFaltanNombres()
 	{
-		this.setVisible(true);
+		dlgMensajeFaltanNombres.setBackground(Color.YELLOW); //Color del fondo del Dialog
+		dlgMensajeFaltanNombres.setLayout(new FlowLayout()); //Layout del Dialog
+		dlgMensajeFaltanNombres.setSize(380,75); //Tamaño del Dialog
+		dlgMensajeFaltanNombres.setLocationRelativeTo(null); //Centrar el Dialog
+		dlgMensajeFaltanNombres.setResizable(false); //Evitar redimensionado
+		
+		dlgMensajeFaltanNombres.add(lblFaltanNombres);
+		
+		this.MostrarMensajeError();
 	}
 	
-	public void OcultarNuevaPartida()
+	public void MostrarMensajeError()
 	{
-		this.setVisible(false);
+		dlgMensajeFaltanNombres.setVisible(true);
 	}
 
+	public void OcultarMensajeError()
+	{
+		dlgMensajeFaltanNombres.setVisible(false);
+	}
 }

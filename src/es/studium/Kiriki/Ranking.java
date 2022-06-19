@@ -9,13 +9,12 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
-import java.awt.TextArea;
+// import java.awt.TextArea;
 
 public class Ranking extends Frame
 {
 	private static final long serialVersionUID = 1L;
 	
-	TextArea txaRanking = new TextArea(20,10);
 	Button btnVolver = new Button("Volver");
 	Panel pnlJugadores = new Panel();
 	Panel lblCabecera = new Panel();
@@ -42,12 +41,20 @@ public class Ranking extends Frame
 	Label lblPuntos9 = new Label();
 	Label lblPuntos10 = new Label();
 	
+	Label lblMejoresJugadores = new Label("Kiriki: Mejores Jugadores");
+//	TextArea listadoJugadores = new TextArea(15, 40);
+//	Button btnVolver = new Button("Volver");
 	
 	public Ranking()
 	{
-		setTitle("Kiriki: Ranking"); //Tï¿½tulo
+		setTitle("Kiriki: Ranking"); //Título
 		setBackground(Color.YELLOW); //Color de fondo del Frame
 		setLayout(new FlowLayout()); //Layout del Frame
+		add(lblMejoresJugadores);
+//		add(listadoJugadores);
+//		listadoJugadores.append("JUGADOR\tPUNTOS\n");
+		add(btnVolver);
+		
 		add(lblCabecera);
 		add(pnlJugadores);
 		lblCabecera.add(lblJugador);
@@ -82,7 +89,8 @@ public class Ranking extends Frame
 		pnlJugadores.setPreferredSize(new Dimension(340,220));
 		
 		add(btnVolver);
-		setSize(400,330); //Tamaï¿½o del Frame
+		
+		setSize(400,360); //Tamaño del Frame
 		setLocationRelativeTo(null); //Centrar la ventana
 		setResizable(false); //Evitar redimensionado
 	}

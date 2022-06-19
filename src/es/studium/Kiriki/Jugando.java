@@ -2,6 +2,7 @@ package es.studium.Kiriki;
 
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
@@ -11,35 +12,73 @@ import java.awt.Toolkit;
 
 public class Jugando extends Frame
 {
-	private static final long servialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 	
 	Toolkit herramientas;
-	Image tapete;
-	int numJugadores;
+	Image tapete, cubilete;
+	Image D1, D2, D3, D4, D5, D6; // Imágenes de las caras de los dados
+	
+	int dadosTapados = 0;
+	int cargarDados = 0;
+	
 	String jugador1, jugador2, jugador3, jugador4;
+	int numJugadores;
 	int turnoJugador = 1;
 	int tirada = 0;
+	
+	int imagenAmostrar1 = 0;
+	int imagenAmostrar2 = 0;
+	int vidasJugador1 = 0;
+	int vidasJugador2 = 0;
+	int vidasJugador3 = 0;
+	int vidasJugador4 = 0;
+	int turno = 0;
+	
+	Frame ventanaJuego = new Frame("Kiriki: Jugando");
+	
+	Dialog dlgTurno = new Dialog(this, "Turno", true);
+	Label lblTurno = new Label();
+	
+	Dialog dlgMensajeComienzoPartida = new Dialog(this, "¡La partida ha comenzado!", true);
+	Label lblMensajeComienzoPartida = new Label();
+	
+	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada");
+	Label lblMensajeValorTirada = new Label("El valor de la tirada es: "); // + valorTirada
+	
+	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
+	Label lblMensajeValorAnunciado = new Label("El valor anunciado por " + " es: "); // + jugadorActual + valorAnunciado
+	
+	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
+	Label lblMensajeValorRecibido = new Label("¿Destapas el cubilete o superas el valor recibido?"); // + btnAceptarValor + btnRechazarValor
+	
+	Dialog dlgMensajeValorAceptado = new Dialog(this, "Resultado Aceptado");
+	Label lblMensajeValorAceptado = new Label(" ha aceptado el valor anunciado por " + " de: "); // jugadorActual + jugadorAnterior + valorAnunciado
+	
+	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado");
+	Label lblMensajeValorRechazado = new Label(" ha rechazado el valor anunciado por " + " de: "); // jugadorActual + jugadorAnterior + valorAnunciado
+	
+	Dialog dlgMensajeValorVerdadero = new Dialog(this, "Resultado Verdadero");
+	Label lblMensajeValorVerdadero = new Label("El valor anunciado es verdad, " + " ha perdido 1 vida."); // + jugadorActual
+	
+	Dialog dlgMensajeValorFalso = new Dialog(this, "Resultado Falso");
+	Label lblMensajeValorFalso = new Label("El valor anunciado es mentira, " + " ha perdido 1 vida."); // + jugadorAnterior
+	
+	Dialog dlgMensajeKiriki = new Dialog(this, "¡Kiriki!");
+	Label lblMensajeKiriki = new Label("¡Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
+	
+	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
+	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
+	
 	Font fuenteTirada = new Font("Jokerman", Font.BOLD, 24);
 	Font fuenteTurno = new Font("Jokerman", Font.BOLD, 24);
 	Font fuenteJugadores = new Font("Jokerman", Font.BOLD, 22);
 	
-	Frame ventanaJuego = new Frame("Kiriki: Jugando");
-	Dialog dialogoTurno = new Dialog(this, "Turno", true);
-	Dialog dialogoAnunciarValor = new Dialog(this, "El valor de la tirada es...");
-	Dialog dialogoRecibirValor = new Dialog(this, "Â¿Destapas el cubilete o superas la tirada?");
-	Dialog dialogoVictoria = new Dialog(this, "Â¡Has ganado!");
-	Dialog dialogoComenzar = new Dialog(this, "Â¡La partida ha comenzado!");
-	Label lblTurno = new Label();
-	Label lblComienzo = new Label();
-	Label lblVictoria = new Label();
-	Label lblMentira = new Label();
-	Label lblVerdad = new Label();
-	
-	int xAmarilla = 100, yAmarilla = 380;
+	/* int xAmarilla = 100, yAmarilla = 380;
 	int xAzul=95, yAzul=380;
 	int xVerde=90, yVerde=380;
-	int xRoja=85, yRoja=380;
+	int xRoja=85, yRoja=380; */
 	
+	// Constructor
 	public Jugando(int n, String j1, String j2, String j3, String j4)
 	{
 		numJugadores = n;
@@ -47,19 +86,154 @@ public class Jugando extends Frame
 		jugador2 = j2;
 		jugador3 = j3;
 		jugador4 = j4;
+		
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		setTitle("Jugando a Kiriki"); // TÃ­tulo
-		setSize(600,420); // TamaÃ±o del Frame
+		cubilete = herramientas.getImage("cubilete.png");
+		
+		setTitle("Jugando a Kiriki"); // Título
+		setSize(600,420); // Tamaño del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
+		
+		dlgMensajeComienzoPartida.setLayout(new FlowLayout());
+		dlgMensajeComienzoPartida.setSize(100, 100);
+		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
+		dlgMensajeComienzoPartida.setResizable(false);
+		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida);
+		
+		dlgMensajeComienzoPartida.setLayout(new FlowLayout()); // Diálogo turno
+		dlgMensajeComienzoPartida.setSize(200, 100);
+		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
+		dlgMensajeComienzoPartida.setResizable(false);
+		dlgMensajeComienzoPartida.add(lblTurno);
+		
+		dlgMensajeValorTirada.setLayout(new FlowLayout());
+		dlgMensajeValorTirada.setSize(100, 100);
+		dlgMensajeValorTirada.setLocationRelativeTo(null);
+		dlgMensajeValorTirada.setResizable(false);
+		dlgMensajeValorTirada.add(lblMensajeValorTirada);
+		
+		dlgMensajeValorAnunciado.setLayout(new FlowLayout());
+		dlgMensajeValorAnunciado.setSize(100, 100);
+		dlgMensajeValorAnunciado.setLocationRelativeTo(null);
+		dlgMensajeValorAnunciado.setResizable(false);
+		dlgMensajeValorAnunciado.add(lblMensajeValorAnunciado);
+		
+		dlgMensajeValorRecibido.setLayout(new FlowLayout());
+		dlgMensajeValorRecibido.setSize(100, 100);
+		dlgMensajeValorRecibido.setLocationRelativeTo(null);
+		dlgMensajeValorRecibido.setResizable(false);
+		dlgMensajeValorRecibido.add(lblMensajeValorRecibido);
+		
+		dlgMensajeValorAceptado.setLayout(new FlowLayout());
+		dlgMensajeValorAceptado.setSize(100, 100);
+		dlgMensajeValorAceptado.setLocationRelativeTo(null);
+		dlgMensajeValorAceptado.setResizable(false);
+		dlgMensajeValorAceptado.add(lblMensajeValorAceptado);
+		
+		dlgMensajeValorRechazado.setLayout(new FlowLayout());
+		dlgMensajeValorRechazado.setSize(100, 100);
+		dlgMensajeValorRechazado.setLocationRelativeTo(null);
+		dlgMensajeValorRechazado.setResizable(false);
+		dlgMensajeValorRechazado.add(lblMensajeValorRechazado);
+		
+		dlgMensajeValorVerdadero.setLayout(new FlowLayout());
+		dlgMensajeValorVerdadero.setSize(100, 100);
+		dlgMensajeValorVerdadero.setLocationRelativeTo(null);
+		dlgMensajeValorVerdadero.setResizable(false);
+		dlgMensajeValorVerdadero.add(lblMensajeValorVerdadero);
+		
+		dlgMensajeValorFalso.setLayout(new FlowLayout());
+		dlgMensajeValorFalso.setSize(100, 100);
+		dlgMensajeValorFalso.setLocationRelativeTo(null);
+		dlgMensajeValorFalso.setResizable(false);
+		dlgMensajeValorFalso.add(lblMensajeValorFalso);
+		
+		dlgMensajeKiriki.setLayout(new FlowLayout());
+		dlgMensajeKiriki.setSize(100, 100);
+		dlgMensajeKiriki.setLocationRelativeTo(null);
+		dlgMensajeKiriki.setResizable(false);
+		dlgMensajeKiriki.add(lblMensajeKiriki);
+		
+		dlgMensajeFinPartida.setLayout(new FlowLayout());
+		dlgMensajeFinPartida.setSize(100, 100);
+		dlgMensajeFinPartida.setLocationRelativeTo(null);
+		dlgMensajeFinPartida.setResizable(false);
+		dlgMensajeFinPartida.add(lblMensajeFinPartida);
 	}
 	
+	// Dibujamos
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
-		g.setFont(fuenteTirada);
+		Font fuente = new Font("Jokerman", Font.BOLD, 24);
+		g.setFont(fuente);
+		
+		g.setColor(Color.yellow);
+		g.drawString("Jugador 1: " + vidasJugador1 + " puntos", 200, 60);
+		g.drawImage(cubilete, 320, 80, this);
+		
+		g.setColor(Color.blue);
+		g.drawString("Jugador 2: " + vidasJugador2, 200, 430);
+		g.drawImage(cubilete, 320, 250, this);
+		
+		g.setColor(Color.green);
+		g.drawString("Jugador 3: ", 60, 200);
+		g.drawImage(cubilete, 80, 320, this);
+		
+		g.setColor(Color.red);
+		g.drawString("Jugador 4: ", 430, 200);
+		g.drawImage(cubilete, 250, 320, this);
+		
 		g.setColor(Color.black);
+		g.drawRect(85, 35, 175, 35);
+		g.drawString("Turno del jugador " + turno, 90, 55);
+		
+		// Mostrar dados
+		switch(imagenAmostrar1)
+		{
+			case 1:
+				g.drawImage(D1, 210, 80, this);
+				break;
+			case 2:
+				g.drawImage(D2, 210, 80, this);
+				break;
+			case 3:
+				g.drawImage(D3, 210, 80, this);
+				break;
+			case 4:
+				g.drawImage(D4, 210, 80, this);
+				break;
+			case 5:
+				g.drawImage(D5, 210, 80, this);
+				break;
+			case 6:
+				g.drawImage(D6, 210, 80, this);
+				break;
+		}
+		
+		switch(imagenAmostrar2)
+		{
+			case 1:
+				g.drawImage(D1, 210, 80, this);
+				break;
+			case 2:
+				g.drawImage(D2, 210, 80, this);
+				break;
+			case 3:
+				g.drawImage(D3, 210, 80, this);
+				break;
+			case 4:
+				g.drawImage(D4, 210, 80, this);
+				break;
+			case 5:
+				g.drawImage(D5, 210, 80, this);
+				break;
+			case 6:
+				g.drawImage(D6, 210, 80, this);
+				break;
+		}
 		
 		if(tirada != 0)
 		{
@@ -98,28 +272,83 @@ public class Jugando extends Frame
 		// Jugadores
 		g.setColor(Color.yellow);
 		g.drawString(jugador1, 10, 320);
-		g.fillOval(xAmarilla, yAmarilla, 10, 320); // Ficha Amarilla
+		//g.fillOval(xAmarilla, yAmarilla, 10, 320); // Ficha Amarilla
 		
 		g.setColor(Color.blue);
 		g.drawString(jugador2,  10, 350);
-		g.fillOval(xAzul, yAzul, 20, 20); // Ficha Azul
+		//g.fillOval(xAzul, yAzul, 20, 20); // Ficha Azul
 		
 		switch(numJugadores)
 		{
 			case 3:
 				g.setColor(Color.green);
 				g.drawString(jugador3, 10, 380);
-				g.fillOval(xVerde, yVerde, 20, 20); // Ficha Verde
+				//g.fillOval(xVerde, yVerde, 20, 20); // Ficha Verde
 				break;
 			case 4:
 				g.setColor(Color.green);
 				g.drawString(jugador3, 10, 380);
-				g.fillOval(xVerde, yVerde, 20, 20);
+				//g.fillOval(xVerde, yVerde, 20, 20);
 				g.setColor(Color.red);
 				g.drawString(jugador4, 10, 410);
-				g.fillOval(xRoja, yRoja, 20, 20); // Ficha Roja
+				//g.fillOval(xRoja, yRoja, 20, 20); // Ficha Roja
 				break;
 		}
+	}
+	
+	public void cargarDados()
+	{
+		D1 = herramientas.getImage("dadoNegro.png");
+		D2 = herramientas.getImage("dadoRojo.png");
+		D3 = herramientas.getImage("dadoJack.png");
+		D4 = herramientas.getImage("dadoQueen.png");
+		D5 = herramientas.getImage("dadoKing.png");
+		D6 = herramientas.getImage("dadoAce.png");
+	}
+	
+	public void mostrarDadoCubilete1(int dado)
+	{
+		imagenAmostrar1 = dado;
+		repaint();
+	}
+	
+	public void mostrarDadoDubilete2(int dado)
+	{
+		imagenAmostrar2 = dado;
+		repaint();
+	}
+	
+	public void quitarVidasJugador1()
+	{
+		vidasJugador1--;
+		repaint();
+	}
+	
+	public void quitarVidasJugador2()
+	{
+		vidasJugador2--;
+		repaint();
+	}
+	
+	public void quitarVidasJugador3()
+	{
+		vidasJugador3--;
+		repaint();
+	}
+	
+	public void quitarVidasJugador4()
+	{
+		vidasJugador4--;
+		repaint();
+	}
+	
+	public void resetearContadores()
+	{
+		vidasJugador1 = 10;
+		vidasJugador2 = 10;
+		vidasJugador3 = 10;
+		vidasJugador4 = 10;
+		repaint();
 	}
 	
 	public void actualizarTurno(int t)
