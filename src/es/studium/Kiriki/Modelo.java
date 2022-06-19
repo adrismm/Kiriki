@@ -11,7 +11,7 @@ import java.util.Random;
 public class Modelo
 
 {
-	//CONEXIï¿½N CON LA BASE DE DATOS
+	//CONEXIÓN CON LA BASE DE DATOS
 	
 		//Drivers 
 		String driver = "com.mysql.cj.jdbc.Driver";

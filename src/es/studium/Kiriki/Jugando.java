@@ -19,11 +19,6 @@ public class Jugando extends Frame
 	Image tapete, cubilete;
 	Image D1, D2, D3, D4, D5, D6; // Imï¿½genes de las caras de los dados
 	
-	Image cubileteInv;
-	Graphics graphInv;
-	Dimension dimInv;
-	Dimension d = size(600, 400); // obtenemos la dimensión del frame o panel
-	
 	int dadosTapados = 0;
 	int cargarDados = 0;
 	
@@ -96,14 +91,15 @@ public class Jugando extends Frame
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
 		//cubilete = herramientas.getImage("cubilete.png");
+		D1 = herramientas.getImage("dadoNegro.png");
+		D2 = herramientas.getImage("dadoRojo.png");
+		D3 = herramientas.getImage("dadoJack.png");
+		D4 = herramientas.getImage("dadoQueen.png");
+		D5 = herramientas.getImage("dadoKing.png");
+		D6 = herramientas.getImage("dadoAce.png");
 		
-<<<<<<< HEAD
 		setTitle("Jugando a Kiriki"); // Título
 		setSize(620, 446); // Tamaño del Frame
-=======
-		setTitle("Jugando a Kiriki"); // Tï¿½tulo
-		setSize(600,420); // Tamaï¿½o del Frame
->>>>>>> 764149c7873246cf898a827491bf2272bd84c314
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -178,28 +174,7 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
-		Font fuente = new Font("Jokerman", Font.BOLD, 24);
-		g.setFont(fuente);
-		
-		g.setColor(Color.yellow);
-		g.drawString("Jugador 1: " + vidasJugador1 + " vidas", 200, 60);
-		g.drawImage(cubilete, 320, 80, this);
-		
-		g.setColor(Color.blue);
-		g.drawString("Jugador 2: " + vidasJugador2, 200, 430);
-		g.drawImage(cubilete, 320, 250, this);
-		
-		g.setColor(Color.green);
-		g.drawString("Jugador 3: ", 60, 200);
-		g.drawImage(cubilete, 80, 320, this);
-		
-		g.setColor(Color.red);
-		g.drawString("Jugador 4: ", 430, 200);
-		g.drawImage(cubilete, 250, 320, this);
-		
-		g.setColor(Color.black);
-		g.drawRect(85, 35, 175, 35);
-		g.drawString("Turno del jugador " + turno, 90, 55);
+		g.setFont(fuenteTurno);
 		
 		// Mostrar dados
 		switch(imagenAmostrar1)
@@ -282,46 +257,32 @@ public class Jugando extends Frame
 		
 		// Jugadores
 		g.setColor(Color.yellow);
-		g.drawString(jugador1, 10, 320);
-		g.fillOval(xJugador1, yJugador1, 10, 320); // Ficha Amarilla
+		g.drawString(jugador1 + ": " + vidasJugador1 + " vidas", 10, 320);
+		g.fillOval(xJugador1, yJugador1, 20, 20); // Ficha Amarilla
 		
 		g.setColor(Color.blue);
-		g.drawString(jugador2,  10, 350);
+		g.drawString(jugador2 + ": " + vidasJugador2 + " vidas",  10, 350);
 		g.fillOval(xJugador2, yJugador2, 20, 20); // Ficha Azul
 		
 		switch(numJugadores)
 		{
 			case 3:
 				g.setColor(Color.green);
-				g.drawString(jugador3, 10, 380);
+				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 10, 380);
 				g.fillOval(xJugador3, yJugador3, 20, 20); // Ficha Verde
 				break;
 			case 4:
 				g.setColor(Color.green);
-				g.drawString(jugador3, 10, 380);
+				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 10, 380);
 				g.fillOval(xJugador3, yJugador3, 20, 20);
 				g.setColor(Color.red);
-				g.drawString(jugador4, 10, 410);
+				g.drawString(jugador4 + ": " + vidasJugador4 + " vidas", 10, 410);
 				g.fillOval(xJugador4, yJugador4, 20, 20); // Ficha Roja
 				break;
 		}
 	}
 	
-	public void update(Graphics g) // Animaciones cubilete y dados
-	{
-		if ((graphInv == null) || (d.width != dimInv.width)|| (d.height != dimInv.height)) // Comprobamos si existe el objeto invisible y si sus dimensiones son correctas
-		{
-			dimInv = d;
-			cubileteInv = createImage(d.width, d.height);
-			graphInv = cubileteInv.getGraphics();
-		}
-		
-		graphInv.setColor(getBackground()); // Establecemos propiedas contexto grñafico invisible y dibujamos sobre él
-		
-		g.drawImage(cubileteInv, 0, 0, this); // Hacemos visible la imagen invisible a partir del punto (0,0) del propio frame o panel
-	}
-	
-	public void cargarDados()
+	public void cargarDados() // Ya en el constructor
 	{
 		D1 = herramientas.getImage("dadoNegro.png");
 		D2 = herramientas.getImage("dadoRojo.png");
