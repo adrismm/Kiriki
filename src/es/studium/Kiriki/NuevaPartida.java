@@ -31,7 +31,8 @@ public class NuevaPartida extends Frame
 	Label lblEtiqueta4 = new Label("Jugador 4:");
 	Button btnComenzarPartida = new Button("Comenzar Partida");
 	
-	
+	Dialog dlgMensajeFaltanNombres = new Dialog(this, "ERROR: Faltan datos", true);
+	Label lblFaltanNombres = new Label("Por favor, introduzca el nombre de todos los jugadores.");
 	
 	public NuevaPartida() // Constructor de la clase
 	{
@@ -61,11 +62,11 @@ public class NuevaPartida extends Frame
 	}
 	
 	// Diálogos Nueva Partida
-	public void PrepararDialogNombresJugadores(int numJugadores) //Método que prepara el diálogo que nos pregunta por los nombres de los jugadores, cuya cantidad vendrá definida por lo que se haya elegido en el cuadro del diálogo despegable
+	public void PrepararDialogNombresJugadores(int numero) //Métodos diálogos para preparar una nueva partida
 	{
 		pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
 		pedirNombresJugadores.setLayout(new FlowLayout()); //Layout del Dialog
-		pedirNombresJugadores.setSize(240,200); //Tamaño del Dialog
+		pedirNombresJugadores.setSize(300,200); //Tamaño del Dialog
 		pedirNombresJugadores.setLocationRelativeTo(null); //Centrar el Dialog
 		pedirNombresJugadores.setResizable(false); //Evitar redimensionado
 		
@@ -82,7 +83,7 @@ public class NuevaPartida extends Frame
 		pedirNombresJugadores.add(txfNombre2);
 		
 		//Si existe Jugador 3
-		if(numJugadores == 3)
+		if(numero == 3)
 		{
 			pedirNombresJugadores.add(lblEtiqueta3);
 			txfNombre3.selectAll(); //Reseteamos los cuadros de texto
@@ -96,7 +97,7 @@ public class NuevaPartida extends Frame
 			txfNombre3.setText("");
 			pedirNombresJugadores.remove(txfNombre3);
 		}
-		if(numJugadores == 4)
+		if(numero == 4)
 		{
 			pedirNombresJugadores.add(lblEtiqueta3);
 			txfNombre3.selectAll(); //Reseteamos los cuadros de texto
@@ -115,6 +116,7 @@ public class NuevaPartida extends Frame
 			pedirNombresJugadores.remove(txfNombre4);
 		}
 		
+		numJugadores = numero;
 		pedirNombresJugadores.add(btnComenzarPartida);
 		this.MostrarDialogNombresJugadores(); //Llamamos al método que muestra el diálogo
 	}
@@ -128,5 +130,27 @@ public class NuevaPartida extends Frame
 	{
 		pedirNombresJugadores.setVisible(false);
 	}
+	
+	public void MensajeErrorFaltanNombres()
+	{
+		dlgMensajeFaltanNombres.setBackground(Color.YELLOW); //Color del fondo del Dialog
+		dlgMensajeFaltanNombres.setLayout(new FlowLayout()); //Layout del Dialog
+		dlgMensajeFaltanNombres.setSize(380,75); //Tamaño del Dialog
+		dlgMensajeFaltanNombres.setLocationRelativeTo(null); //Centrar el Dialog
+		dlgMensajeFaltanNombres.setResizable(false); //Evitar redimensionado
+		
+		dlgMensajeFaltanNombres.add(lblFaltanNombres);
+		
+		this.MostrarMensajeError();
+	}
+	
+	public void MostrarMensajeError()
+	{
+		dlgMensajeFaltanNombres.setVisible(true);
+	}
 
+	public void OcultarMensajeError()
+	{
+		dlgMensajeFaltanNombres.setVisible(false);
+	}
 }

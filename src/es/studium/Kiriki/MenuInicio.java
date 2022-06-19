@@ -25,10 +25,12 @@ public class MenuInicio extends Frame
 	{
 		setTitle("Kiriki"); //Título
 		setBackground(Color.YELLOW); //Color del fondo del Frame
+		setTitle("Kiriki"); //Título
+		setBackground(Color.yellow);
 		setLayout(new BorderLayout()); //Layout del Frame
 		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
 		pnlBotonera.add(lblMenuPrincipal); //Añadir Botón a Panel
-		pnlBotonera.add(btnNuevaPartida); //Añadir Botón a Panel 	
+		pnlBotonera.add(btnNuevaPartida); //Añadir Botï¿½n a Panel 	
 		pnlBotonera.add(btnRanking); //Añadir Botón a Panel
 		pnlBotonera.add(btnAyuda); //Añadir Botón a Panel
 		add(pnlBotonera, "Center"); //Añadir Panel a Frame

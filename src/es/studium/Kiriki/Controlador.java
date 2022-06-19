@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.Connection;
 
 public class Controlador implements WindowListener, ActionListener, MouseListener
 {
@@ -15,8 +16,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	Ranking vistaRanking; // Top 10 jugadores
 	Jugando vistaJugando; // Tapete de juego
 	
-	Ayuda va;
-	
 	int numJugadores;
 	int turno = 1;
 	int tirada;
@@ -24,6 +23,9 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	int tiradasAzul = 0;
 	int tiradasVerde = 0;
 	int tiradasRojo = 0;
+	
+	Connection conexion = null;
+	String consulta = "";
 	
 	public Controlador(Modelo m, MenuInicio vmi, NuevaPartida vnp, Ranking vr, Jugando vj)
 	{
@@ -37,6 +39,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vmi.btnNuevaPartida.addActionListener(this);	
 		vmi.btnRanking.addActionListener(this);
 		vmi.btnSalir.addActionListener(this);
+		vmi.btnAyuda.addActionListener(this);
 		
 		vr.addWindowListener(this);
 		vr.btnVolver.addActionListener(this);
@@ -45,6 +48,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vnp.btnContinuar.addActionListener(this);
 		vnp.pedirNombresJugadores.addWindowListener(this);
 		vnp.btnComenzarPartida.addActionListener(this);
+		vnp.dlgMensajeFaltanNombres.addWindowListener(this);
 		
 		vj.addWindowListener(this);
 		vj.addMouseListener(this);
@@ -59,41 +63,199 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		{
 			System.exit(0);
 		}
-		else if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) //Ejecutar al pulsar el botón "Ranking"
+		else if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) //Ejecutar al pulsar el botÃ³n Ranking
 		{
 			this.vistaRanking.MostrarRanking(); //Muestra la ventana
-			this.vistaMenuInicio.OcultarInicio(); 
+			this.vistaMenuInicio.OcultarInicio();
+			
+			conexion = this.modelo.conectar();// Conectar con la base de datos
+			consulta = this.modelo.mejoresJugadores(conexion);
+			//this.vistaRanking.listadoJugadores.append(consulta);
+			
+			String cogerRanking = this.modelo.mejoresJugadores(conexion);
+			String[] completarRanking = cogerRanking.split("/");
+			
+			if(completarRanking.length >=2 && completarRanking.length <4)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+				}
+			else if(completarRanking.length >=4 && completarRanking.length <6)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+				}
+			else if(completarRanking.length >=6 && completarRanking.length <8)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+				}
+			else if(completarRanking.length >=8 && completarRanking.length <10)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+				}
+			else if(completarRanking.length >=10 && completarRanking.length <12)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+					this.vistaRanking.lblJugador5.setText(completarRanking[8]);
+					this.vistaRanking.lblPuntos5.setText(completarRanking[9]);
+				}
+			else if(completarRanking.length >=12 && completarRanking.length <14)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+					this.vistaRanking.lblJugador5.setText(completarRanking[8]);
+					this.vistaRanking.lblPuntos5.setText(completarRanking[9]);
+					this.vistaRanking.lblJugador6.setText(completarRanking[10]);
+					this.vistaRanking.lblPuntos6.setText(completarRanking[11]);
+				}
+			else if(completarRanking.length >=14 && completarRanking.length <16)
+				{	
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+					this.vistaRanking.lblJugador5.setText(completarRanking[8]);
+					this.vistaRanking.lblPuntos5.setText(completarRanking[9]);
+					this.vistaRanking.lblJugador6.setText(completarRanking[10]);
+					this.vistaRanking.lblPuntos6.setText(completarRanking[11]);
+					this.vistaRanking.lblJugador7.setText(completarRanking[12]);
+					this.vistaRanking.lblPuntos7.setText(completarRanking[13]);
+				}
+			else if(completarRanking.length >=16 && completarRanking.length <18)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+					this.vistaRanking.lblJugador5.setText(completarRanking[8]);
+					this.vistaRanking.lblPuntos5.setText(completarRanking[9]);
+					this.vistaRanking.lblJugador6.setText(completarRanking[10]);
+					this.vistaRanking.lblPuntos6.setText(completarRanking[11]);
+					this.vistaRanking.lblJugador7.setText(completarRanking[12]);
+					this.vistaRanking.lblPuntos7.setText(completarRanking[13]);
+					this.vistaRanking.lblJugador8.setText(completarRanking[14]);
+					this.vistaRanking.lblPuntos8.setText(completarRanking[15]);
+				}
+			else if(completarRanking.length >=18 && completarRanking.length <20)
+				{
+					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+					this.vistaRanking.lblJugador5.setText(completarRanking[8]);
+					this.vistaRanking.lblPuntos5.setText(completarRanking[9]);
+					this.vistaRanking.lblJugador6.setText(completarRanking[10]);
+					this.vistaRanking.lblPuntos6.setText(completarRanking[11]);
+					this.vistaRanking.lblJugador7.setText(completarRanking[12]);
+					this.vistaRanking.lblPuntos7.setText(completarRanking[13]);
+					this.vistaRanking.lblJugador8.setText(completarRanking[14]);
+					this.vistaRanking.lblPuntos8.setText(completarRanking[15]);
+					this.vistaRanking.lblJugador9.setText(completarRanking[16]);
+					this.vistaRanking.lblPuntos9.setText(completarRanking[17]);
+	
+				}
+			else if(completarRanking.length >=20)
+				{	this.vistaRanking.lblJugador1.setText(completarRanking[0]);
+					this.vistaRanking.lblPuntos1.setText(completarRanking[1]);
+					this.vistaRanking.lblJugador2.setText(completarRanking[2]);
+					this.vistaRanking.lblPuntos2.setText(completarRanking[3]);
+					this.vistaRanking.lblJugador3.setText(completarRanking[4]);
+					this.vistaRanking.lblPuntos3.setText(completarRanking[5]);
+					this.vistaRanking.lblJugador4.setText(completarRanking[6]);
+					this.vistaRanking.lblPuntos4.setText(completarRanking[7]);
+					this.vistaRanking.lblJugador5.setText(completarRanking[8]);
+					this.vistaRanking.lblPuntos5.setText(completarRanking[9]);
+					this.vistaRanking.lblJugador6.setText(completarRanking[10]);
+					this.vistaRanking.lblPuntos6.setText(completarRanking[11]);
+					this.vistaRanking.lblJugador7.setText(completarRanking[12]);
+					this.vistaRanking.lblPuntos7.setText(completarRanking[13]);
+					this.vistaRanking.lblJugador8.setText(completarRanking[14]);
+					this.vistaRanking.lblPuntos8.setText(completarRanking[15]);
+					this.vistaRanking.lblJugador9.setText(completarRanking[16]);
+					this.vistaRanking.lblPuntos9.setText(completarRanking[17]);
+					this.vistaRanking.lblJugador10.setText(completarRanking[18]);
+					this.vistaRanking.lblPuntos10.setText(completarRanking[19]);
+				}
+			this.modelo.desconectar(conexion);
 		}
-		else if(botonPulsado.equals(this.vistaRanking.btnVolver)) //Gestionar el botón "Volver" de la nueva ventana Ranking
+		
+		//Lanzar ventana de AYUDA al pulsar el botÃ³n de ayuda 
+		if(botonPulsado.equals(this.vistaMenuInicio.btnAyuda))
+			{
+				this.modelo.ayuda(conexion);
+				this.modelo.desconectar(conexion);
+			}
+		
+		else if(botonPulsado.equals(this.vistaRanking.btnVolver)) //Gestionar el botï¿½n "Volver" de la nueva ventana Ranking
 		{
 			this.vistaRanking.OcultarRanking();
 			this.vistaMenuInicio.MostrarInicio();
 		}
-		else if(botonPulsado.equals(this.vistaMenuInicio.btnNuevaPartida)) //Al pulsar el botón "Nueva Partida", mostrar el diálogo para pedir el número de jugadores mediante un desplegable
+		else if(botonPulsado.equals(this.vistaMenuInicio.btnNuevaPartida)) //Al pulsar el botï¿½n "Nueva Partida", mostrar el diï¿½logo para pedir el nï¿½mero de jugadores mediante un desplegable
 		{
 			this.vistaNuevaPartida.MostrarDialogNumeroJugadores();
 			this.vistaMenuInicio.OcultarInicio();
 		}
-		else if(botonPulsado.equals(this.vistaNuevaPartida.btnContinuar)) //Si ha pulsado el botón "Continuar" del diálogo anterior, se llama al método que prepara el siguiente diálogo pasándole como parámetro el número de jugadores
+		else if(botonPulsado.equals(this.vistaNuevaPartida.btnContinuar)) //Si ha pulsado el botï¿½n "Continuar" del diï¿½logo anterior, se llama al mï¿½todo que prepara el siguiente diï¿½logo pasï¿½ndole como parï¿½metro el nï¿½mero de jugadores
 		{
-			if(!this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem().equals("Elegir número de jugadores...")) //Este método prepara el contenido del diálogo en función de este valor pasado y muestra dicho diálogo
+			if(!this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem().equals("Elegir número de jugadores...")) //Este mï¿½todo prepara el contenido del diï¿½logo en funciï¿½n de este valor pasado y muestra dicho diï¿½logo
 			{
 				this.vistaNuevaPartida.PrepararDialogNombresJugadores(Integer.parseInt(this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem()));
 			}
 		}
-		else if(botonPulsado.equals(this.vistaNuevaPartida.btnComenzarPartida)) //Si ha pulsado el botón "Comenzar Partida" del diálogo anterior, ya una vez escritos los nombres de los jugadores
-		{
-			if((numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda algún nombre en blanco no se puede comenzar la partida
+		else if(botonPulsado.equals(this.vistaNuevaPartida.btnComenzarPartida)) //Si ha pulsado el botï¿½n "Comenzar Partida" del diï¿½logo anterior, ya una vez escritos los nombres de los jugadores
+		{			
+			if((this.vistaNuevaPartida.numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda algún nombre en blanco no se puede comenzar la partida
 				&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre3.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre4.getText().equals("")))
 			{
-				 	new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
+					this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
 				 	this.vistaJugando.MostrarJugando();
 					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
+
 			}
-			else if((numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
+			else if((this.vistaNuevaPartida.numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre3.getText().equals("")))
 			{
@@ -102,7 +264,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 			}
-			else if((numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
+			else if((this.vistaNuevaPartida.numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
@@ -112,7 +274,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			}
 			else
 			{
-				this.vistaNuevaPartida.txfNombre1.requestFocus();
+				this.vistaNuevaPartida.MensajeErrorFaltanNombres();
 			}
 		}
 	}
@@ -139,7 +301,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaRanking.OcultarRanking();
 			this.vistaMenuInicio.MostrarInicio();
 		}
-		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo número jugadores
+		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo nï¿½mero jugadores
 		{
 			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 			this.vistaMenuInicio.MostrarInicio();
@@ -150,6 +312,11 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaNuevaPartida.removeAll();
 			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 		}
+		else if(this.vistaNuevaPartida.dlgMensajeFaltanNombres.isActive())
+		{
+			this.vistaNuevaPartida.OcultarMensajeError();
+			this.vistaNuevaPartida.txfNombre1.requestFocus();
+		}
 		else if((this.vistaJugando != null) && (this.vistaJugando.isActive()))
 		{
 			this.vistaJugando.OcultarJugando();
@@ -157,6 +324,22 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 			this.vistaMenuInicio.MostrarInicio();
 		}
+		/*else if(this.vistaJugando.dlgMensajeFinPartida.isActive())
+		{
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(false);
+			
+			// Reinicio
+			vidasActualesJugador1 = 10;
+			vidasActualesJugador2 = 10;
+			this.vistaJugando.resetearContadores();
+			turno = 0;
+			this.vistaJugando.esconderDados();
+			this.modelo.agitar(cubilete);
+		}
+		else if(this.vistaJugando.dlgMensajeRonda.isActive())
+		{
+			this.vistaJugando.dlgMensajeRonda.setvisible(false);
+		} */
 		else
 		{
 			System.exit(0);
@@ -194,18 +377,19 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	@Override
 	public void mouseClicked(MouseEvent click)
 	{
-		int x = click.getX();
-		int y = click.getY();
+		// int x = click.getX();
+		// int y = click.getY();
 		
 		// Pulsamos sobre el cubilete
-		if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
+	/*	if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
 		{
-			tirada = this.modelo.tirada();
-			this.vistaJugando.mostrarTirada(tirada);
+			tirada = this.modelo.tirada(); // agitar cubilete, realizar tirada dados
+			this.vistaJugando.mostrarTirada(tirada); //Mostrar tirada dados
+			turno = 1;
 			
 			if(true) // Analizar tirada
 			{
-				switch(turno) // Actualizar posición
+				switch(turno) // Actualizar posiciï¿½n
 				{
 					case 1:
 						this.vistaJugando.xAmarilla = this.vistaJugando.xAmarilla + tirada * 38;
@@ -297,8 +481,29 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				}
 				
 				this.vistaJugando.actualizarTurno(turno);
-			}
+			} 
+		} */
+		
+	/*	if((vidasJugador1 > 0) && (vidasJugador2 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador1 + "ha ganado!"); // Gana el jugador 1
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
 		}
+		else if((vidasJugador2 > 0) && (vidasJugador1 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador2 + "ha ganado!"); // Gana el jugador 2
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+		}
+		else if((vidasJugador3 > 0) && (vidasJugador1 = 0) && (vidasJugador2 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador3 + "ha ganado!"); // Gana el jugador 3
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+		}
+		else if((vidasJugador4 > 0) && (vidasJugador1 = 0) && (vidasJugador2 = 0) && (vidasJugador3 = 0))
+		{
+			this.vistaJugando.lblMensajeFinPartida.setText(jugador4 + "ha ganado!"); // Gana el jugador 4
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+		} */
 	}
 
 	@Override
