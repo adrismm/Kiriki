@@ -1,14 +1,18 @@
 package es.studium.Kiriki;
 
+
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
+
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.Toolkit;
+
+
 
 public class Jugando extends Frame
 {
@@ -69,9 +73,9 @@ public class Jugando extends Frame
 	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
 	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
 	
-	Font fuenteTirada = new Font("Jokerman", Font.BOLD, 20);
-	Font fuenteTurno = new Font("Jokerman", Font.BOLD, 20);
-	Font fuenteJugadores = new Font("Jokerman", Font.BOLD, 18);
+	Font fuenteTirada = new Font("Harlow Solid Italic", Font.BOLD, 20);
+	Font fuenteTurno = new Font("Harlow Solid Italic", Font.BOLD, 20);
+	Font fuenteJugadores = new Font("Harlow Solid Italic", Font.PLAIN, 18);
 	
 	int xJugador1 = 100, yJugador1 = 380;
 	int xJugador2 = 95, yJugador2 = 380;
@@ -89,7 +93,7 @@ public class Jugando extends Frame
 		
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		//cubilete = herramientas.getImage("cubilete.png");
+		cubilete = herramientas.getImage("cubilete.png");
 		
 		setTitle("Jugando a Kiriki"); // T�tulo
 		setSize(620,446); // Tama�o del Frame
@@ -177,6 +181,7 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
+		g.drawImage(cubilete, 270, 180,  this);
 		g.setFont(fuenteTurno);
 		
 		// Mostrar dados
@@ -236,22 +241,22 @@ public class Jugando extends Frame
 		{
 			case 1:
 				g.setColor(Color.yellow);
-				g.drawString("Turno de", 450, 60);
+				g.drawString("Turno de:", 450, 60);
 				g.drawString(jugador1, 440, 90);
 				break;
 			case 2:
 				g.setColor(Color.red);
-				g.drawString("Turno de", 450, 60);
+				g.drawString("Turno de:", 450, 60);
 				g.drawString(jugador2, 440, 90);
 				break;
 			case 3:
 				g.setColor(Color.green);
-				g.drawString("Turno de", 450, 60);
+				g.drawString("Turno de:", 450, 60);
 				g.drawString(jugador3, 440, 90);
 				break;
 			case 4:
 				g.setColor(Color.white);
-				g.drawString("Turno de", 450, 60);
+				g.drawString("Turno de:", 450, 60);
 				g.drawString(jugador4, 440, 90);
 				break;
 		}
@@ -361,4 +366,5 @@ public class Jugando extends Frame
 	{
 		this.setVisible(false);
 	}
+	
 }
