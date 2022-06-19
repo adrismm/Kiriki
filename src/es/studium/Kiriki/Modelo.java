@@ -11,22 +11,22 @@ import java.util.Random;
 public class Modelo
 
 {
-	//CONEXIÓN CON LA BASE DE DATOS
+	//CONEXIï¿½N CON LA BASE DE DATOS
 	
 		//Drivers 
 		String driver = "com.mysql.cj.jdbc.Driver";
-		// Indicamos la dirección donde se encuentra la base de datos. 
+		// Indicamos la direcciï¿½n donde se encuentra la base de datos. 
 		String url = "jdbc:mysql://localhost:3306/juegoKiriki"; 
-		// Introducimos el usuario por medio del cual se hará la conexión 
+		// Introducimos el usuario por medio del cual se harï¿½ la conexiï¿½n 
 		String login = "root";
-		// Indicamos la contraseña que tiene dicha base de datos. 
+		// Indicamos la contraseï¿½a que tiene dicha base de datos. 
 		String password = "Holacaracola"; 
 		String sentencia = "";
 		Connection connection = null; 
 		Statement statement = null; 
 		ResultSet rs = null;
 
-		// Conexión con la base de datos
+		// Conexiï¿½n con la base de datos
 		public Connection conectar()
 			{
 				// Cargar los controladores para el acceso a la base de datos.
@@ -39,7 +39,7 @@ public class Modelo
 					{
 						System.out.println("Se ha producido un error al cargar el Driver"); // Error 1-
 					}
-				// Establecer la conexión con la base de datos, juegoKiriki
+				// Establecer la conexiï¿½n con la base de datos, juegoKiriki
 				try
 					{
 						connection = DriverManager.getConnection(url, login, password);
@@ -84,7 +84,7 @@ public class Modelo
 								
 							while(rs.next())
 								{
-									ranking = ranking + rs.getString("nombreJugador")+ "\t" + rs.getInt("puntosJugador") + "\n";
+									ranking = ranking + rs.getString("nombreJugador")+ "/" + rs.getInt("puntosJugador") + "/";
 								}
 						}
 				catch (SQLException sqle)
@@ -95,7 +95,7 @@ public class Modelo
 				return (ranking);
 			}
 	
-	// Métodos adicionales
+	// Mï¿½todos adicionales
 	Random rnd = new Random();
 	
 	public Modelo()
