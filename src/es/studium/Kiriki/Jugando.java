@@ -2,6 +2,7 @@ package es.studium.Kiriki;
 
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
@@ -18,11 +19,16 @@ public class Jugando extends Frame
 	Image tapete, cubilete;
 	Image D1, D2, D3, D4, D5, D6; // Imágenes de las caras de los dados
 	
+	Image cubileteInv;
+	Graphics graphInv;
+	Dimension dimInv;
+	Dimension d = size(600, 400); // obtenemos la dimensión del frame o panel
+	
 	int dadosTapados = 0;
 	int cargarDados = 0;
 	
 	String jugador1, jugador2, jugador3, jugador4;
-	int numJugadores;
+	int numJugadores = 0;
 	int turnoJugador = 1;
 	int tirada = 0;
 	
@@ -73,10 +79,10 @@ public class Jugando extends Frame
 	Font fuenteTurno = new Font("Jokerman", Font.BOLD, 24);
 	Font fuenteJugadores = new Font("Jokerman", Font.BOLD, 22);
 	
-	/* int xAmarilla = 100, yAmarilla = 380;
-	int xAzul=95, yAzul=380;
-	int xVerde=90, yVerde=380;
-	int xRoja=85, yRoja=380; */
+	int xJugador1 = 100, yJugador1 = 380;
+	int xJugador2 = 95, yJugador2 = 380;
+	int xJugador3 = 90, yJugador3 = 380;
+	int xJugador4 = 85, yJugador4 = 380;
 	
 	// Constructor
 	public Jugando(int n, String j1, String j2, String j3, String j4)
@@ -89,10 +95,10 @@ public class Jugando extends Frame
 		
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		cubilete = herramientas.getImage("cubilete.png");
+		//cubilete = herramientas.getImage("cubilete.png");
 		
 		setTitle("Jugando a Kiriki"); // Título
-		setSize(600,420); // Tamaño del Frame
+		setSize(620, 446); // Tamaño del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -171,7 +177,7 @@ public class Jugando extends Frame
 		g.setFont(fuente);
 		
 		g.setColor(Color.yellow);
-		g.drawString("Jugador 1: " + vidasJugador1 + " puntos", 200, 60);
+		g.drawString("Jugador 1: " + vidasJugador1 + " vidas", 200, 60);
 		g.drawImage(cubilete, 320, 80, this);
 		
 		g.setColor(Color.blue);
@@ -272,28 +278,42 @@ public class Jugando extends Frame
 		// Jugadores
 		g.setColor(Color.yellow);
 		g.drawString(jugador1, 10, 320);
-		//g.fillOval(xAmarilla, yAmarilla, 10, 320); // Ficha Amarilla
+		g.fillOval(xJugador1, yJugador1, 10, 320); // Ficha Amarilla
 		
 		g.setColor(Color.blue);
 		g.drawString(jugador2,  10, 350);
-		//g.fillOval(xAzul, yAzul, 20, 20); // Ficha Azul
+		g.fillOval(xJugador2, yJugador2, 20, 20); // Ficha Azul
 		
 		switch(numJugadores)
 		{
 			case 3:
 				g.setColor(Color.green);
 				g.drawString(jugador3, 10, 380);
-				//g.fillOval(xVerde, yVerde, 20, 20); // Ficha Verde
+				g.fillOval(xJugador3, yJugador3, 20, 20); // Ficha Verde
 				break;
 			case 4:
 				g.setColor(Color.green);
 				g.drawString(jugador3, 10, 380);
-				//g.fillOval(xVerde, yVerde, 20, 20);
+				g.fillOval(xJugador3, yJugador3, 20, 20);
 				g.setColor(Color.red);
 				g.drawString(jugador4, 10, 410);
-				//g.fillOval(xRoja, yRoja, 20, 20); // Ficha Roja
+				g.fillOval(xJugador4, yJugador4, 20, 20); // Ficha Roja
 				break;
 		}
+	}
+	
+	public void update(Graphics g) // Animaciones cubilete y dados
+	{
+		if ((graphInv == null) || (d.width != dimInv.width)|| (d.height != dimInv.height)) // Comprobamos si existe el objeto invisible y si sus dimensiones son correctas
+		{
+			dimInv = d;
+			cubileteInv = createImage(d.width, d.height);
+			graphInv = cubileteInv.getGraphics();
+		}
+		
+		graphInv.setColor(getBackground()); // Establecemos propiedas contexto grñafico invisible y dibujamos sobre él
+		
+		g.drawImage(cubileteInv, 0, 0, this); // Hacemos visible la imagen invisible a partir del punto (0,0) del propio frame o panel
 	}
 	
 	public void cargarDados()
