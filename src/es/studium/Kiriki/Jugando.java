@@ -2,6 +2,7 @@ package es.studium.Kiriki;
 
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
@@ -22,7 +23,7 @@ public class Jugando extends Frame
 	int cargarDados = 0;
 	
 	String jugador1, jugador2, jugador3, jugador4;
-	int numJugadores;
+	int numJugadores = 0;
 	int turnoJugador = 1;
 	int tirada = 0;
 	
@@ -73,10 +74,10 @@ public class Jugando extends Frame
 	Font fuenteTurno = new Font("Jokerman", Font.BOLD, 24);
 	Font fuenteJugadores = new Font("Jokerman", Font.BOLD, 22);
 	
-	/* int xAmarilla = 100, yAmarilla = 380;
-	int xAzul=95, yAzul=380;
-	int xVerde=90, yVerde=380;
-	int xRoja=85, yRoja=380; */
+	int xJugador1 = 100, yJugador1 = 380;
+	int xJugador2 = 95, yJugador2 = 380;
+	int xJugador3 = 90, yJugador3 = 380;
+	int xJugador4 = 85, yJugador4 = 380;
 	
 	// Constructor
 	public Jugando(int n, String j1, String j2, String j3, String j4)
@@ -93,6 +94,16 @@ public class Jugando extends Frame
 		
 		setTitle("Jugando a Kiriki"); // T�tulo
 		setSize(620,446); // Tama�o del Frame
+		D1 = herramientas.getImage("dadoNegro.png");
+		D2 = herramientas.getImage("dadoRojo.png");
+		D3 = herramientas.getImage("dadoJack.png");
+		D4 = herramientas.getImage("dadoQueen.png");
+		D5 = herramientas.getImage("dadoKing.png");
+		D6 = herramientas.getImage("dadoAce.png");
+		
+		setTitle("Jugando a Kiriki"); // T�tulo
+		setSize(620, 446); // Tama�o del Frame
+
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -167,28 +178,7 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
-		Font fuente = new Font("Jokerman", Font.BOLD, 24);
-		g.setFont(fuente);
-		
-		g.setColor(Color.yellow);
-		g.drawString("Jugador 1: " + vidasJugador1 + " puntos", 200, 60);
-		g.drawImage(cubilete, 320, 80, this);
-		
-		g.setColor(Color.blue);
-		g.drawString("Jugador 2: " + vidasJugador2, 200, 430);
-		g.drawImage(cubilete, 320, 250, this);
-		
-		g.setColor(Color.green);
-		g.drawString("Jugador 3: ", 60, 200);
-		g.drawImage(cubilete, 80, 320, this);
-		
-		g.setColor(Color.red);
-		g.drawString("Jugador 4: ", 430, 200);
-		g.drawImage(cubilete, 250, 320, this);
-		
-		g.setColor(Color.black);
-		g.drawRect(85, 35, 175, 35);
-		g.drawString("Turno del jugador " + turno, 90, 55);
+		g.setFont(fuenteTurno);
 		
 		// Mostrar dados
 		switch(imagenAmostrar1)
@@ -271,32 +261,32 @@ public class Jugando extends Frame
 		
 		// Jugadores
 		g.setColor(Color.yellow);
-		g.drawString(jugador1, 10, 320);
-		//g.fillOval(xAmarilla, yAmarilla, 10, 320); // Ficha Amarilla
+		g.drawString(jugador1 + ": " + vidasJugador1 + " vidas", 10, 320);
+		g.fillOval(xJugador1, yJugador1, 20, 20); // Ficha Amarilla
 		
 		g.setColor(Color.blue);
-		g.drawString(jugador2,  10, 350);
-		//g.fillOval(xAzul, yAzul, 20, 20); // Ficha Azul
+		g.drawString(jugador2 + ": " + vidasJugador2 + " vidas",  10, 350);
+		g.fillOval(xJugador2, yJugador2, 20, 20); // Ficha Azul
 		
 		switch(numJugadores)
 		{
 			case 3:
 				g.setColor(Color.green);
-				g.drawString(jugador3, 10, 380);
-				//g.fillOval(xVerde, yVerde, 20, 20); // Ficha Verde
+				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 10, 380);
+				g.fillOval(xJugador3, yJugador3, 20, 20); // Ficha Verde
 				break;
 			case 4:
 				g.setColor(Color.green);
-				g.drawString(jugador3, 10, 380);
-				//g.fillOval(xVerde, yVerde, 20, 20);
+				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 10, 380);
+				g.fillOval(xJugador3, yJugador3, 20, 20);
 				g.setColor(Color.red);
-				g.drawString(jugador4, 10, 410);
-				//g.fillOval(xRoja, yRoja, 20, 20); // Ficha Roja
+				g.drawString(jugador4 + ": " + vidasJugador4 + " vidas", 10, 410);
+				g.fillOval(xJugador4, yJugador4, 20, 20); // Ficha Roja
 				break;
 		}
 	}
 	
-	public void cargarDados()
+	public void cargarDados() // Ya en el constructor
 	{
 		D1 = herramientas.getImage("dadoNegro.png");
 		D2 = herramientas.getImage("dadoRojo.png");
