@@ -243,6 +243,7 @@ public class Jugando extends Frame
 		{
 			case 1:
 				g.setColor(Color.yellow);
+				g.fillRect(320, 190, 200, 200);
 				g.drawString("Turno de:", 450, 60);
 				g.drawString(jugador1, 440, 90);
 				break;
