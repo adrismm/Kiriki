@@ -51,6 +51,18 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		
 		vj.addWindowListener(this);
 		vj.addMouseListener(this);
+		vj.ventanaJuego.addWindowListener(this);
+		vj.ventanaJuego.addMouseListener(this);
+		vj.dlgMensajeComienzoPartida.addWindowListener(this);
+		vj.dlgMensajeValorTirada.addWindowListener(this);
+		vj.dlgMensajeValorAnunciado.addWindowListener(this);
+		vj.dlgMensajeValorRecibido.addWindowListener(this);
+		vj.dlgMensajeValorAceptado.addWindowListener(this);
+		vj.dlgMensajeValorRechazado.addWindowListener(this);
+		vj.dlgMensajeValorVerdadero.addWindowListener(this);
+		vj.dlgMensajeValorFalso.addWindowListener(this);
+		vj.dlgMensajeKiriki.addWindowListener(this);
+		vj.dlgMensajeFinPartida.addWindowListener(this);
 	}
 
 	@Override
@@ -375,9 +387,14 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	@Override
 	public void mouseClicked(MouseEvent click)
 	{
-		// int x = click.getX();
-		// int y = click.getY();
+		int x = click.getX();
+		int y = click.getY();
 		
+		// Turno Jugador 1
+		if((x >= 320) && (x <= 520) && (y >= 190) && (y <= 390) && (turno == 1))
+		{
+			System.out.println("Hola retraquasi");
+		}
 		// Pulsamos sobre el cubilete
 	/*	if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
 		{
