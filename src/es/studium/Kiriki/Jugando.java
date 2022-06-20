@@ -1,15 +1,18 @@
 package es.studium.Kiriki;
 
+
 import java.awt.Color;
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
+
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.Toolkit;
+
+
 
 public class Jugando extends Frame
 {
@@ -70,9 +73,9 @@ public class Jugando extends Frame
 	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
 	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
 	
-	Font fuenteTirada = new Font("Jokerman", Font.BOLD, 24);
-	Font fuenteTurno = new Font("Jokerman", Font.BOLD, 24);
-	Font fuenteJugadores = new Font("Jokerman", Font.BOLD, 22);
+	Font fuenteTirada = new Font("Harlow Solid Italic", Font.BOLD, 20);
+	Font fuenteTurno = new Font("Harlow Solid Italic", Font.BOLD, 20);
+	Font fuenteJugadores = new Font("Harlow Solid Italic", Font.PLAIN, 18);
 	
 	int xJugador1 = 100, yJugador1 = 380;
 	int xJugador2 = 95, yJugador2 = 380;
@@ -90,7 +93,10 @@ public class Jugando extends Frame
 		
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		//cubilete = herramientas.getImage("cubilete.png");
+		cubilete = herramientas.getImage("cubilete.png");
+		
+		setTitle("Jugando a Kiriki"); // Tï¿½tulo
+		setSize(620,446); // Tamaï¿½o del Frame
 		D1 = herramientas.getImage("dadoNegro.png");
 		D2 = herramientas.getImage("dadoRojo.png");
 		D3 = herramientas.getImage("dadoJack.png");
@@ -98,8 +104,9 @@ public class Jugando extends Frame
 		D5 = herramientas.getImage("dadoKing.png");
 		D6 = herramientas.getImage("dadoAce.png");
 		
-		setTitle("Jugando a Kiriki"); // Título
-		setSize(620, 446); // Tamaño del Frame
+		setTitle("Jugando a Kiriki"); // Tï¿½tulo
+		setSize(620, 446); // Tamaï¿½o del Frame
+
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -174,6 +181,7 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
+		g.drawImage(cubilete, 270, 180,  this);
 		g.setFont(fuenteTurno);
 		
 		// Mostrar dados
@@ -233,23 +241,23 @@ public class Jugando extends Frame
 		{
 			case 1:
 				g.setColor(Color.yellow);
-				g.drawString("Turno de", 10, 60);
-				g.drawString(jugador1, 10, 90);
+				g.drawString("Turno de:", 450, 60);
+				g.drawString(jugador1, 440, 90);
 				break;
 			case 2:
-				g.setColor(Color.blue);
-				g.drawString("Turno de", 10, 60);
-				g.drawString(jugador2, 10, 90);
+				g.setColor(Color.red);
+				g.drawString("Turno de:", 450, 60);
+				g.drawString(jugador2, 440, 90);
 				break;
 			case 3:
 				g.setColor(Color.green);
-				g.drawString("Turno de", 10, 60);
-				g.drawString(jugador3, 10, 90);
+				g.drawString("Turno de:", 450, 60);
+				g.drawString(jugador3, 440, 90);
 				break;
 			case 4:
-				g.setColor(Color.red);
-				g.drawString("Turno de", 10, 60);
-				g.drawString(jugador4, 10, 90);
+				g.setColor(Color.white);
+				g.drawString("Turno de:", 450, 60);
+				g.drawString(jugador4, 440, 90);
 				break;
 		}
 		
@@ -257,27 +265,27 @@ public class Jugando extends Frame
 		
 		// Jugadores
 		g.setColor(Color.yellow);
-		g.drawString(jugador1 + ": " + vidasJugador1 + " vidas", 10, 320);
-		g.fillOval(xJugador1, yJugador1, 20, 20); // Ficha Amarilla
+		g.drawString(jugador1 + ": " + vidasJugador1 + " vidas", 45, 54);
+		g.fillOval(18, 40, 20, 20); // Ficha Amarilla
 		
-		g.setColor(Color.blue);
-		g.drawString(jugador2 + ": " + vidasJugador2 + " vidas",  10, 350);
-		g.fillOval(xJugador2, yJugador2, 20, 20); // Ficha Azul
+		g.setColor(Color.red);
+		g.drawString(jugador2 + ": " + vidasJugador2 + " vidas",  45, 84);
+		g.fillOval(18, 70, 20, 20); // Ficha Azul
 		
 		switch(numJugadores)
 		{
 			case 3:
 				g.setColor(Color.green);
-				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 10, 380);
-				g.fillOval(xJugador3, yJugador3, 20, 20); // Ficha Verde
+				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 45, 114);
+				g.fillOval(18, 100, 20, 20); // Ficha Verde
 				break;
 			case 4:
 				g.setColor(Color.green);
-				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 10, 380);
-				g.fillOval(xJugador3, yJugador3, 20, 20);
-				g.setColor(Color.red);
-				g.drawString(jugador4 + ": " + vidasJugador4 + " vidas", 10, 410);
-				g.fillOval(xJugador4, yJugador4, 20, 20); // Ficha Roja
+				g.drawString(jugador3 + ": " + vidasJugador3 + " vidas", 45, 114);
+				g.fillOval(18, 100, 20, 20);
+				g.setColor(Color.white);
+				g.drawString(jugador4 + ": " + vidasJugador4 + " vidas", 45, 144);
+				g.fillOval(18, 130, 20, 20); // Ficha Roja
 				break;
 		}
 	}
