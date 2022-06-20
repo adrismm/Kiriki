@@ -37,7 +37,8 @@ public class NuevaPartida extends Frame
 	public NuevaPartida() // Constructor de la clase
 	{
 		// Preguntamos el n�mero de jugadores
-		pedirNumeroJugadores.setBackground(Color.YELLOW); // Color del fondo del Dialog
+		Color myColor = new Color(60, 179, 113);
+		pedirNumeroJugadores.setBackground(myColor); // Color del fondo del Dialog
 		pedirNumeroJugadores.setLayout(new FlowLayout()); // Layout del Dialog
 		pedirNumeroJugadores.setSize(240,100); // Tama�o del Dialog
 		pedirNumeroJugadores.setLocationRelativeTo(null); // Centrar el Dialog
@@ -64,7 +65,8 @@ public class NuevaPartida extends Frame
 	// Di�logos Nueva Partida
 	public void PrepararDialogNombresJugadores(int numero) //M�todos di�logos para preparar una nueva partida
 	{
-		pedirNombresJugadores.setBackground(Color.YELLOW); //Color del fondo del Dialog
+		Color myColor = new Color(60, 179, 113);
+		pedirNombresJugadores.setBackground(myColor); //Color del fondo del Dialog
 		pedirNombresJugadores.setLayout(new FlowLayout()); //Layout del Dialog
 		pedirNombresJugadores.setSize(300,200); //Tama�o del Dialog
 		pedirNombresJugadores.setLocationRelativeTo(null); //Centrar el Dialog

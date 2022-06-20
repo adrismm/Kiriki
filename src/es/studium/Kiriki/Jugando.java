@@ -38,7 +38,7 @@ public class Jugando extends Frame
 	int vidasJugador4 = 0;
 	int turno = 0;
 	
-	Frame ventanaJuego = new Frame("Kiriki: Jugando");
+	
 	
 	Dialog dlgTurno = new Dialog(this, "Turno", true);
 	Label lblTurno = new Label();

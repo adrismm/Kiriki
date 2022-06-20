@@ -51,8 +51,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		
 		vj.addWindowListener(this);
 		vj.addMouseListener(this);
-		vj.ventanaJuego.addWindowListener(this);
-		vj.ventanaJuego.addMouseListener(this);
 		vj.dlgMensajeComienzoPartida.addWindowListener(this);
 		vj.dlgMensajeValorTirada.addWindowListener(this);
 		vj.dlgMensajeValorAnunciado.addWindowListener(this);
