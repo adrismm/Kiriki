@@ -368,5 +368,4 @@ public class Jugando extends Frame
 	{
 		this.setVisible(false);
 	}
-	
 }
