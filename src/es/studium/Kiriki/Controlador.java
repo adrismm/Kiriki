@@ -390,6 +390,11 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		int x = click.getX();
 		int y = click.getY();
 		
+		// Turno Jugador 1
+		if((x >= 320) && (x <= 520) && (y >= 190) && (y <= 390) && (turno == 1))
+		{
+			System.out.println("Hola retraquasi");
+		}
 		// Pulsamos sobre el cubilete
 	/*	if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
 		{
