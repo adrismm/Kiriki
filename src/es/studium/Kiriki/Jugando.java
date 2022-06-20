@@ -19,7 +19,7 @@ public class Jugando extends Frame
 	private static final long serialVersionUID = 1L;
 	
 	Toolkit herramientas;
-	Image tapete, cubilete;
+	Image tapete, cubilete, cubileteBocaAbajo;
 	Image D1, D2, D3, D4, D5, D6; // Im�genes de las caras de los dados
 	
 	int dadosTapados = 0;
@@ -94,6 +94,7 @@ public class Jugando extends Frame
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
 		cubilete = herramientas.getImage("cubilete.png");
+		cubileteBocaAbajo = herramientas.getImage("cubilete2.png");
 		
 		setTitle("Jugando a Kiriki"); // T�tulo
 		setSize(620,446); // Tama�o del Frame
@@ -182,6 +183,7 @@ public class Jugando extends Frame
 	{
 		g.drawImage(tapete,  0,  30,  this);
 		g.drawImage(cubilete, 270, 180,  this);
+		g.drawImage(cubileteBocaAbajo, 270, 180,  this);
 		g.setFont(fuenteTurno);
 		
 		// Mostrar dados
