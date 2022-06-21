@@ -135,7 +135,8 @@ public class NuevaPartida extends Frame
 	
 	public void MensajeErrorFaltanNombres()
 	{
-		dlgMensajeFaltanNombres.setBackground(Color.YELLOW); //Color del fondo del Dialog
+		Color myColor4 = new Color(60, 179, 113);
+		dlgMensajeFaltanNombres.setBackground(myColor4); //Color del fondo del Dialog
 		dlgMensajeFaltanNombres.setLayout(new FlowLayout()); //Layout del Dialog
 		dlgMensajeFaltanNombres.setSize(380,75); //Tama�o del Dialog
 		dlgMensajeFaltanNombres.setLocationRelativeTo(null); //Centrar el Dialog

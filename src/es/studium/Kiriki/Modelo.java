@@ -110,6 +110,56 @@ public class Modelo
 		return (t);
 	}
 	
+	public String calcularValorTirada(int tirada1, int tirada2)
+	{
+		String valorTirada;
+		valorTirada = String.valueOf(tirada1 + tirada2);
+		
+		if(tirada1 == tirada2)
+		{
+			if(tirada1 == 1)
+			{
+				valorTirada = "Pareja de Negras";
+				return(valorTirada);
+			}
+			else if(tirada1 == 2)
+			{
+				valorTirada = "Pareja de Rojas";
+				return(valorTirada);
+			}
+			else if(tirada1 == 3)
+			{
+				valorTirada = "Pareja de Jotas";
+				return(valorTirada);
+			}
+			else if(tirada1 == 4)
+			{
+				valorTirada = "Pareja de Reinas";
+				return(valorTirada);
+			}
+			else if(tirada1 == 5)
+			{
+				valorTirada = "Pareja de Reyes";
+				return(valorTirada);
+			}
+			else if(tirada1 == 6)
+			{
+				valorTirada = "Pareja de Ases";
+				return(valorTirada);
+			}
+		}
+		else if((tirada1 + tirada2) == 3)
+		{
+			valorTirada = "¡Kiriki!";
+			return(valorTirada);
+		}
+		else if((tirada1 + tirada2) == 11)
+		{
+			valorTirada = "Ladrillazo";
+			return(valorTirada);
+		}
+		return(valorTirada);
+	}
 	
 	//Insertar jugadores que han ganado en la base de datos junto a sus puntos
 	public void insertarJugador(String jugador, int puntos)
