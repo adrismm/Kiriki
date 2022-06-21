@@ -39,6 +39,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vmi.btnRanking.addActionListener(this);
 		vmi.btnSalir.addActionListener(this);
 		vmi.btnAyuda.addActionListener(this);
+		vmi.addMouseListener(this);
 		
 		vr.addWindowListener(this);
 		vr.btnVolver.addActionListener(this);
@@ -48,9 +49,10 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vnp.pedirNombresJugadores.addWindowListener(this);
 		vnp.btnComenzarPartida.addActionListener(this);
 		vnp.dlgMensajeFaltanNombres.addWindowListener(this);
+	
 		
-		vj.addWindowListener(this);
-		vj.addMouseListener(this);
+		
+		
 		vj.dlgMensajeComienzoPartida.addWindowListener(this);
 		vj.dlgMensajeValorTirada.addWindowListener(this);
 		vj.dlgMensajeValorAnunciado.addWindowListener(this);
@@ -258,6 +260,8 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				&& (!this.vistaNuevaPartida.txfNombre4.getText().equals("")))
 			{
 					this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
+					this.vistaJugando.addWindowListener(this);
+					this.vistaJugando.addMouseListener(this);
 				 	this.vistaJugando.MostrarJugando();
 					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
@@ -268,6 +272,8 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					&& (!this.vistaNuevaPartida.txfNombre3.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(3, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), "");
+				this.vistaJugando.addWindowListener(this);
+				this.vistaJugando.addMouseListener(this);
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
@@ -276,6 +282,8 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
 			{
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
+				this.vistaJugando.addWindowListener(this);
+				this.vistaJugando.addMouseListener(this);
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
@@ -383,16 +391,16 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent click)
+	public void mouseClicked(MouseEvent ie)
 	{
-		int x = click.getX();
-		int y = click.getY();
+		int x = ie.getX();
+		int y = ie.getY();
 		
 		// Turno Jugador 1
-		if((x >= 320) && (x <= 520) && (y >= 190) && (y <= 390) && (turno == 1))
-		{
-			System.out.println("Hola retraquasi");
-		}
+		if(ie.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390))
+			{
+				
+			}
 		// Pulsamos sobre el cubilete
 	/*	if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
 		{
@@ -521,8 +529,8 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 
 	@Override
 	public void mouseEntered(MouseEvent arg0)
-	{
-		// TODO Auto-generated method stub
+	{			
+		
 		
 	}
 
