@@ -51,8 +51,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		
 		vj.addWindowListener(this);
 		vj.addMouseListener(this);
-		vj.ventanaJuego.addWindowListener(this);
-		vj.ventanaJuego.addMouseListener(this);
 		vj.dlgMensajeComienzoPartida.addWindowListener(this);
 		vj.dlgMensajeValorTirada.addWindowListener(this);
 		vj.dlgMensajeValorAnunciado.addWindowListener(this);
@@ -314,7 +312,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo n�mero jugadores
 		{
 			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
-			this.vistaMenuInicio.MostrarInicio();
+			this.vistaMenuInicio.MostrarInicio(); 
 		}
 		else if(this.vistaNuevaPartida.pedirNombresJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo nombres jugadores
 		{
@@ -327,12 +325,11 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaNuevaPartida.OcultarMensajeError();
 			this.vistaNuevaPartida.txfNombre1.requestFocus();
 		}
-		else if((this.vistaJugando != null) && (this.vistaJugando.isActive()))
+		else if(this.vistaJugando.isActive()) // this.vistaJugando != null
 		{
 			this.vistaJugando.OcultarJugando();
-			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 			this.vistaMenuInicio.MostrarInicio();
+			System.out.println("Cierrate joder");
 		}
 		/*else if(this.vistaJugando.dlgMensajeFinPartida.isActive())
 		{

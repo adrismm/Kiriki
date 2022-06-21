@@ -38,8 +38,6 @@ public class Jugando extends Frame
 	int vidasJugador4 = 0;
 	int turno = 0;
 	
-	Frame ventanaJuego = new Frame("Kiriki: Jugando");
-	
 	Dialog dlgTurno = new Dialog(this, "Turno", true);
 	Label lblTurno = new Label();
 	
@@ -95,9 +93,7 @@ public class Jugando extends Frame
 		tapete = herramientas.getImage("tapete612x408.jpg");
 		cubilete = herramientas.getImage("cubilete.png");
 		cubileteBocaAbajo = herramientas.getImage("cubilete2.png");
-		
-		setTitle("Jugando a Kiriki"); // T�tulo
-		setSize(620,446); // Tama�o del Frame
+
 		D1 = herramientas.getImage("dadoNegro.png");
 		D2 = herramientas.getImage("dadoRojo.png");
 		D3 = herramientas.getImage("dadoJack.png");
@@ -105,9 +101,8 @@ public class Jugando extends Frame
 		D5 = herramientas.getImage("dadoKing.png");
 		D6 = herramientas.getImage("dadoAce.png");
 		
-		setTitle("Jugando a Kiriki"); // T�tulo
+		setTitle("Kiriki: Jugando"); // T�tulo
 		setSize(620, 446); // Tama�o del Frame
-
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
