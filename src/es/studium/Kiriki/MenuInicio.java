@@ -1,55 +1,76 @@
 package es.studium.Kiriki;
 
-import java.awt.BorderLayout;
+
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Label;
 import java.awt.Panel;
+import java.awt.Toolkit;
+
+
 
 public class MenuInicio extends Frame
 {
 	private static final long serialVersionUID = 1L;
 	
-	// Ventana menú principal
-	Label lblMenuPrincipal = new Label ("MENÚ PRINCIPAL", 1); //El 1 para que salga centrado
+	// Ventana menï¿½ principal
+	Label lblMenuPrincipal = new Label ("MENÃš PRINCIPAL", 1); //El 1 para que salga centrado
 	Panel pnlBotonera = new Panel(); //Panel para botonera principal
-	Panel pnlBotoneraSalir = new Panel(); //Panel para botón Salir
+	Panel pnlBotoneraSalir = new Panel(); //Panel para botï¿½n Salir
 	Button btnNuevaPartida = new Button ("Nueva Partida");
 	Button btnRanking = new Button ("Ranking");
 	Button btnAyuda = new Button("Ayuda");
 	Button btnSalir = new Button("Salir");
 	
-	Panel pnlEspacioIzquierdo = new Panel();
-	Panel pnlEspacioDerecho = new Panel();
-	Label lblEspacioIzquierdo = new Label("\t\t\t\t");
-	Label lblEspacioDerecho = new Label("\t\t\t\t");
+	
+	Toolkit herramientas;
+	Image fondo;
 	
 	public MenuInicio()
 	{
-		this.setTitle("Kiriki"); //Título
-		this.setBackground(Color.YELLOW); //Color del fondo del Frame
-		this.setLayout(new BorderLayout()); //Layout del Frame
-		this.
+		this.setTitle("Kiriki"); //Tï¿½tulo
+		//this.setBackground(Color.YELLOW); //Color del fondo del Frame
+		this.setLayout(new FlowLayout()); //Layout del Frame
 		
 		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
-		pnlBotonera.add(lblMenuPrincipal); //Añadir Botón a Panel
-		pnlBotonera.add(btnNuevaPartida); //Añadir Botï¿½n a Panel 	
-		pnlBotonera.add(btnRanking); //Añadir Botón a Panel
-		pnlBotonera.add(btnAyuda); //Añadir Botón a Panel
-		this.add(pnlBotonera, "Center"); //Añadir Panel a Frame
-		pnlBotoneraSalir.add(btnSalir); //Añadir Botón a Panel
-		this.add(pnlBotoneraSalir, "South"); //Añadir Panel a Frame
-		pnlEspacioIzquierdo.add(lblEspacioIzquierdo);
-		this.add(pnlEspacioIzquierdo, "West");
-		pnlEspacioDerecho.add(lblEspacioDerecho);
-		this.add(pnlEspacioDerecho, "East");
+		pnlBotonera.add(lblMenuPrincipal); //Aï¿½adir Botï¿½n a Panel
+		pnlBotonera.add(btnNuevaPartida); //Aï¿½adir Botï¿½n a Panel 	
+		pnlBotonera.add(btnRanking); //Aï¿½adir Botï¿½n a Panel
+		pnlBotonera.add(btnAyuda); //Aï¿½adir Botï¿½n a Panel
+		this.add(pnlBotonera, "Center"); //Aï¿½adir Panel a Frame
+		pnlBotoneraSalir.add(btnSalir); //Aï¿½adir Botï¿½n a Panel
+		this.add(pnlBotoneraSalir, "South"); //Aï¿½adir Panel a Frame
 		
-		this.setSize(400,200); //Tamaño de Frame
+		//agregar imagen de fondo al menu de inicio, ademÃ¡s, de colocarla y redimensionarla
+		herramientas = getToolkit();
+		fondo = herramientas.getImage("fondoMenu.jpg").getScaledInstance(390, 240, Image.SCALE_AREA_AVERAGING);
+		pnlBotonera.setPreferredSize(new Dimension(200,100)); //redimensionar el panel
+		pnlBotoneraSalir.setPreferredSize(new Dimension(200,30)); //redimensionar el panel
+		
+		//cambiar color al panel botonera
+		Color myColor = new Color(0, 128, 0);
+		pnlBotonera.setBackground(myColor);
+		//cambiar color al panel botoneraSAlir
+		Color myColor2 = new Color(60, 179, 113);
+		pnlBotoneraSalir.setBackground(myColor2);
+		
+		this.setSize(400,200); //Tamaï¿½o de Frame
 		this.setLocationRelativeTo(null); //Centrar la ventana
 		this.setResizable(false); //Evitar redimensionado
+		
 		MostrarInicio(); //Mostrarlo
+	}
+	
+	
+	public void paint(Graphics g)
+	{
+		g.drawImage(fondo, 6, 25, this);
 	}
 	
 	public void MostrarInicio()
@@ -61,4 +82,5 @@ public class MenuInicio extends Frame
 	{
 		this.setVisible(false);
 	}
+	
 }

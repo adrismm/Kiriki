@@ -207,22 +207,22 @@ public class Jugando extends Frame
 		switch(imagenAmostrar2)
 		{
 			case 1:
-				g.drawImage(D1, 210, 80, this);
+				g.drawImage(D1, 310, 80, this);
 				break;
 			case 2:
-				g.drawImage(D2, 210, 80, this);
+				g.drawImage(D2, 310, 80, this);
 				break;
 			case 3:
-				g.drawImage(D3, 210, 80, this);
+				g.drawImage(D3, 310, 80, this);
 				break;
 			case 4:
-				g.drawImage(D4, 210, 80, this);
+				g.drawImage(D4, 310, 80, this);
 				break;
 			case 5:
-				g.drawImage(D5, 210, 80, this);
+				g.drawImage(D5, 310, 80, this);
 				break;
 			case 6:
-				g.drawImage(D6, 210, 80, this);
+				g.drawImage(D6, 310, 80, this);
 				break;
 		}
 		
@@ -289,23 +289,18 @@ public class Jugando extends Frame
 	
 	public void cargarDados() // Ya en el constructor
 	{
-		D1 = herramientas.getImage("dadoNegro.png");
-		D2 = herramientas.getImage("dadoRojo.png");
-		D3 = herramientas.getImage("dadoJack.png");
-		D4 = herramientas.getImage("dadoQueen.png");
-		D5 = herramientas.getImage("dadoKing.png");
-		D6 = herramientas.getImage("dadoAce.png");
+		D1 = herramientas.getImage("dadoNegro.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
+		D2 = herramientas.getImage("dadoRojo.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
+		D3 = herramientas.getImage("dadoJack.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
+		D4 = herramientas.getImage("dadoQueen.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
+		D5 = herramientas.getImage("dadoKing.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
+		D6 = herramientas.getImage("dadoAce.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
 	}
 	
-	public void mostrarDadoCubilete1(int dado)
+	public void mostrarDadoCubiletes(int dado1, int dado2)
 	{
-		imagenAmostrar1 = dado;
-		repaint();
-	}
-	
-	public void mostrarDadoDubilete2(int dado)
-	{
-		imagenAmostrar2 = dado;
+		imagenAmostrar1 = dado1;
+		imagenAmostrar2 = dado2;
 		repaint();
 	}
 	

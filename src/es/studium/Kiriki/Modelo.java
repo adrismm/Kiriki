@@ -106,7 +106,7 @@ public class Modelo
 	public int tirada()
 	{
 		int t;
-		t = rnd.nextInt(2); // 0-5
+		t = 1 + rnd.nextInt(6);
 		return (t);
 	}
 	
