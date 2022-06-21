@@ -1,15 +1,18 @@
 package es.studium.Kiriki;
 
 
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
-
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
+import java.awt.Panel;
 import java.awt.Toolkit;
 
 
@@ -36,7 +39,6 @@ public class Jugando extends Frame
 	int vidasJugador2 = 0;
 	int vidasJugador3 = 0;
 	int vidasJugador4 = 0;
-	int turno = 0;
 	
 	Dialog dlgTurno = new Dialog(this, "Turno", true);
 	Label lblTurno = new Label();
@@ -45,7 +47,25 @@ public class Jugando extends Frame
 	Label lblMensajeComienzoPartida = new Label();
 	
 	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada");
-	Label lblMensajeValorTirada = new Label("El valor de la tirada es: "); // + valorTirada
+	Label lblMensajeValorTirada = new Label();
+	Label lblMensajeAnunciarValor = new Label();
+	Panel pnlLabelValorTirada = new Panel();
+	Panel pnlCheckboxValorTirada = new Panel();
+	CheckboxGroup chkgrValorTirada = new CheckboxGroup();
+	Checkbox chkCuatro = new Checkbox("4", false, chkgrValorTirada);
+	Checkbox chkCinco = new Checkbox("5", false, chkgrValorTirada);
+	Checkbox chkSeis = new Checkbox("6", false, chkgrValorTirada);
+	Checkbox chkSiete = new Checkbox("7", false, chkgrValorTirada);
+	Checkbox chkOcho = new Checkbox("8", false, chkgrValorTirada);
+	Checkbox chkNueve = new Checkbox("9", false, chkgrValorTirada);
+	Checkbox chkDiez = new Checkbox("10", false, chkgrValorTirada);
+	Checkbox chkLadrillazo = new Checkbox("Ladrillazo", false, chkgrValorTirada);
+	Checkbox chkParejaNegras = new Checkbox("Pareja de Negras", false, chkgrValorTirada);
+	Checkbox chkParejaRojas = new Checkbox("Pareja de Rojas", false, chkgrValorTirada);
+	Checkbox chkParejaJacks = new Checkbox("Pareja de Jotas", false, chkgrValorTirada);
+	Checkbox chkParejaQueens = new Checkbox("Pareja de Reinas", false, chkgrValorTirada);
+	Checkbox chkParejaKings = new Checkbox("Pareja de Reyes", false, chkgrValorTirada);
+	Checkbox chkParejaAces = new Checkbox("Pareja de Ases", false, chkgrValorTirada);
 	
 	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
 	Label lblMensajeValorAnunciado = new Label("El valor anunciado por " + " es: "); // + jugadorActual + valorAnunciado
@@ -118,11 +138,30 @@ public class Jugando extends Frame
 		dlgMensajeComienzoPartida.setResizable(false);
 		dlgMensajeComienzoPartida.add(lblTurno);
 		
-		dlgMensajeValorTirada.setLayout(new FlowLayout());
-		dlgMensajeValorTirada.setSize(100, 100);
+		dlgMensajeValorTirada.setLayout(new GridLayout(2,3));
+		dlgMensajeValorTirada.setSize(400, 225);
 		dlgMensajeValorTirada.setLocationRelativeTo(null);
 		dlgMensajeValorTirada.setResizable(false);
-		dlgMensajeValorTirada.add(lblMensajeValorTirada);
+		Color myColor3 = new Color(60, 179, 113);
+		dlgMensajeValorTirada.setBackground(myColor3);
+		pnlLabelValorTirada.add(lblMensajeValorTirada, "Center");
+		pnlLabelValorTirada.add(lblMensajeAnunciarValor, "South");
+		dlgMensajeValorTirada.add(pnlLabelValorTirada);
+		pnlCheckboxValorTirada.add(chkCuatro);
+		pnlCheckboxValorTirada.add(chkCinco);
+		pnlCheckboxValorTirada.add(chkSeis);
+		pnlCheckboxValorTirada.add(chkSiete);
+		pnlCheckboxValorTirada.add(chkOcho);
+		pnlCheckboxValorTirada.add(chkNueve);
+		pnlCheckboxValorTirada.add(chkDiez);
+		pnlCheckboxValorTirada.add(chkLadrillazo);
+		pnlCheckboxValorTirada.add(chkParejaNegras);
+		pnlCheckboxValorTirada.add(chkParejaRojas);
+		pnlCheckboxValorTirada.add(chkParejaJacks);
+		pnlCheckboxValorTirada.add(chkParejaQueens);
+		pnlCheckboxValorTirada.add(chkParejaKings);
+		pnlCheckboxValorTirada.add(chkParejaAces);
+		dlgMensajeValorTirada.add(pnlCheckboxValorTirada, "South");
 		
 		dlgMensajeValorAnunciado.setLayout(new FlowLayout());
 		dlgMensajeValorAnunciado.setSize(100, 100);
@@ -337,9 +376,9 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
-	public void actualizarTurno(int t)
+	public void actualizarTurno(int turno)
 	{
-		turnoJugador = t;
+		turnoJugador = turno;
 		repaint();
 	}
 	

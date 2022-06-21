@@ -20,11 +20,13 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	int turno = 1;
 	int tiradaDado1;
 	int tiradaDado2;
+	String valorTirada;
 	int tiradasAmarillo = 0;
 	int tiradasAzul = 0;
 	int tiradasVerde = 0;
 	int tiradasRojo = 0;
 	boolean controlTurno = false;
+	int valorAnunciado;
 	
 	Connection conexion = null;
 	
@@ -261,6 +263,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
 					this.vistaJugando.addWindowListener(this);
 					this.vistaJugando.addMouseListener(this);
+					this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
 				 	this.vistaJugando.MostrarJugando();
 					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
@@ -273,6 +276,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando = new Jugando(3, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), "");
 				this.vistaJugando.addWindowListener(this);
 				this.vistaJugando.addMouseListener(this);
+				this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
@@ -283,6 +287,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
 				this.vistaJugando.addWindowListener(this);
 				this.vistaJugando.addMouseListener(this);
+				this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
@@ -338,7 +343,12 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaMenuInicio.MostrarInicio();
 			System.out.println("Cierrate joder");
 		}
-		/*else if(this.vistaJugando.dlgMensajeFinPartida.isActive())
+		else if(this.vistaJugando.dlgMensajeValorTirada.isActive())
+		{
+			this.vistaJugando.dlgMensajeValorTirada.setVisible(false);
+			this.vistaJugando.MostrarJugando();
+		}
+		/* else if(this.vistaJugando.dlgMensajeFinPartida.isActive())
 		{
 			this.vistaJugando.dlgMensajeFinPartida.setVisible(false);
 			
@@ -400,11 +410,41 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				controlTurno = false;
 				tiradaDado1 = this.modelo.tirada();
 				tiradaDado2 = this.modelo.tirada();
-				//this.vistaJugando.dlgMensajeValorTirada();
-				System.out.println("El jugador 1 ha obtenido: " + tiradaDado1 + ", " + tiradaDado2);
+				valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
+				this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
+				this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
+				this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
 				this.vistaJugando.cargarDados();
 				this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
+				//turno = 2;
+				if(turno == 2)
+				{
+					this.vistaJugando.actualizarTurno(+1);
+				}
+				System.out.println("Jugador 2 ¿destapas el cubilete o superas la tirada?");
 			}
+		
+		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 1))
+		{
+			if(controlTurno == false)
+			{
+				boolean controlMentira = false;
+				System.out.println("El jugador 1 cree que el jugador anterior miente y destapa el cubilete");
+				for(int i = 0; i < tiradaDado1; i++)
+				{
+					if(valorAnunciado != tiradaDado1 + tiradaDado2)
+					{
+						controlMentira = true;
+					}
+				}
+				
+				if(controlMentira == false)
+				{
+					
+				}
+			}
+		}
+		
 		// Pulsamos sobre el cubilete
 	/*	if((x >= 33) && (x <= 73) && (y >= 217) && (y <= 277))
 		{
