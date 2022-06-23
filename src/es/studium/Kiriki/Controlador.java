@@ -27,6 +27,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	int tiradasRojo = 0;
 	boolean controlTurno = false;
 	int valorAnunciado;
+	int voltearCubilete;
 	
 	Connection conexion = null;
 	
@@ -414,6 +415,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
 				this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
 				this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
+				this.vistaJugando.voltearCubilete(1);
 				this.vistaJugando.cargarDados();
 				this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
 				//turno = 2;

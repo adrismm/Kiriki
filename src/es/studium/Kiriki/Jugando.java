@@ -22,7 +22,7 @@ public class Jugando extends Frame
 	private static final long serialVersionUID = 1L;
 	
 	Toolkit herramientas;
-	Image tapete, cubilete, cubileteBocaAbajo;
+	Image tapete, cubileteBocaArriba, cubileteBocaAbajo;
 	Image D1, D2, D3, D4, D5, D6; // Im�genes de las caras de los dados
 	
 	int dadosTapados = 0;
@@ -35,6 +35,7 @@ public class Jugando extends Frame
 	
 	int imagenAmostrar1 = 0;
 	int imagenAmostrar2 = 0;
+	int voltearCubilete = 0;
 	int vidasJugador1 = 0;
 	int vidasJugador2 = 0;
 	int vidasJugador3 = 0;
@@ -111,7 +112,7 @@ public class Jugando extends Frame
 		
 		herramientas = getToolkit();
 		tapete = herramientas.getImage("tapete612x408.jpg");
-		cubilete = herramientas.getImage("cubilete.png");
+		cubileteBocaArriba = herramientas.getImage("cubilete.png");
 		cubileteBocaAbajo = herramientas.getImage("cubilete2.png");
 
 		D1 = herramientas.getImage("dadoNegro.png");
@@ -216,9 +217,17 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
-		g.drawImage(cubilete, 270, 180,  this);
-		g.drawImage(cubileteBocaAbajo, 270, 180,  this);
 		g.setFont(fuenteTurno);
+		g.drawImage(cubileteBocaAbajo, 270, 180,  this);
+
+		
+		switch(voltearCubilete)
+		{
+			case 1:
+				g.drawImage(cubileteBocaArriba, 270, 180,  this);
+			case 2:
+				g.drawImage(cubileteBocaAbajo, 270, 180,  this);
+		}
 		
 		// Mostrar dados
 		switch(imagenAmostrar1)
@@ -340,6 +349,12 @@ public class Jugando extends Frame
 	{
 		imagenAmostrar1 = dado1;
 		imagenAmostrar2 = dado2;
+		repaint();
+	}
+	
+	public void voltearCubilete(int voltear)
+	{
+		voltearCubilete = voltear;
 		repaint();
 	}
 	
