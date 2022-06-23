@@ -416,7 +416,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
 				this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
 				this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
-				this.vistaJugando.setVisible(true);
+				this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
 				this.vistaJugando.cargarDados();
 				this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
 				this.vistaJugando.vasoBocaArriba();
