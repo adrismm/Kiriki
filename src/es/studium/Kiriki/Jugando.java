@@ -36,6 +36,7 @@ public class Jugando extends Frame
 	int imagenAmostrar1 = 0;
 	int imagenAmostrar2 = 0;
 	int voltearCubilete = 0;
+	int recuperarCubilete = 0;
 	int vidasJugador1 = 0;
 	int vidasJugador2 = 0;
 	int vidasJugador3 = 0;
@@ -217,20 +218,19 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
-		g.drawImage(cubileteBocaAbajo, 270, 180,  this);
-		g.drawImage(cubileteBocaArriba, 270, 180,  this);
-
-
 		g.setFont(fuenteTurno);
-		g.drawImage(cubileteBocaAbajo, 270, 180,  this);
-
 		
 		switch(voltearCubilete)
 		{
+			case 0:
+				g.drawImage(cubileteBocaAbajo, 270, 180,  this);
+			case 1:
+				g.drawImage(cubileteBocaAbajo, 1000, 1000,  this);
+		}
+		switch(recuperarCubilete)
+		{
 			case 1:
 				g.drawImage(cubileteBocaArriba, 270, 180,  this);
-			case 2:
-				g.drawImage(cubileteBocaAbajo, 270, 180,  this);
 		}
 		
 		// Mostrar dados
@@ -410,12 +410,16 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
-	public void cambiarCubilete()
+	public void cambiarCubilete(int voltear)
 	{
-		
+		voltearCubilete = voltear;
+		repaint();
 	}
-	
-	
+	public void recuperarCubilete(int recup)
+	{
+		recuperarCubilete = recup;
+		repaint();
+	}
 	public void MostrarJugando()
 	{
 		this.setVisible(true);
