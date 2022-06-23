@@ -388,6 +388,19 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
+	public void vasoBocaAbajo()
+	{
+		cubilete = herramientas.getImage("cubilete.jpg").getScaledInstance(1, 1, Image.SCALE_AREA_AVERAGING);
+		cubileteBocaAbajo = herramientas.getImage("cubileteBocaAbajo.jpg").getScaledInstance(390, 240, Image.SCALE_AREA_AVERAGING);
+	}
+	
+	public void vasoBocaArriba()
+	{
+		cubileteBocaAbajo = herramientas.getImage("cubileteBocaAbajo.jpg").getScaledInstance(1, 1, Image.SCALE_AREA_AVERAGING);
+		cubilete = herramientas.getImage("cubilete.jpg").getScaledInstance(390, 240, Image.SCALE_AREA_AVERAGING);
+
+	}
+	
 	public void MostrarJugando()
 	{
 		this.setVisible(true);
