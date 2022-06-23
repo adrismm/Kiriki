@@ -216,8 +216,8 @@ public class Jugando extends Frame
 	public void paint(Graphics g)
 	{
 		g.drawImage(tapete,  0,  30,  this);
-		g.drawImage(cubilete, 270, 180,  this);
 		g.drawImage(cubileteBocaAbajo, 270, 180,  this);
+		g.drawImage(cubilete, 270, 180,  this);
 		g.setFont(fuenteTurno);
 		
 		// Mostrar dados
@@ -324,6 +324,9 @@ public class Jugando extends Frame
 				g.fillOval(18, 130, 20, 20); // Ficha Roja
 				break;
 		}
+		
+		
+		
 	}
 	
 	public void cargarDados() // Ya en el constructor
@@ -388,18 +391,11 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
-	public void vasoBocaAbajo()
+	public void cambiarCubilete()
 	{
-		//cubilete = herramientas.getImage("cubilete.jpg").getScaledInstance(1, 1, Image.SCALE_AREA_AVERAGING);
-		cubileteBocaAbajo = herramientas.getImage("cubileteBocaAbajo.jpg").getScaledInstance(390, 240, Image.SCALE_AREA_AVERAGING);
+		
 	}
 	
-	public void vasoBocaArriba()
-	{
-		//cubileteBocaAbajo = herramientas.getImage("cubileteBocaAbajo.jpg").getScaledInstance(1, 1, Image.SCALE_AREA_AVERAGING);
-		cubilete = herramientas.getImage("cubilete.jpg").getScaledInstance(390, 240, Image.SCALE_AREA_AVERAGING);
-
-	}
 	
 	public void MostrarJugando()
 	{

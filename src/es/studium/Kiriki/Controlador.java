@@ -267,7 +267,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				 	this.vistaJugando.MostrarJugando();
 					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-					this.vistaJugando.vasoBocaAbajo();
+					
 
 			}
 			else if((this.vistaNuevaPartida.numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
@@ -281,7 +281,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.vasoBocaAbajo();
+				
 			}
 			else if((this.vistaNuevaPartida.numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
@@ -293,7 +293,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.vasoBocaAbajo();
+				
 			}
 			else
 			{
@@ -419,7 +419,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
 				this.vistaJugando.cargarDados();
 				this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
-				this.vistaJugando.vasoBocaArriba();
 				//turno = 2;
 				if(turno == 2)
 				{
