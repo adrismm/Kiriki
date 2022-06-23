@@ -422,6 +422,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
 				this.vistaJugando.voltearCubilete(1);
 				this.vistaJugando.recuperarCubilete(1);
+				this.vistaJugando.sonidoDados();
 				//turno = 2;
 				if(turno == 2)
 				{

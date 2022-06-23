@@ -14,7 +14,17 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 public class Jugando extends Frame
@@ -41,6 +51,9 @@ public class Jugando extends Frame
 	int vidasJugador2 = 0;
 	int vidasJugador3 = 0;
 	int vidasJugador4 = 0;
+	
+	
+	
 	
 	Dialog dlgTurno = new Dialog(this, "Turno", true);
 	Label lblTurno = new Label();
@@ -419,6 +432,27 @@ public class Jugando extends Frame
 	{
 		recuperarCubilete = recup;
 		repaint();
+	}
+	public void sonidoDados()
+	{
+		//sonido
+		try
+		{
+			// Se obtiene un Clip de sonido
+            Clip sonido = AudioSystem.getClip();
+            
+            // Se carga con un fichero wav
+            sonido.open(AudioSystem.getAudioInputStream(new File("dados.wav")));
+            
+            // Comienza la reproducción
+            sonido.start();
+            
+        } 
+		catch (Exception e) 
+		{
+            System.out.println("" + e);
+        }
+
 	}
 	public void MostrarJugando()
 	{
