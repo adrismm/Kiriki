@@ -162,105 +162,102 @@ public class Modelo
 		return(valorTirada);
 	}
 	
-/*	public boolean compararValores (String valorTirada, String valorAnunciado)
+	public boolean compararValores (String valorTirada, String valorAnunciado)
 	{
 		boolean controlMentira;
 		controlMentira = false;
-		if(valorTirada != )
-		int valorCadena1 = Integer.parseInt(valorTirada);
-		int valorCadena2 = Integer.parseInt(valorAnunciado);
 		
-		if(valorTirada.equals("Pareja de Negras"))
+		int valorCadena1 = 0;
+		int valorCadena2 = 0;
+		
+		if(valorTirada.equals("4") || 
+				valorTirada.equals("5") || 
+				valorTirada.equals("6") || 
+				valorTirada.equals("7") || 
+				valorTirada.equals("8") || 
+				valorTirada.equals("9") || 
+				valorTirada.equals("10"))
+		{
+				valorCadena1 = Integer.parseInt(valorTirada);
+		}
+		else if(valorTirada.equals("Ladrillazo"))
 		{
 			valorCadena1 = 11;
 		}
-		else if(valorAnunciado.equals("Pareja de Negras"))
-		{
-			valorCadena2 = 11;
-		}
-		else if(valorTirada.equals("Pareja de Rojas"))
+		else if(valorTirada.equals("Pareja de Negras"))
 		{
 			valorCadena1 = 12;
 		}
-		else if(valorAnunciado.equals("Pareja de Rojas"))
-		{
-			valorCadena2 = 12;
-		}
-		else if(valorTirada.equals("Pareja de Jotas"))
+		else if(valorTirada.equals("Pareja de Rojas"))
 		{
 			valorCadena1 = 13;
 		}
-		else if(valorAnunciado.equals("Pareja de Jotas"))
-		{
-			valorCadena2 = 13;
-		}
-		else if(valorTirada.equals("Pareja de Reinas"))
+		else if(valorTirada.equals("Pareja de Jotas"))
 		{
 			valorCadena1 = 14;
 		}
-		else if(valorAnunciado.equals("Pareja de Reinas"))
-		{
-			valorCadena2 = 14;
-		}
-		else if(valorTirada.equals("Pareja de Reyes"))
+		else if(valorTirada.equals("Pareja de Reinas"))
 		{
 			valorCadena1 = 15;
 		}
-		else if(valorAnunciado.equals("Pareja de Reyes"))
-		{
-			valorCadena2 = 15;
-		}
-		else if(valorTirada.equals("Pareja de Ases"))
+		else if(valorTirada.equals("Pareja de Reyes"))
 		{
 			valorCadena1 = 16;
 		}
-		else if(valorAnunciado.equals("Pareja de Ases"))
+		else if(valorTirada.equals("Pareja de Ases"))
+		{
+			valorCadena1 = 17;
+		}
+		
+		if(valorAnunciado.equals("4") || 
+				valorAnunciado.equals("5") || 
+				valorAnunciado.equals("6") || 
+				valorAnunciado.equals("7") || 
+				valorAnunciado.equals("8") || 
+				valorAnunciado.equals("9") || 
+				valorAnunciado.equals("10"))
+		{
+				valorCadena1 = Integer.parseInt(valorAnunciado);
+		}
+		else if(valorAnunciado.equals("Ladrillazo"))
+		{
+			valorCadena2 = 11;
+		}
+		else if(valorAnunciado.equals("Pareja de Negras"))
+		{
+			valorCadena2 = 12;
+		}
+		else if(valorAnunciado.equals("Pareja de Rojas"))
+		{
+			valorCadena2 = 13;
+		}
+		else if(valorAnunciado.equals("Pareja de Jotas"))
+		{
+			valorCadena2 = 14;
+		}
+		else if(valorAnunciado.equals("Pareja de Reinas"))
+		{
+			valorCadena2 = 15;
+		}
+		else if(valorAnunciado.equals("Pareja de Reyes"))
 		{
 			valorCadena2 = 16;
 		}
-			
+		else if(valorAnunciado.equals("Pareja de Ases"))
+		{
+			valorCadena2 = 17;
+		}
 		
-		String cuatro = "4";
-		int numCuatro = Integer.parseInt(cuatro);
-		String cinco = "5";
-		int numCinco = Integer.parseInt(cinco);
-		String seis = "6";
-		int numSeis = Integer.parseInt(seis);
-		String siete = "7";
-		int numSiete = Integer.parseInt(siete);
-		String ocho = "8";
-		int numOcho = Integer.parseInt(ocho);
-		String nueve = "9";
-		int numNueve = Integer.parseInt(nueve);
-		String diez = "10";
-		int numDiez = Integer.parseInt(diez);
-		String ladrillazo = "11";
-		int numLadrillazo = Integer.parseInt(ladrillazo);
-		String negras = "12";
-		int parejaNegras = Integer.parseInt(negras);
-		String rojas = "13";
-		int parejaRojas = Integer.parseInt(rojas);
-		String jotas = "14";
-		int parejaJotas = Integer.parseInt(jotas);
-		String reinas = "15";
-		int parejaReinas = Integer.parseInt(reinas);
-		String reyes = "16";
-		int parejaReyes = Integer.parseInt(reyes);
-		String ases = "17";
-		int parejaAses = Integer.parseInt(ases);
-		
-		if((valorAnunciado == cuatro) && (valorTirada > cuatro)
+		if(valorCadena1 < valorCadena2)
 		{
 			controlMentira = true;
 			return(controlMentira);
 		}
-		else if(valorAnunciado >= valorTirada)
+		else
 		{
 			return(controlMentira);
-		}
-		
-		return(controlMentira);
-	} */
+		} 
+	}
 	
 	//Insertar jugadores que han ganado en la base de datos junto a sus puntos
 	public void insertarJugador(String jugador, int puntos)

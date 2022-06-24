@@ -184,28 +184,28 @@ public class Jugando extends Frame
 		
 		dlgMensajeValorAceptado.setBackground(myColor);
 		dlgMensajeValorAceptado.setLayout(new FlowLayout());
-		dlgMensajeValorAceptado.setSize(300, 100);
+		dlgMensajeValorAceptado.setSize(400, 100);
 		dlgMensajeValorAceptado.setLocationRelativeTo(null);
 		dlgMensajeValorAceptado.setResizable(false);
 		dlgMensajeValorAceptado.add(lblMensajeValorAceptado);
 		
 		dlgMensajeValorRechazado.setBackground(myColor);
 		dlgMensajeValorRechazado.setLayout(new FlowLayout());
-		dlgMensajeValorRechazado.setSize(300, 100);
+		dlgMensajeValorRechazado.setSize(400, 100);
 		dlgMensajeValorRechazado.setLocationRelativeTo(null);
 		dlgMensajeValorRechazado.setResizable(false);
 		dlgMensajeValorRechazado.add(lblMensajeValorRechazado);
 		
 		dlgMensajeValorVerdadero.setBackground(myColor);
 		dlgMensajeValorVerdadero.setLayout(new FlowLayout());
-		dlgMensajeValorVerdadero.setSize(300, 100);
+		dlgMensajeValorVerdadero.setSize(400, 100);
 		dlgMensajeValorVerdadero.setLocationRelativeTo(null);
 		dlgMensajeValorVerdadero.setResizable(false);
 		dlgMensajeValorVerdadero.add(lblMensajeValorVerdadero);
 		
 		dlgMensajeValorFalso.setBackground(myColor);
 		dlgMensajeValorFalso.setLayout(new FlowLayout());
-		dlgMensajeValorFalso.setSize(100, 100);
+		dlgMensajeValorFalso.setSize(400, 100);
 		dlgMensajeValorFalso.setLocationRelativeTo(null);
 		dlgMensajeValorFalso.setResizable(false);
 		dlgMensajeValorFalso.add(lblMensajeValorFalso);
