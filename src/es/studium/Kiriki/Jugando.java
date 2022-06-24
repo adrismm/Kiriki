@@ -372,11 +372,6 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
-	public void voltearCubilete(int voltear)
-	{
-		voltearCubilete = voltear;
-		repaint();
-	}
 	
 	public void quitarVidasJugador1()
 	{
