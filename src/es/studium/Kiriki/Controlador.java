@@ -372,6 +372,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaJugando.dlgMensajeValorRecibido.setVisible(false);
 			this.vistaJugando.lblMensajeValorAceptado.setText("Intenta superar la tirada, vuelve a tirar los dados �Suerte!");
 			this.vistaJugando.dlgMensajeValorAceptado.setVisible(true);
+			this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null);
 		}
 		else if(botonPulsado.equals(this.vistaJugando.btnRechazarValor))
 		{

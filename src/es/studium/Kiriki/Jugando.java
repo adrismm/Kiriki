@@ -97,8 +97,8 @@ public class Jugando extends Frame
 	Dialog dlgMensajeValorFalso = new Dialog(this, "Resultado Falso");
 	Label lblMensajeValorFalso = new Label("El valor anunciado es mentira, " + " ha perdido 1 vida."); // + jugadorAnterior
 	
-	Dialog dlgMensajeKiriki = new Dialog(this, "�Kiriki!");
-	Label lblMensajeKiriki = new Label("�Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
+	Dialog dlgMensajeKiriki = new Dialog(this, "¡Kiriki!");
+	Label lblMensajeKiriki = new Label("¡Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
 	
 	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
 	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
@@ -148,9 +148,9 @@ public class Jugando extends Frame
 		dlgMensajeTurno.add(lblMensajeTurno);
 		
 		dlgMensajeValorTirada.setBackground(myColor);
-		dlgMensajeValorTirada.setLayout(new GridLayout(2,3));
-		dlgMensajeValorTirada.setSize(400, 275);
-		dlgMensajeValorTirada.setLocationRelativeTo(null);
+		dlgMensajeValorTirada.setLayout(new GridLayout(2, 1));
+		dlgMensajeValorTirada.setSize(300, 320);
+		dlgMensajeValorTirada.setLocation(570, 395);
 		dlgMensajeValorTirada.setResizable(false);
 		pnlLabelValorTirada.add(lblMensajeValorTirada, "Center");
 		pnlLabelValorTirada.add(lblMensajeAnunciarValor, "South");
@@ -184,7 +184,7 @@ public class Jugando extends Frame
 		
 		dlgMensajeValorAceptado.setBackground(myColor);
 		dlgMensajeValorAceptado.setLayout(new FlowLayout());
-		dlgMensajeValorAceptado.setSize(300, 100);
+		dlgMensajeValorAceptado.setSize(400, 100);
 		dlgMensajeValorAceptado.setLocationRelativeTo(null);
 		dlgMensajeValorAceptado.setResizable(false);
 		dlgMensajeValorAceptado.add(lblMensajeValorAceptado);
@@ -369,8 +369,8 @@ public class Jugando extends Frame
 	{
 		dlgMensajeValorAnunciado.setBackground(myColor);
 		dlgMensajeValorAnunciado.setLayout(new FlowLayout());
-		dlgMensajeValorAnunciado.setSize(400, 110);
-		dlgMensajeValorAnunciado.setLocationRelativeTo(null);
+		dlgMensajeValorAnunciado.setSize(300, 110);
+		dlgMensajeValorAnunciado.setLocation(600, 395);
 		dlgMensajeValorAnunciado.setResizable(false);
 		
 		if(turnoJugador == 1)
