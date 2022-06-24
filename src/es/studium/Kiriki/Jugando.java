@@ -51,9 +51,11 @@ public class Jugando extends Frame
 	
 	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida", true);
 	Label lblMensajeComienzoPartida = new Label();
+	Button btnMensajeComienzoPartida = new Button("¡Dale!");
 	
 	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual", true);
 	Label lblMensajeTurno = new Label();
+	Button btnMensajeTurno = new Button("Vale");
 	
 	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada");
 	Label lblMensajeValorTirada = new Label();
@@ -79,6 +81,7 @@ public class Jugando extends Frame
 	
 	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
 	Label lblMensajeValorAnunciado = new Label(); // + jugadorActual + valorAnunciado
+	Button btnMensajeValorAnunciado = new Button("¡Vale!");
 	
 	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
 	Label lblMensajeValorRecibido = new Label();
@@ -87,21 +90,27 @@ public class Jugando extends Frame
 	
 	Dialog dlgMensajeValorAceptado = new Dialog(this, "Resultado Aceptado");
 	Label lblMensajeValorAceptado = new Label();
+	Button btnMensajeValorAceptado = new Button("Vale");
 	
 	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado");
 	Label lblMensajeValorRechazado = new Label(); // jugadorActual + jugadorAnterior + valorAnunciado
+	Button btnMensajeValorRechazado = new Button("Vale");
 	
 	Dialog dlgMensajeValorVerdadero = new Dialog(this, "Resultado Verdadero");
 	Label lblMensajeValorVerdadero = new Label("El valor anunciado es verdad, " + " ha perdido 1 vida."); // + jugadorActual
+	Button btnMensajeValorVerdadero = new Button("Chúpate esa");
 	
 	Dialog dlgMensajeValorFalso = new Dialog(this, "Resultado Falso");
 	Label lblMensajeValorFalso = new Label("El valor anunciado es mentira, " + " ha perdido 1 vida."); // + jugadorAnterior
+	Button btnMensajeValorFalso = new Button("En la frente");
 	
 	Dialog dlgMensajeKiriki = new Dialog(this, "¡Kiriki!");
 	Label lblMensajeKiriki = new Label("¡Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
+	Button btnMensajeKiriki = new Button("¡Toma!");
 	
 	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
 	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
+	Button btnMensajeFinPartida = new Button("¡Se acabó!");
 	
 	Font fuenteTirada = new Font("Harlow Solid Italic", Font.BOLD, 20);
 	Font fuenteTurno = new Font("Harlow Solid Italic", Font.BOLD, 20);
@@ -135,10 +144,11 @@ public class Jugando extends Frame
 		
 		dlgMensajeComienzoPartida.setBackground(myColor);
 		dlgMensajeComienzoPartida.setLayout(new FlowLayout());
-		dlgMensajeComienzoPartida.setSize(250, 80);
+		dlgMensajeComienzoPartida.setSize(220, 100);
 		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
 		dlgMensajeComienzoPartida.setResizable(false);
 		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida);
+		dlgMensajeComienzoPartida.add(btnMensajeComienzoPartida);
 		
 		dlgMensajeTurno.setBackground(myColor);
 		dlgMensajeTurno.setLayout(new FlowLayout());
@@ -146,6 +156,7 @@ public class Jugando extends Frame
 		dlgMensajeTurno.setLocationRelativeTo(null);
 		dlgMensajeTurno.setResizable(false);
 		dlgMensajeTurno.add(lblMensajeTurno);
+		dlgMensajeTurno.add(btnMensajeTurno);
 		
 		dlgMensajeValorTirada.setBackground(myColor);
 		dlgMensajeValorTirada.setLayout(new GridLayout(2, 1));
@@ -188,6 +199,7 @@ public class Jugando extends Frame
 		dlgMensajeValorAceptado.setLocationRelativeTo(null);
 		dlgMensajeValorAceptado.setResizable(false);
 		dlgMensajeValorAceptado.add(lblMensajeValorAceptado);
+		dlgMensajeValorAceptado.add(btnMensajeValorAceptado);
 		
 		dlgMensajeValorRechazado.setBackground(myColor);
 		dlgMensajeValorRechazado.setLayout(new FlowLayout());
@@ -195,6 +207,7 @@ public class Jugando extends Frame
 		dlgMensajeValorRechazado.setLocationRelativeTo(null);
 		dlgMensajeValorRechazado.setResizable(false);
 		dlgMensajeValorRechazado.add(lblMensajeValorRechazado);
+		dlgMensajeValorRechazado.add(btnMensajeValorRechazado);
 		
 		dlgMensajeValorVerdadero.setBackground(myColor);
 		dlgMensajeValorVerdadero.setLayout(new FlowLayout());
@@ -202,6 +215,7 @@ public class Jugando extends Frame
 		dlgMensajeValorVerdadero.setLocationRelativeTo(null);
 		dlgMensajeValorVerdadero.setResizable(false);
 		dlgMensajeValorVerdadero.add(lblMensajeValorVerdadero);
+		dlgMensajeValorVerdadero.add(btnMensajeValorVerdadero);
 		
 		dlgMensajeValorFalso.setBackground(myColor);
 		dlgMensajeValorFalso.setLayout(new FlowLayout());
@@ -209,6 +223,7 @@ public class Jugando extends Frame
 		dlgMensajeValorFalso.setLocationRelativeTo(null);
 		dlgMensajeValorFalso.setResizable(false);
 		dlgMensajeValorFalso.add(lblMensajeValorFalso);
+		dlgMensajeValorFalso.add(btnMensajeValorFalso);
 		
 		dlgMensajeKiriki.setBackground(myColor);
 		dlgMensajeKiriki.setLayout(new FlowLayout());
@@ -216,6 +231,7 @@ public class Jugando extends Frame
 		dlgMensajeKiriki.setLocationRelativeTo(null);
 		dlgMensajeKiriki.setResizable(false);
 		dlgMensajeKiriki.add(lblMensajeKiriki);
+		dlgMensajeKiriki.add(btnMensajeKiriki);
 		
 		dlgMensajeFinPartida.setBackground(myColor);
 		dlgMensajeFinPartida.setLayout(new FlowLayout());
@@ -223,6 +239,7 @@ public class Jugando extends Frame
 		dlgMensajeFinPartida.setLocationRelativeTo(null);
 		dlgMensajeFinPartida.setResizable(false);
 		dlgMensajeFinPartida.add(lblMensajeFinPartida);
+		dlgMensajeFinPartida.add(btnMensajeFinPartida);
 	}
 	
 	// Dibujamos
