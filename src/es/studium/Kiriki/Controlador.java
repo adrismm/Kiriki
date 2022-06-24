@@ -275,7 +275,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				 	this.vistaJugando.MostrarJugando();
 					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-					this.vistaJugando.lblMensajeComienzoPartida.setText("¡La partida ha comenzado!");
+					this.vistaJugando.lblMensajeComienzoPartida.setText("ï¿½La partida ha comenzado!");
 					this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
 					
 
@@ -302,7 +302,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.lblMensajeComienzoPartida.setText("¡La partida ha comenzado!");
+				this.vistaJugando.lblMensajeComienzoPartida.setText("ï¿½La partida ha comenzado!");
 				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
 				
 			}
@@ -327,7 +327,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.lblMensajeComienzoPartida.setText("¡La partida ha comenzado!");
+				this.vistaJugando.lblMensajeComienzoPartida.setText("ï¿½La partida ha comenzado!");
 				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
 				
 			}
@@ -368,8 +368,9 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		{
 			controlTurno = true;
 			this.vistaJugando.dlgMensajeValorRecibido.setVisible(false);
-			this.vistaJugando.lblMensajeValorAceptado.setText("Intenta superar la tirada, vuelve a tirar los dados ¡Suerte!");
+			this.vistaJugando.lblMensajeValorAceptado.setText("Intenta superar la tirada, vuelve a tirar los dados ï¿½Suerte!");
 			this.vistaJugando.dlgMensajeValorAceptado.setVisible(true);
+			this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null);
 		}
 		else if(botonPulsado.equals(this.vistaJugando.btnRechazarValor))
 		{
@@ -534,7 +535,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		
 		// Turno Jugador 1
 		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 1) && (controlTurno == true))
-		{
+		{			
 			tiradaDado1 = this.modelo.tirada();
 			tiradaDado2 = this.modelo.tirada();
 			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
@@ -544,7 +545,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaJugando.cambiarCubilete(1);
 			this.vistaJugando.recuperarCubilete(1);
 			this.vistaJugando.sonidoDados();
-
+				
 			controlTurno = false;
 			turno = 2;
 			if(turno == 2)
