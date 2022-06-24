@@ -1,6 +1,7 @@
 package es.studium.Kiriki;
 
 
+import java.awt.Button;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Color;
@@ -15,16 +16,9 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.Toolkit;
 import java.io.File;
-import java.io.IOException;
 
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 
 public class Jugando extends Frame
@@ -47,19 +41,19 @@ public class Jugando extends Frame
 	int imagenAmostrar2 = 0;
 	int voltearCubilete = 0;
 	int recuperarCubilete = 0;
+	
 	int vidasJugador1 = 0;
 	int vidasJugador2 = 0;
 	int vidasJugador3 = 0;
 	int vidasJugador4 = 0;
 	
+	Color myColor = new Color(60, 179, 113);
 	
-	
-	
-	Dialog dlgTurno = new Dialog(this, "Turno", true);
-	Label lblTurno = new Label();
-	
-	Dialog dlgMensajeComienzoPartida = new Dialog(this, "¡La partida ha comenzado!", true);
+	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida", true);
 	Label lblMensajeComienzoPartida = new Label();
+	
+	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual", true);
+	Label lblMensajeTurno = new Label();
 	
 	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada");
 	Label lblMensajeValorTirada = new Label();
@@ -81,18 +75,21 @@ public class Jugando extends Frame
 	Checkbox chkParejaQueens = new Checkbox("Pareja de Reinas", false, chkgrValorTirada);
 	Checkbox chkParejaKings = new Checkbox("Pareja de Reyes", false, chkgrValorTirada);
 	Checkbox chkParejaAces = new Checkbox("Pareja de Ases", false, chkgrValorTirada);
+	Button btnAnunciarValor = new Button("Anunciar Valor");
 	
 	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
-	Label lblMensajeValorAnunciado = new Label("El valor anunciado por " + " es: "); // + jugadorActual + valorAnunciado
+	Label lblMensajeValorAnunciado = new Label(); // + jugadorActual + valorAnunciado
 	
 	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
-	Label lblMensajeValorRecibido = new Label("�Destapas el cubilete o superas el valor recibido?"); // + btnAceptarValor + btnRechazarValor
+	Label lblMensajeValorRecibido = new Label();
+	Button btnAceptarValor = new Button("Superar Tirada");
+	Button btnRechazarValor = new Button("Destapar Dados");
 	
 	Dialog dlgMensajeValorAceptado = new Dialog(this, "Resultado Aceptado");
-	Label lblMensajeValorAceptado = new Label(" ha aceptado el valor anunciado por " + " de: "); // jugadorActual + jugadorAnterior + valorAnunciado
+	Label lblMensajeValorAceptado = new Label();
 	
 	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado");
-	Label lblMensajeValorRechazado = new Label(" ha rechazado el valor anunciado por " + " de: "); // jugadorActual + jugadorAnterior + valorAnunciado
+	Label lblMensajeValorRechazado = new Label(); // jugadorActual + jugadorAnterior + valorAnunciado
 	
 	Dialog dlgMensajeValorVerdadero = new Dialog(this, "Resultado Verdadero");
 	Label lblMensajeValorVerdadero = new Label("El valor anunciado es verdad, " + " ha perdido 1 vida."); // + jugadorActual
@@ -109,11 +106,6 @@ public class Jugando extends Frame
 	Font fuenteTirada = new Font("Harlow Solid Italic", Font.BOLD, 20);
 	Font fuenteTurno = new Font("Harlow Solid Italic", Font.BOLD, 20);
 	Font fuenteJugadores = new Font("Harlow Solid Italic", Font.PLAIN, 18);
-	
-	int xJugador1 = 100, yJugador1 = 380;
-	int xJugador2 = 95, yJugador2 = 380;
-	int xJugador3 = 90, yJugador3 = 380;
-	int xJugador4 = 85, yJugador4 = 380;
 	
 	// Constructor
 	public Jugando(int n, String j1, String j2, String j3, String j4)
@@ -141,24 +133,25 @@ public class Jugando extends Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
+		dlgMensajeComienzoPartida.setBackground(myColor);
 		dlgMensajeComienzoPartida.setLayout(new FlowLayout());
-		dlgMensajeComienzoPartida.setSize(100, 100);
+		dlgMensajeComienzoPartida.setSize(250, 80);
 		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
 		dlgMensajeComienzoPartida.setResizable(false);
 		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida);
 		
-		dlgMensajeComienzoPartida.setLayout(new FlowLayout()); // Di�logo turno
-		dlgMensajeComienzoPartida.setSize(200, 100);
-		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
-		dlgMensajeComienzoPartida.setResizable(false);
-		dlgMensajeComienzoPartida.add(lblTurno);
+		dlgMensajeTurno.setBackground(myColor);
+		dlgMensajeTurno.setLayout(new FlowLayout());
+		dlgMensajeTurno.setSize(300, 80);
+		dlgMensajeTurno.setLocationRelativeTo(null);
+		dlgMensajeTurno.setResizable(false);
+		dlgMensajeTurno.add(lblMensajeTurno);
 		
+		dlgMensajeValorTirada.setBackground(myColor);
 		dlgMensajeValorTirada.setLayout(new GridLayout(2,3));
-		dlgMensajeValorTirada.setSize(400, 225);
+		dlgMensajeValorTirada.setSize(400, 275);
 		dlgMensajeValorTirada.setLocationRelativeTo(null);
 		dlgMensajeValorTirada.setResizable(false);
-		Color myColor3 = new Color(60, 179, 113);
-		dlgMensajeValorTirada.setBackground(myColor3);
 		pnlLabelValorTirada.add(lblMensajeValorTirada, "Center");
 		pnlLabelValorTirada.add(lblMensajeAnunciarValor, "South");
 		dlgMensajeValorTirada.add(pnlLabelValorTirada);
@@ -176,50 +169,55 @@ public class Jugando extends Frame
 		pnlCheckboxValorTirada.add(chkParejaQueens);
 		pnlCheckboxValorTirada.add(chkParejaKings);
 		pnlCheckboxValorTirada.add(chkParejaAces);
+		pnlCheckboxValorTirada.add(btnAnunciarValor);
 		dlgMensajeValorTirada.add(pnlCheckboxValorTirada, "South");
+		//dlgMensajeValorTirada.add(btnAnunciarValor);
 		
-		dlgMensajeValorAnunciado.setLayout(new FlowLayout());
-		dlgMensajeValorAnunciado.setSize(100, 100);
-		dlgMensajeValorAnunciado.setLocationRelativeTo(null);
-		dlgMensajeValorAnunciado.setResizable(false);
-		dlgMensajeValorAnunciado.add(lblMensajeValorAnunciado);
-		
+		dlgMensajeValorRecibido.setBackground(myColor);
 		dlgMensajeValorRecibido.setLayout(new FlowLayout());
-		dlgMensajeValorRecibido.setSize(100, 100);
+		dlgMensajeValorRecibido.setSize(450, 100);
 		dlgMensajeValorRecibido.setLocationRelativeTo(null);
 		dlgMensajeValorRecibido.setResizable(false);
 		dlgMensajeValorRecibido.add(lblMensajeValorRecibido);
+		dlgMensajeValorRecibido.add(btnAceptarValor);
+		dlgMensajeValorRecibido.add(btnRechazarValor);
 		
+		dlgMensajeValorAceptado.setBackground(myColor);
 		dlgMensajeValorAceptado.setLayout(new FlowLayout());
-		dlgMensajeValorAceptado.setSize(100, 100);
+		dlgMensajeValorAceptado.setSize(300, 100);
 		dlgMensajeValorAceptado.setLocationRelativeTo(null);
 		dlgMensajeValorAceptado.setResizable(false);
 		dlgMensajeValorAceptado.add(lblMensajeValorAceptado);
 		
+		dlgMensajeValorRechazado.setBackground(myColor);
 		dlgMensajeValorRechazado.setLayout(new FlowLayout());
-		dlgMensajeValorRechazado.setSize(100, 100);
+		dlgMensajeValorRechazado.setSize(300, 100);
 		dlgMensajeValorRechazado.setLocationRelativeTo(null);
 		dlgMensajeValorRechazado.setResizable(false);
 		dlgMensajeValorRechazado.add(lblMensajeValorRechazado);
 		
+		dlgMensajeValorVerdadero.setBackground(myColor);
 		dlgMensajeValorVerdadero.setLayout(new FlowLayout());
-		dlgMensajeValorVerdadero.setSize(100, 100);
+		dlgMensajeValorVerdadero.setSize(300, 100);
 		dlgMensajeValorVerdadero.setLocationRelativeTo(null);
 		dlgMensajeValorVerdadero.setResizable(false);
 		dlgMensajeValorVerdadero.add(lblMensajeValorVerdadero);
 		
+		dlgMensajeValorFalso.setBackground(myColor);
 		dlgMensajeValorFalso.setLayout(new FlowLayout());
 		dlgMensajeValorFalso.setSize(100, 100);
 		dlgMensajeValorFalso.setLocationRelativeTo(null);
 		dlgMensajeValorFalso.setResizable(false);
 		dlgMensajeValorFalso.add(lblMensajeValorFalso);
 		
+		dlgMensajeKiriki.setBackground(myColor);
 		dlgMensajeKiriki.setLayout(new FlowLayout());
 		dlgMensajeKiriki.setSize(100, 100);
 		dlgMensajeKiriki.setLocationRelativeTo(null);
 		dlgMensajeKiriki.setResizable(false);
 		dlgMensajeKiriki.add(lblMensajeKiriki);
 		
+		dlgMensajeFinPartida.setBackground(myColor);
 		dlgMensajeFinPartida.setLayout(new FlowLayout());
 		dlgMensajeFinPartida.setSize(100, 100);
 		dlgMensajeFinPartida.setLocationRelativeTo(null);
@@ -289,11 +287,6 @@ public class Jugando extends Frame
 			case 6:
 				g.drawImage(D6, 310, 80, this);
 				break;
-		}
-		
-		if(tirada != 0)
-		{
-			g.drawString(tirada + "", 53, 255);
 		}
 		
 		g.setFont(fuenteTurno);
@@ -372,6 +365,74 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
+	public void mostrarValorAnunciado(String valorCheckbox)
+	{
+		dlgMensajeValorAnunciado.setBackground(myColor);
+		dlgMensajeValorAnunciado.setLayout(new FlowLayout());
+		dlgMensajeValorAnunciado.setSize(400, 110);
+		dlgMensajeValorAnunciado.setLocationRelativeTo(null);
+		dlgMensajeValorAnunciado.setResizable(false);
+		
+		if(turnoJugador == 1)
+		{
+			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador1 + " es: " + valorCheckbox);
+			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador2);
+		}
+		else if(turnoJugador == 2)
+		{
+			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador2 + " es: " + valorCheckbox);
+			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador3);
+		}
+		else if(turnoJugador == 3)
+		{
+			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador3 + " es: " + valorCheckbox);
+			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador4);
+		}
+		else if(turnoJugador == 4)
+		{
+			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador4 + " es: " + valorCheckbox);
+			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador1);
+		}
+		
+		dlgMensajeValorAnunciado.add(lblMensajeValorAnunciado);
+		dlgMensajeValorAnunciado.add(lblMensajeTurno);
+		dlgMensajeValorAnunciado.setVisible(true);
+	}
+	
+	public void actualizarTurno(int turno)
+	{
+		if((numJugadores == 4) && ((turno - 1) < 4))
+		{
+			turnoJugador = turno;
+			repaint();
+		}
+		else if((numJugadores == 4) && ((turno - 1) >= 4))
+		{
+			turnoJugador = 1;
+			repaint();
+		}
+		else if((numJugadores == 3) && ((turno - 1) < 3))
+		{
+			turnoJugador = turno;
+			repaint();
+		}
+		else if((numJugadores == 3) && ((turno - 1) >= 3))
+		{
+			turnoJugador = 1;
+			repaint();
+		}
+		else if((numJugadores == 2) && ((turno - 1) < 2))
+		{
+			turnoJugador = turno;
+			repaint();
+		}
+		else if((numJugadores == 2) && ((turno - 1) >= 2))
+		{
+			turnoJugador = 1;
+			repaint();
+		}
+	}
+	
 	
 	public void quitarVidasJugador1()
 	{
@@ -403,18 +464,6 @@ public class Jugando extends Frame
 		vidasJugador2 = 10;
 		vidasJugador3 = 10;
 		vidasJugador4 = 10;
-		repaint();
-	}
-	
-	public void actualizarTurno(int turno)
-	{
-		turnoJugador = turno;
-		repaint();
-	}
-	
-	public void mostrarTirada(int t)
-	{
-		tirada = t;
 		repaint();
 	}
 	
