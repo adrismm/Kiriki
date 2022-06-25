@@ -345,7 +345,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.MostrarJugando();
 				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.lblMensajeComienzoPartida.setText("Â¡La partida ha comenzado!");
+				this.vistaJugando.lblMensajeComienzoPartida.setText("¡La partida ha comenzado!");
 				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
 				this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
 				this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
@@ -363,6 +363,11 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			}
 		}
 		
+		if(botonPulsado.equals(this.vistaJugando.btnMensajeComienzoPartida))
+		{
+			this.vistaJugando.dlgMensajeComienzoPartida.setVisible(false);
+		}
+		
 		else if(botonPulsado.equals(this.vistaJugando.btnAnunciarValor))
 		{
 			if(!this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().equals(null)) // if(chkgrValorTirada.isSelected())
@@ -371,25 +376,13 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.mostrarValorAnunciado(this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().getLabel());
 			}
 			
-			if(this.vistaJugando.turnoJugador == 1)
-			{
-				this.vistaJugando.actualizarTurno(2);
-			}
-			else if(this.vistaJugando.turnoJugador == 2)
-			{
-				this.vistaJugando.actualizarTurno(3);
-			}
-			else if(this.vistaJugando.turnoJugador == 3)
-			{
-				this.vistaJugando.actualizarTurno(4);
-			}
-			else if(this.vistaJugando.turnoJugador == 4)
-			{
-				this.vistaJugando.actualizarTurno(1);
-			}
-			
 			this.vistaJugando.cambiarCubilete(0);
 			this.vistaJugando.recuperarCubilete(0);
+		}
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAnunciado))
+		{
+			this.vistaJugando.dlgMensajeValorAnunciado.setVisible(false);
+			this.vistaJugando.actualizarTurno(turno + 1);
 		}
 		else if(botonPulsado.equals(this.vistaJugando.btnAceptarValor))
 		{
@@ -424,16 +417,10 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			}*/
 		}
 		
-		if(botonPulsado.equals(this.vistaJugando.btnMensajeComienzoPartida))
-		{
-			this.vistaJugando.dlgMensajeComienzoPartida.setVisible(false);
-		}
-		
 		//turno jugador 1
 			//comiezo de la ronda
 		if(this.vistaJugando.dlgMensajeValorTirada.isActive() && (turno == 1) && (controlTurno == true))
 			{
-				controlTurno = false;
 				turno = 2;
 				this.vistaJugando.actualizarTurno(2);
 				System.out.println("tu puta madre 1");
@@ -669,7 +656,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		int y = click.getY();
 		
 		// Turno Jugador 1
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390))
+		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (controlTurno == true))
 		{			
 			tiradaDado1 = this.modelo.tirada();
 			tiradaDado2 = this.modelo.tirada();
@@ -680,6 +667,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			this.vistaJugando.cambiarCubilete(1);
 			this.vistaJugando.recuperarCubilete(1);
 			this.vistaJugando.sonidoDados();
+			controlTurno = false;
 		}
 		/*
 		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 1) && (controlTurno == false))

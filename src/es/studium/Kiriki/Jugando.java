@@ -49,9 +49,9 @@ public class Jugando extends Frame
 	
 	Color myColor = new Color(60, 179, 113);
 	
-	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida", true);
+	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida");
 	Label lblMensajeComienzoPartida = new Label();
-	Button btnMensajeComienzoPartida = new Button("Â¡Dale!");
+	Button btnMensajeComienzoPartida = new Button("¡Dale!");
 	
 	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual", true);
 	Label lblMensajeTurno = new Label();
@@ -81,7 +81,7 @@ public class Jugando extends Frame
 	
 	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
 	Label lblMensajeValorAnunciado = new Label(); // + jugadorActual + valorAnunciado
-	Button btnMensajeValorAnunciado = new Button("Â¡Vale!");
+	Button btnMensajeValorAnunciado = new Button("¡Vale!");
 	
 	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
 	Label lblMensajeValorRecibido = new Label();
@@ -389,6 +389,7 @@ public class Jugando extends Frame
 		dlgMensajeValorAnunciado.setSize(300, 110);
 		dlgMensajeValorAnunciado.setLocation(600, 395);
 		dlgMensajeValorAnunciado.setResizable(false);
+		dlgMensajeValorAnunciado.add(btnMensajeValorAnunciado);
 		
 		if(turnoJugador == 1)
 		{

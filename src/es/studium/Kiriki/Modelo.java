@@ -217,7 +217,7 @@ public class Modelo
 				valorAnunciado.equals("9") || 
 				valorAnunciado.equals("10"))
 		{
-				valorCadena1 = Integer.parseInt(valorAnunciado);
+				valorCadena2 = Integer.parseInt(valorAnunciado);
 		}
 		else if(valorAnunciado.equals("Ladrillazo"))
 		{
