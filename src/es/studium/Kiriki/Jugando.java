@@ -524,4 +524,8 @@ public class Jugando extends Frame
 	{
 		this.setVisible(false);
 	}
+	public void setVisible(boolean b)
+	{
+		//Jugando.setVisible(b);
+	}
 }
