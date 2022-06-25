@@ -373,6 +373,14 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAnunciado))
 		{
 			this.vistaJugando.dlgMensajeValorAnunciado.setVisible(false);
+			if((this.vistaJugando.numJugadores == 4) && ((turno == 5) || (turno == 8)))
+			{
+				turno = 1;
+			}
+			if((this.vistaJugando.numJugadores == 3) && ((turno == 4) || (turno == 6)))
+			{
+				turno = 1;
+			}
 			if((this.vistaJugando.numJugadores == 2) && ((turno == 3) || (turno == 4)))
 			{
 				turno = 1;
@@ -410,6 +418,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.lblMensajeValorFalso.setVisible(true);
 				this.vistaJugando.lblMensajeValorFalso1.setVisible(true);
 				controlTurno = true;
+				turno = turno -1; 
 			}
 			else if(controlMentira == false)
 			{
@@ -422,18 +431,25 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null);
 				controlTurno = true;
 			}
-			
 		}
 
 		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorRechazado))
 		{
 			this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				if((controlMentira == false) && (this.vistaJugando.numJugadores == 2) && (turno == 2))
-				{
-					turno = 0;
-				}
-				turno = turno + 1;
-				this.vistaJugando.actualizarTurno(turno);
+			if((controlMentira == false) && (this.vistaJugando.numJugadores == 4) && (turno == 4))
+			{
+				turno = 0;
+			}
+			else if((controlMentira == false) && (this.vistaJugando.numJugadores == 3) && (turno == 3))
+			{
+				turno = 0;
+			}
+			else if((controlMentira == false) && (this.vistaJugando.numJugadores == 2) && (turno == 2))
+			{
+				turno = 0;
+			}
+			turno = turno + 1;
+			this.vistaJugando.actualizarTurno(turno);
 			
 		}
 		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAceptado))
@@ -442,100 +458,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		}
 		
 	}
-		//turno jugador 1
-		/*
-		if(this.vistaJugando.dlgMensajeValorTirada.isActive() && (turno == 1) && (controlTurno == false))
-		{
-			
-			if(controlMentira == true) //si levantas compara los valores
-				{
-					this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-					System.out.println("tu puta madre 3");
-					if(this.vistaJugando.numJugadores == 4)
-						{
-							this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador4 + " ha mentido y pierda 1 vida!");
-							this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-						}
-					else if(this.vistaJugando.numJugadores == 3)
-						{
-							this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador3 + " ha mentido y pierda 1 vida!");
-							this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-						}
-					else if(this.vistaJugando.numJugadores == 2)
-						{
-						System.out.println("tu puta madre 4");
-							this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador2 + " ha mentido y pierda 1 vida!");
-							this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-						}
-					
-					controlTurno = true;
-					turno = 1;
-				}
-			else 
-				{
-					System.out.println("tu puta madre 5");
-					this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-					this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador4 + " decía la verdad y " + this.vistaJugando.jugador1 + " pierde 1 vida!");
-					this.vistaJugando.dlgMensajeValorVerdadero.setVisible(true);
-							
-					controlTurno = true;
-					turno = 2;
-					this.vistaJugando.actualizarTurno(2);
-				}
-				
-		}
-		*/
-		/*
-		//turno jugador 2
-		if(this.vistaJugando.dlgMensajeValorTirada.isActive() && (turno == 2) && (controlTurno == true))
-			{
-				controlTurno = false;
-				tiradaDado1 = this.modelo.tirada();
-				tiradaDado2 = this.modelo.tirada();
-				valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-				this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
-				this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
-				this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
-				this.vistaJugando.cambiarCubilete(1);
-				this.vistaJugando.recuperarCubilete(1);
-				this.vistaJugando.sonidoDados();
-					
-				controlTurno = false;
-				turno = 3;
-				this.vistaJugando.actualizarTurno(3);
-				System.out.println("tu puta madre 6");
-			}
-		
-		if(((turno == 2) && (controlTurno == false)))
-			{
-				boolean controlMentira = false;
-				this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador2 + ", ¿intentarás superar la tirada anterior o destapar�s los dados?");
-				this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
-				System.out.println("tu puta madre 7");
-				if(controlMentira == true)
-					{
-						this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-						this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador1 + " ha mentido y pierda 1 vida!");
-						
-						
-						controlTurno = true;
-						turno = 2;
-						System.out.println("tu puta madre 8");
-					}
-				else
-					{
-						this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-						this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador1 + " dec�a la verdad y " + this.vistaJugando.jugador2 + " pierde 1 vida!");
-						
-						
-						controlTurno = true;
-						turno = 3;
-						this.vistaJugando.actualizarTurno(3);
-						System.out.println("tu puta madre 9");
-					}
-			}
-		
-	}*/
+
 
 	@Override
 	public void windowActivated(WindowEvent arg0)
