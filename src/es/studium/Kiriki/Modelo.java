@@ -11,7 +11,7 @@ import java.util.Random;
 public class Modelo
 
 {
-	//CONEXIÓN CON LA BASE DE DATOS
+	//CONEXIï¿½N CON LA BASE DE DATOS
 	
 		//Drivers 
 		String driver = "com.mysql.cj.jdbc.Driver";
@@ -150,7 +150,7 @@ public class Modelo
 		}
 		else if((tirada1 + tirada2) == 3)
 		{
-			valorTirada = "¡Kiriki!";
+			valorTirada = "Â¡Kiriki!";
 			return(valorTirada);
 		}
 		else if((tirada1 + tirada2) == 11)
@@ -217,7 +217,7 @@ public class Modelo
 				valorAnunciado.equals("9") || 
 				valorAnunciado.equals("10"))
 		{
-				valorCadena1 = Integer.parseInt(valorAnunciado);
+				valorCadena2 = Integer.parseInt(valorAnunciado);
 		}
 		else if(valorAnunciado.equals("Ladrillazo"))
 		{
@@ -248,15 +248,17 @@ public class Modelo
 			valorCadena2 = 17;
 		}
 		
-		if(valorCadena1 < valorCadena2)
+		if(valorCadena1 != valorCadena2)
 		{
 			controlMentira = true;
 			return(controlMentira);
 		}
-		else
+		else if(valorCadena1 == valorCadena2)
 		{
+			controlMentira = false;
 			return(controlMentira);
 		} 
+		return (controlMentira);
 	}
 	
 	//Insertar jugadores que han ganado en la base de datos junto a sus puntos

@@ -27,7 +27,7 @@ public class Jugando extends Frame
 	
 	Toolkit herramientas;
 	Image tapete, cubileteBocaArriba, cubileteBocaAbajo;
-	Image D1, D2, D3, D4, D5, D6; // Im�genes de las caras de los dados
+	Image D1, D2, D3, D4, D5, D6; // Imágenes de las caras de los dados
 	
 	int dadosTapados = 0;
 	int cargarDados = 0;
@@ -49,11 +49,11 @@ public class Jugando extends Frame
 	
 	Color myColor = new Color(60, 179, 113);
 	
-	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida", true);
+	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida");
 	Label lblMensajeComienzoPartida = new Label();
 	Button btnMensajeComienzoPartida = new Button("¡Dale!");
 	
-	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual", true);
+	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual");
 	Label lblMensajeTurno = new Label();
 	Button btnMensajeTurno = new Button("Vale");
 	
@@ -95,14 +95,11 @@ public class Jugando extends Frame
 	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado");
 	Label lblMensajeValorRechazado = new Label(); // jugadorActual + jugadorAnterior + valorAnunciado
 	Button btnMensajeValorRechazado = new Button("Vale");
+	Label lblMensajeValorVerdadero = new Label(); // + jugadorActual
+	Label lblMensajeValorVerdadero1 = new Label(); 
+	Label lblMensajeValorFalso = new Label(); // + jugadorAnterior
+	Label lblMensajeValorFalso1 = new Label(); 
 	
-	Dialog dlgMensajeValorVerdadero = new Dialog(this, "Resultado Verdadero");
-	Label lblMensajeValorVerdadero = new Label("El valor anunciado es verdad, " + " ha perdido 1 vida."); // + jugadorActual
-	Button btnMensajeValorVerdadero = new Button("Chúpate esa");
-	
-	Dialog dlgMensajeValorFalso = new Dialog(this, "Resultado Falso");
-	Label lblMensajeValorFalso = new Label("El valor anunciado es mentira, " + " ha perdido 1 vida."); // + jugadorAnterior
-	Button btnMensajeValorFalso = new Button("En la frente");
 	
 	Dialog dlgMensajeKiriki = new Dialog(this, "¡Kiriki!");
 	Label lblMensajeKiriki = new Label("¡Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
@@ -138,7 +135,7 @@ public class Jugando extends Frame
 		D6 = herramientas.getImage("dadoAce.png");
 		
 		setTitle("Kiriki: Jugando"); // T�tulo
-		setSize(620, 446); // Tama�o del Frame
+		setSize(620, 446); // Tamaño del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -203,27 +200,16 @@ public class Jugando extends Frame
 		
 		dlgMensajeValorRechazado.setBackground(myColor);
 		dlgMensajeValorRechazado.setLayout(new FlowLayout());
-		dlgMensajeValorRechazado.setSize(400, 100);
+		dlgMensajeValorRechazado.setSize(400, 150);
 		dlgMensajeValorRechazado.setLocationRelativeTo(null);
 		dlgMensajeValorRechazado.setResizable(false);
 		dlgMensajeValorRechazado.add(lblMensajeValorRechazado);
+		dlgMensajeValorRechazado.add(lblMensajeValorVerdadero);
+		dlgMensajeValorRechazado.add(lblMensajeValorVerdadero1);
+		dlgMensajeValorRechazado.add(lblMensajeValorFalso);
+		dlgMensajeValorRechazado.add(lblMensajeValorFalso1);
 		dlgMensajeValorRechazado.add(btnMensajeValorRechazado);
 		
-		dlgMensajeValorVerdadero.setBackground(myColor);
-		dlgMensajeValorVerdadero.setLayout(new FlowLayout());
-		dlgMensajeValorVerdadero.setSize(400, 100);
-		dlgMensajeValorVerdadero.setLocationRelativeTo(null);
-		dlgMensajeValorVerdadero.setResizable(false);
-		dlgMensajeValorVerdadero.add(lblMensajeValorVerdadero);
-		dlgMensajeValorVerdadero.add(btnMensajeValorVerdadero);
-		
-		dlgMensajeValorFalso.setBackground(myColor);
-		dlgMensajeValorFalso.setLayout(new FlowLayout());
-		dlgMensajeValorFalso.setSize(400, 100);
-		dlgMensajeValorFalso.setLocationRelativeTo(null);
-		dlgMensajeValorFalso.setResizable(false);
-		dlgMensajeValorFalso.add(lblMensajeValorFalso);
-		dlgMensajeValorFalso.add(btnMensajeValorFalso);
 		
 		dlgMensajeKiriki.setBackground(myColor);
 		dlgMensajeKiriki.setLayout(new FlowLayout());
@@ -385,34 +371,68 @@ public class Jugando extends Frame
 	public void mostrarValorAnunciado(String valorCheckbox)
 	{
 		dlgMensajeValorAnunciado.setBackground(myColor);
-		dlgMensajeValorAnunciado.setLayout(new FlowLayout());
-		dlgMensajeValorAnunciado.setSize(300, 110);
+		dlgMensajeValorAnunciado.setLayout(new GridLayout(3, 1));
+		dlgMensajeValorAnunciado.setSize(300, 120);
 		dlgMensajeValorAnunciado.setLocation(600, 395);
 		dlgMensajeValorAnunciado.setResizable(false);
+		if(numJugadores == 4)
+		{
+			if(turnoJugador == 1)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador1 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador2);
+			}
+			else if(turnoJugador == 2)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador2 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador3);
+			}
+			else if(turnoJugador == 3)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador3 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador4);
+			}
+			else if(turnoJugador == 4)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador4 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador1);
+			}
+		}
+		else if(numJugadores == 3)
+		{
+			if(turnoJugador == 1)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador1 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador2);
+			}
+			else if(turnoJugador == 2)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador2 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador3);
+			}
+			else if(turnoJugador == 3)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador3 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador1);
+			}
+		}
+		else if(numJugadores == 2)
+		{
+			if(turnoJugador == 1)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador1 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador2);
+			}
+			else if(turnoJugador == 2)
+			{
+				lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador2 + " es: " + valorCheckbox);
+				lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador1);
+			}
+		}
 		
-		if(turnoJugador == 1)
-		{
-			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador1 + " es: " + valorCheckbox);
-			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador2);
-		}
-		else if(turnoJugador == 2)
-		{
-			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador2 + " es: " + valorCheckbox);
-			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador3);
-		}
-		else if(turnoJugador == 3)
-		{
-			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador3 + " es: " + valorCheckbox);
-			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador4);
-		}
-		else if(turnoJugador == 4)
-		{
-			lblMensajeValorAnunciado.setText("El valor anunciado por " + jugador4 + " es: " + valorCheckbox);
-			lblMensajeTurno.setText("\r" + "Ahora es el turno de " + jugador1);
-		}
-		
-		dlgMensajeValorAnunciado.add(lblMensajeValorAnunciado);
-		dlgMensajeValorAnunciado.add(lblMensajeTurno);
+		dlgMensajeValorAnunciado.add(lblMensajeValorAnunciado, "Center");
+		dlgMensajeValorAnunciado.add(lblMensajeTurno, "Center");
+		dlgMensajeValorAnunciado.add(btnMensajeValorAnunciado,"Center");
 		dlgMensajeValorAnunciado.setVisible(true);
 	}
 	
@@ -523,9 +543,5 @@ public class Jugando extends Frame
 	public void OcultarJugando()
 	{
 		this.setVisible(false);
-	}
-	public void setVisible(boolean b)
-	{
-		//Jugando.setVisible(b);
 	}
 }
