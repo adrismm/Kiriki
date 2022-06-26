@@ -458,63 +458,78 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				// Comprobamos si hay algun ganador despues de actualizar las vidas
 				if(this.vistaJugando.numJugadores == 4)
 				{
+					conexion = this.modelo.conectar();
 					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
 					
 					if(vidasGanador[0] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 					}
 					else if(vidasGanador[1] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 					}
 					else if(vidasGanador[2] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador3, this.vistaJugando.vidasJugador3);
 					}
 					else if(vidasGanador[3] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador4 + " con " + this.vistaJugando.vidasJugador4 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador4, this.vistaJugando.vidasJugador4);
 					}
+					this.modelo.desconectar(conexion);
 				}
 				else if(this.vistaJugando.numJugadores == 3)
 				{
+					conexion = this.modelo.conectar();
 					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, 0);
 					
 					if(vidasGanador[0] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 					}
 					else if(vidasGanador[1] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 					}
 					else if(vidasGanador[2] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador3, this.vistaJugando.vidasJugador3);
 					}
+					this.modelo.desconectar(conexion);
 				}
 				else if(this.vistaJugando.numJugadores == 2)
 				{
+					conexion = this.modelo.conectar();
 					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, 0, 0);
 					
 					if(vidasGanador[0] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 					}
 					else if(vidasGanador[1] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 					}
+					this.modelo.desconectar(conexion);
 				}
 			}
 			else if(controlMentira == false) // En caso de que no haya mentido, el metodo "compararValores" nos devuelve: false
@@ -549,63 +564,78 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				// Comprobamos si hay algun ganador despues de actualizar las vidas
 				if(this.vistaJugando.numJugadores == 4)
 				{
+					conexion = this.modelo.conectar();
 					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
 					
 					if(vidasGanador[0] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 					}
 					else if(vidasGanador[1] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 					}
 					else if(vidasGanador[2] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador3, this.vistaJugando.vidasJugador3);
 					}
 					else if(vidasGanador[3] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador4 + " con " + this.vistaJugando.vidasJugador4 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador4, this.vistaJugando.vidasJugador4);
 					}
+					this.modelo.desconectar(conexion);
 				}
 				else if(this.vistaJugando.numJugadores == 3)
 				{
+					conexion = this.modelo.conectar();
 					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, 0);
 					
 					if(vidasGanador[0] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 					}
 					else if(vidasGanador[1] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 					}
 					else if(vidasGanador[2] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador3, this.vistaJugando.vidasJugador3);
 					}
+					this.modelo.desconectar(conexion);
 				}
 				else if(this.vistaJugando.numJugadores == 2)
 				{
+					conexion = this.modelo.conectar();
 					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, 0, 0);
 					
 					if(vidasGanador[0] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 					}
 					else if(vidasGanador[1] != 0)
 					{
 						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+						this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 					}
+					this.modelo.desconectar(conexion);
 				}
 			}
 		}
@@ -660,64 +690,80 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			// Comprobamos si hay algun ganador despues de actualizar las vidas
 			if(this.vistaJugando.numJugadores == 4)
 			{
+				
 				vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
 				
 				if(vidasGanador[0] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 				}
 				else if(vidasGanador[1] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 				}
 				else if(vidasGanador[2] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador3, this.vistaJugando.vidasJugador3);
 				}
 				else if(vidasGanador[3] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador4 + " con " + this.vistaJugando.vidasJugador4 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador4, this.vistaJugando.vidasJugador4);
 				}
+				this.modelo.desconectar(conexion);
 			}
 			else if(this.vistaJugando.numJugadores == 3)
 			{
+				conexion = this.modelo.conectar();
 				vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, 0);
 				
 				if(vidasGanador[0] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
 				}
 				else if(vidasGanador[1] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 				}
 				else if(vidasGanador[2] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador3, this.vistaJugando.vidasJugador3);
 				}
+				this.modelo.desconectar(conexion);
 			}
 			else if(this.vistaJugando.numJugadores == 2)
 			{
+				conexion = this.modelo.conectar();
 				vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, 0, 0);
 				
 				if(vidasGanador[0] != 0)
 				{
-					System.out.println("Aloh");
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					this.modelo.insertarJugador(this.vistaJugando.jugador1, this.vistaJugando.vidasJugador1);
+					
 				}
 				else if(vidasGanador[1] != 0)
 				{
 					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
 					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					conexion = this.modelo.conectar();
+					this.modelo.insertarJugador(this.vistaJugando.jugador2, this.vistaJugando.vidasJugador2);
 				}
+				this.modelo.desconectar(conexion);
 			}
 			
 			turno = turno + 1; // Actualizamos de nuevo el contador de turnos, para saltar el turno del jugador que ha perdido la vida
@@ -736,6 +782,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			}
 			
 			this.vistaJugando.actualizarTurno(turno); // Actualizamos el turno, comprobando si tiene que volver al primer jugador o no
+			this.vistaJugando.mostrarDadoCubiletes(0, 0);
 		}
 		else if(botonPulsado.equals(this.vistaJugando.btnMensajeFinPartida)) // En caso de que haya un ganador, se muestra un mensaje de finalizacion, si pulsamos el boton salimos de la partida
 		{
@@ -866,16 +913,14 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		{			
 			tiradaDado1 = this.modelo.tirada();
 			tiradaDado2 = this.modelo.tirada();
+			this.vistaJugando.cargarDados();
 			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-
 			
-
-
-
 			if(valorTirada.equals("Kiriki"))
 			{
 				this.vistaJugando.dlgMensajeValorTirada.setVisible(false);
 				this.vistaJugando.lblMensajeKiriki.setText("¡Kiriki! El siguiente jugador pierde una vida automáticamente");
+				this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
 				this.vistaJugando.dlgMensajeKiriki.setVisible(true);
 			}
 			else

@@ -147,7 +147,7 @@ public class Modelo
 		}
 		else if((tirada1 + tirada2) == 3)
 		{
-			valorTirada = "¡Kiriki!";
+			valorTirada = "Kiriki";
 			return(valorTirada);
 		}
 		else if((tirada1 + tirada2) == 11)
@@ -273,7 +273,6 @@ public class Modelo
 		catch (SQLException sqle)
 			{
 				System.out.println(sqle.getMessage());
-				
 			}
 	}
 	

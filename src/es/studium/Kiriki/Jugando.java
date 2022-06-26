@@ -48,6 +48,7 @@ public class Jugando extends Frame
 	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida"); // Mensaje aviso de que ha empezado la partida
 	Label lblMensajeComienzoPartida = new Label();
 	Button btnMensajeComienzoPartida = new Button("A jugar!");
+	Panel pnlComienzoPartida = new Panel();
 	
 	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada"); // Mensaje con el resultado de la tirada y los valores posibles para anunciar al resto
 	Label lblMensajeValorTirada = new Label();
@@ -75,6 +76,8 @@ public class Jugando extends Frame
 	Label lblMensajeValorAnunciado = new Label();
 	Button btnMensajeValorAnunciado = new Button("Vale");
 	Label lblMensajeTurno = new Label();
+	Panel pnlValorAnunciado =new Panel();
+	
 	
 	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido"); // Mensaje para el jugador que tiene que decidir si levantar el cubilete o seguir tirando
 	Label lblMensajeValorRecibido = new Label();
@@ -88,6 +91,7 @@ public class Jugando extends Frame
 	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado"); // Mensaje que aparece cuando un jugador decide levantar el cubilete y ver si el jugador anterior ha mentido o no
 	Label lblMensajeValorRechazado = new Label();
 	Button btnMensajeValorRechazado = new Button("Vale");
+	Panel pnlValorRechazado = new Panel();
 	Label lblMensajeValorVerdadero = new Label();
 	Label lblMensajeValorVerdadero1 = new Label(); 
 	Label lblMensajeValorFalso = new Label();
@@ -132,17 +136,20 @@ public class Jugando extends Frame
 		
 		dlgMensajeComienzoPartida.setBackground(myColor);
 		dlgMensajeComienzoPartida.setLayout(new FlowLayout());
-		dlgMensajeComienzoPartida.setSize(220, 100);
+		dlgMensajeComienzoPartida.setSize(180, 80);
 		dlgMensajeComienzoPartida.setLocationRelativeTo(null);
 		dlgMensajeComienzoPartida.setResizable(false);
-		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida);
-		dlgMensajeComienzoPartida.add(btnMensajeComienzoPartida);
+		dlgMensajeComienzoPartida.setUndecorated(true);
+		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida,"Center");
+		dlgMensajeComienzoPartida.add(pnlComienzoPartida);
+		pnlComienzoPartida.add(btnMensajeComienzoPartida, "Center");
 		
 		dlgMensajeValorTirada.setBackground(myColor);
 		dlgMensajeValorTirada.setLayout(new GridLayout(2, 1));
 		dlgMensajeValorTirada.setSize(300, 320);
 		dlgMensajeValorTirada.setLocation(570, 395);
 		dlgMensajeValorTirada.setResizable(false);
+		dlgMensajeValorTirada.setUndecorated(true);
 		pnlLabelValorTirada.add(lblMensajeValorTirada, "Center");
 		pnlLabelValorTirada.add(lblMensajeAnunciarValor, "South");
 		dlgMensajeValorTirada.add(pnlLabelValorTirada);
@@ -163,40 +170,46 @@ public class Jugando extends Frame
 		pnlCheckboxValorTirada.add(btnAnunciarValor);
 		dlgMensajeValorTirada.add(pnlCheckboxValorTirada, "South");
 		
+		
 		dlgMensajeValorRecibido.setBackground(myColor);
 		dlgMensajeValorRecibido.setLayout(new FlowLayout());
-		dlgMensajeValorRecibido.setSize(450, 100);
+		dlgMensajeValorRecibido.setSize(410, 60);
 		dlgMensajeValorRecibido.setLocationRelativeTo(null);
 		dlgMensajeValorRecibido.setResizable(false);
+		dlgMensajeValorRecibido.setUndecorated(true);
 		dlgMensajeValorRecibido.add(lblMensajeValorRecibido);
 		dlgMensajeValorRecibido.add(btnAceptarValor);
 		dlgMensajeValorRecibido.add(btnRechazarValor);
 		
 		dlgMensajeValorAceptado.setBackground(myColor);
 		dlgMensajeValorAceptado.setLayout(new FlowLayout());
-		dlgMensajeValorAceptado.setSize(400, 100);
+		dlgMensajeValorAceptado.setSize(330, 60);
 		dlgMensajeValorAceptado.setLocationRelativeTo(null);
+		dlgMensajeValorAceptado.setUndecorated(true);
 		dlgMensajeValorAceptado.setResizable(false);
 		dlgMensajeValorAceptado.add(lblMensajeValorAceptado);
 		dlgMensajeValorAceptado.add(btnMensajeValorAceptado);
 		
 		dlgMensajeValorRechazado.setBackground(myColor);
 		dlgMensajeValorRechazado.setLayout(new FlowLayout());
-		dlgMensajeValorRechazado.setSize(400, 150);
+		dlgMensajeValorRechazado.setSize(400, 110);
 		dlgMensajeValorRechazado.setLocationRelativeTo(null);
 		dlgMensajeValorRechazado.setResizable(false);
+		dlgMensajeValorRechazado.setUndecorated(true);
 		dlgMensajeValorRechazado.add(lblMensajeValorRechazado);
 		dlgMensajeValorRechazado.add(lblMensajeValorVerdadero);
 		dlgMensajeValorRechazado.add(lblMensajeValorVerdadero1);
 		dlgMensajeValorRechazado.add(lblMensajeValorFalso);
 		dlgMensajeValorRechazado.add(lblMensajeValorFalso1);
-		dlgMensajeValorRechazado.add(btnMensajeValorRechazado);
+		dlgMensajeValorRechazado.add(pnlValorRechazado);
+		pnlValorRechazado.add(btnMensajeValorRechazado);
 		
 		
 		dlgMensajeKiriki.setBackground(myColor);
 		dlgMensajeKiriki.setLayout(new FlowLayout());
-		dlgMensajeKiriki.setSize(400, 100);
+		dlgMensajeKiriki.setSize(400, 70);
 		dlgMensajeKiriki.setLocationRelativeTo(null);
+		dlgMensajeKiriki.setUndecorated(true);
 		dlgMensajeKiriki.setResizable(false);
 		dlgMensajeKiriki.add(lblMensajeKiriki);
 		dlgMensajeKiriki.add(btnMensajeKiriki);
@@ -349,12 +362,7 @@ public class Jugando extends Frame
 	
 	public void mostrarValorAnunciado(String valorCheckbox) // Mostramos mensaje con valor anunciado por jugador anterior y avisamos al siguiente jugador
 	{
-		dlgMensajeValorAnunciado.setBackground(myColor);
-		dlgMensajeValorAnunciado.setLayout(new GridLayout(3, 1));
-		dlgMensajeValorAnunciado.setSize(300, 120);
-		dlgMensajeValorAnunciado.setLocation(600, 395);
-		dlgMensajeValorAnunciado.setResizable(false);
-		dlgMensajeValorAnunciado.add(btnMensajeValorAnunciado);
+		
 		
 		if(numJugadores == 4)
 		{
@@ -411,10 +419,18 @@ public class Jugando extends Frame
 			}
 		}
 		
+		dlgMensajeValorAnunciado.setBackground(myColor);
+		dlgMensajeValorAnunciado.setLayout(new GridLayout(3, 3));
+		dlgMensajeValorAnunciado.add(btnMensajeValorAnunciado);
 		dlgMensajeValorAnunciado.add(lblMensajeValorAnunciado, "Center");
 		dlgMensajeValorAnunciado.add(lblMensajeTurno, "Center");
-		dlgMensajeValorAnunciado.add(btnMensajeValorAnunciado,"Center");
+		dlgMensajeValorAnunciado.add(pnlValorAnunciado);
+		pnlValorAnunciado.add(btnMensajeValorAnunciado,"Center");
+		dlgMensajeValorAnunciado.setSize(340, 120);
+		dlgMensajeValorAnunciado.setLocation(600, 395);
+		dlgMensajeValorAnunciado.setResizable(false);
 		dlgMensajeValorAnunciado.setVisible(true);
+		
 	}
 	
 	public void actualizarTurno(int turno) // Metodo para actualizar el turno actual segun el numero de jugadores
