@@ -51,7 +51,7 @@ public class Jugando extends Frame
 	
 	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida");
 	Label lblMensajeComienzoPartida = new Label();
-	Button btnMensajeComienzoPartida = new Button("¡Dale!");
+	Button btnMensajeComienzoPartida = new Button("ï¿½Dale!");
 	
 	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual");
 	Label lblMensajeTurno = new Label();
@@ -81,7 +81,7 @@ public class Jugando extends Frame
 	
 	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
 	Label lblMensajeValorAnunciado = new Label(); // + jugadorActual + valorAnunciado
-	Button btnMensajeValorAnunciado = new Button("¡Vale!");
+	Button btnMensajeValorAnunciado = new Button("ï¿½Vale!");
 	
 	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
 	Label lblMensajeValorRecibido = new Label();
@@ -213,7 +213,7 @@ public class Jugando extends Frame
 		
 		dlgMensajeKiriki.setBackground(myColor);
 		dlgMensajeKiriki.setLayout(new FlowLayout());
-		dlgMensajeKiriki.setSize(100, 100);
+		dlgMensajeKiriki.setSize(400, 100);
 		dlgMensajeKiriki.setLocationRelativeTo(null);
 		dlgMensajeKiriki.setResizable(false);
 		dlgMensajeKiriki.add(lblMensajeKiriki);

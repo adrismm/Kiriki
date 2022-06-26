@@ -291,4 +291,31 @@ public class Modelo
 				e.printStackTrace();
 			}
 	}
+	public int finPartida(int vidaJug1, int vidaJug2, int vidaJug3, int vidaJug4)
+	{
+		int vidasGanador;
+		vidasGanador = 0; 
+		
+		if((vidaJug1 != 0) && (vidaJug2 == 0) && (vidaJug3 == 0) && (vidaJug4 == 0))
+		{
+			vidasGanador = vidaJug1;
+			return vidasGanador;
+		}
+		else if((vidaJug1 == 0) && (vidaJug2 != 0) && (vidaJug3 == 0) && (vidaJug4 == 0))
+		{
+			vidasGanador = vidaJug2;
+			return vidasGanador;
+		}
+		else if((vidaJug1 == 0) && (vidaJug2 == 0) && (vidaJug3 != 0) && (vidaJug4 == 0))
+		{
+			vidasGanador = vidaJug3;
+			return vidasGanador;
+		}
+		else if((vidaJug1 == 0) && (vidaJug2 == 0) && (vidaJug3 == 0) && (vidaJug4 != 0))
+		{
+			vidasGanador = vidaJug4;
+			return vidasGanador;
+		}
+		return (vidasGanador);
+	}
 }
