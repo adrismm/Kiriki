@@ -19,52 +19,49 @@ public class MenuInicio extends Frame
 {
 	private static final long serialVersionUID = 1L;
 	
-	// Ventana men� principal
-	Label lblMenuPrincipal = new Label ("MENÚ PRINCIPAL", 1); //El 1 para que salga centrado
-	Panel pnlBotonera = new Panel(); //Panel para botonera principal
-	Panel pnlBotoneraSalir = new Panel(); //Panel para bot�n Salir
+	// Ventana menu principal
+	Label lblMenuPrincipal = new Label ("MENU PRINCIPAL", 1); // 1 para que salga centrado
+	Panel pnlBotonera = new Panel(); // Panel para botonera principal
+	Panel pnlBotoneraSalir = new Panel(); // Panel para boton Salir
 	Button btnNuevaPartida = new Button ("Nueva Partida");
 	Button btnRanking = new Button ("Ranking");
 	Button btnAyuda = new Button("Ayuda");
 	Button btnSalir = new Button("Salir");
 	
+	Color myColor = new Color(0, 128, 0);
 	
 	Toolkit herramientas;
 	Image fondo;
 	
 	public MenuInicio()
 	{
-		this.setTitle("Kiriki"); //T�tulo
-		//this.setBackground(Color.YELLOW); //Color del fondo del Frame
-		this.setLayout(new FlowLayout()); //Layout del Frame
+		this.setTitle("Kiriki"); // Titulo
+		this.setLayout(new FlowLayout()); // Layout del Frame
 		
-		pnlBotonera.setLayout(new GridLayout(4,1)); //Layout del Panel
-		pnlBotonera.add(lblMenuPrincipal); //A�adir Bot�n a Panel
-		pnlBotonera.add(btnNuevaPartida); //A�adir Bot�n a Panel 	
-		pnlBotonera.add(btnRanking); //A�adir Bot�n a Panel
-		pnlBotonera.add(btnAyuda); //A�adir Bot�n a Panel
-		this.add(pnlBotonera, "Center"); //A�adir Panel a Frame
-		pnlBotoneraSalir.add(btnSalir); //A�adir Bot�n a Panel
-		this.add(pnlBotoneraSalir, "South"); //A�adir Panel a Frame
+		pnlBotonera.setLayout(new GridLayout(4,1)); // Layout del Panel
+		pnlBotonera.add(lblMenuPrincipal); // Aniadir Boton a Panel
+		pnlBotonera.add(btnNuevaPartida); // Aniadir Boton a Panel 	
+		pnlBotonera.add(btnRanking); // Aniadir Boton a Panel
+		pnlBotonera.add(btnAyuda); // Aniadir Boton a Panel
+		this.add(pnlBotonera, "Center"); // Aniadir Panel a Frame
+		pnlBotoneraSalir.add(btnSalir); // Aniadir Boton a Panel
+		this.add(pnlBotoneraSalir, "South"); // Aniadir Panel a Frame
 		
-		//agregar imagen de fondo al menu de inicio, además, de colocarla y redimensionarla
+		// Agregar imagen de fondo al menu de inicio, ademas, de colocarla y redimensionarla
 		herramientas = getToolkit();
 		fondo = herramientas.getImage("fondoMenu.jpg").getScaledInstance(390, 240, Image.SCALE_AREA_AVERAGING);
 		pnlBotonera.setPreferredSize(new Dimension(200,100)); //redimensionar el panel
 		pnlBotoneraSalir.setPreferredSize(new Dimension(200,30)); //redimensionar el panel
 		
-		//cambiar color al panel botonera
-		Color myColor = new Color(0, 128, 0);
+		// Color del fondo de los paneles de las botoneras
 		pnlBotonera.setBackground(myColor);
-		//cambiar color al panel botoneraSAlir
-		Color myColor2 = new Color(60, 179, 113);
-		pnlBotoneraSalir.setBackground(myColor2);
+		pnlBotoneraSalir.setBackground(myColor);
 		
-		this.setSize(400,200); //Tama�o de Frame
-		this.setLocationRelativeTo(null); //Centrar la ventana
-		this.setResizable(false); //Evitar redimensionado
+		this.setSize(400,200); // Tamanio de Frame
+		this.setLocationRelativeTo(null); // Centrar la ventana
+		this.setResizable(false); // Evitar redimensionado
 		
-		MostrarInicio(); //Mostrarlo
+		MostrarInicio(); // Mostrarlo
 	}
 	
 	

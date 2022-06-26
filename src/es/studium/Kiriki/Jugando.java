@@ -25,39 +25,31 @@ public class Jugando extends Frame
 {
 	private static final long serialVersionUID = 1L;
 	
-	Toolkit herramientas;
-	Image tapete, cubileteBocaArriba, cubileteBocaAbajo;
-	Image D1, D2, D3, D4, D5, D6; // Imágenes de las caras de los dados
+	Toolkit herramientas; // Llamamos a Toolkit para poder trabajar con graphics
+	Image tapete, cubileteBocaArriba, cubileteBocaAbajo; //Imagenes fondo y cubilete
+	Image D1, D2, D3, D4, D5, D6; // Imagenes de las caras de los dados
 	
-	int dadosTapados = 0;
-	int cargarDados = 0;
+	String jugador1, jugador2, jugador3, jugador4; // Cadenas que almacenan el nombre de los jugadores escrito en la creacion de la partida
+	int numJugadores = 0; // Entero que guarda el numero de jugadores elegidos en la creacion de la partida
+	int turnoJugador = 1; // Entero que nos ayuda a actualizar el turno de los jugadores
 	
-	String jugador1, jugador2, jugador3, jugador4;
-	int numJugadores = 0;
-	int turnoJugador = 1;
-	int tirada = 0;
+	int imagenAmostrar1 = 0; // Entero para un switch donde se muestra la cara obtenida del dado 1 en la tirada
+	int imagenAmostrar2 = 0; // Entero para un switch donde se muestra la cara obtenida del dado 2 en la tirada
+	int voltearCubilete = 0; // Entero para un switch donde se anima al cubilete tirando dados
+	int recuperarCubilete = 0; // Entero para un switch donde se anima al cubilete tapando dados
 	
-	int imagenAmostrar1 = 0;
-	int imagenAmostrar2 = 0;
-	int voltearCubilete = 0;
-	int recuperarCubilete = 0;
-	
-	int vidasJugador1 = 0;
+	int vidasJugador1 = 0; // Enteros donde se guarda las vidas de los jugadores
 	int vidasJugador2 = 0;
 	int vidasJugador3 = 0;
 	int vidasJugador4 = 0;
 	
-	Color myColor = new Color(60, 179, 113);
+	Color myColor = new Color(60, 179, 113); // Color de los dialogos
 	
-	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida");
+	Dialog dlgMensajeComienzoPartida = new Dialog(this, "Comienzo Partida"); // Mensaje aviso de que ha empezado la partida
 	Label lblMensajeComienzoPartida = new Label();
-	Button btnMensajeComienzoPartida = new Button("�Dale!");
+	Button btnMensajeComienzoPartida = new Button("A jugar!");
 	
-	Dialog dlgMensajeTurno = new Dialog(this, "Turno Actual");
-	Label lblMensajeTurno = new Label();
-	Button btnMensajeTurno = new Button("Vale");
-	
-	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada");
+	Dialog dlgMensajeValorTirada = new Dialog(this, "Resultado Tirada"); // Mensaje con el resultado de la tirada y los valores posibles para anunciar al resto
 	Label lblMensajeValorTirada = new Label();
 	Label lblMensajeAnunciarValor = new Label();
 	Panel pnlLabelValorTirada = new Panel();
@@ -79,39 +71,38 @@ public class Jugando extends Frame
 	Checkbox chkParejaAces = new Checkbox("Pareja de Ases", false, chkgrValorTirada);
 	Button btnAnunciarValor = new Button("Anunciar Valor");
 	
-	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado");
-	Label lblMensajeValorAnunciado = new Label(); // + jugadorActual + valorAnunciado
-	Button btnMensajeValorAnunciado = new Button("�Vale!");
+	Dialog dlgMensajeValorAnunciado = new Dialog(this, "Resultado Anunciado"); // Mensaje con el valor anunciado por el jugador que ha tirado los dados
+	Label lblMensajeValorAnunciado = new Label();
+	Button btnMensajeValorAnunciado = new Button("Vale");
+	Label lblMensajeTurno = new Label();
 	
-	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido");
+	Dialog dlgMensajeValorRecibido = new Dialog(this, "Resultado Recibido"); // Mensaje para el jugador que tiene que decidir si levantar el cubilete o seguir tirando
 	Label lblMensajeValorRecibido = new Label();
 	Button btnAceptarValor = new Button("Superar Tirada");
 	Button btnRechazarValor = new Button("Destapar Dados");
 	
-	Dialog dlgMensajeValorAceptado = new Dialog(this, "Resultado Aceptado");
+	Dialog dlgMensajeValorAceptado = new Dialog(this, "Resultado Aceptado"); // Mensaje que aparece cuando un jugador decide seguir tirando los dados e intenta superar la anterior tirada
 	Label lblMensajeValorAceptado = new Label();
 	Button btnMensajeValorAceptado = new Button("Vale");
 	
-	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado");
-	Label lblMensajeValorRechazado = new Label(); // jugadorActual + jugadorAnterior + valorAnunciado
+	Dialog dlgMensajeValorRechazado = new Dialog(this, "Resultado Rechazado"); // Mensaje que aparece cuando un jugador decide levantar el cubilete y ver si el jugador anterior ha mentido o no
+	Label lblMensajeValorRechazado = new Label();
 	Button btnMensajeValorRechazado = new Button("Vale");
-	Label lblMensajeValorVerdadero = new Label(); // + jugadorActual
+	Label lblMensajeValorVerdadero = new Label();
 	Label lblMensajeValorVerdadero1 = new Label(); 
-	Label lblMensajeValorFalso = new Label(); // + jugadorAnterior
-	Label lblMensajeValorFalso1 = new Label(); 
+	Label lblMensajeValorFalso = new Label();
+	Label lblMensajeValorFalso1 = new Label(); 	
 	
+	Dialog dlgMensajeKiriki = new Dialog(this, "Kiriki!!"); // Mensaje que aparece cuando a un jugador le ha salido un kiriki en la tirada
+	Label lblMensajeKiriki = new Label();
+	Button btnMensajeKiriki = new Button("Toma ya!");
 	
-	Dialog dlgMensajeKiriki = new Dialog(this, "¡Kiriki!");
-	Label lblMensajeKiriki = new Label("¡Toma ya! Vaya kirikazo, " + " ha perdido 1 vida."); // + jugadorSiguiente
-	Button btnMensajeKiriki = new Button("¡Toma!");
+	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin"); // Mensaje que aparece cuando un jugador se sale con la victoria
+	Label lblMensajeFinPartida = new Label();
+	Button btnMensajeFinPartida = new Button("Se acabo!");
 	
-	Dialog dlgMensajeFinPartida = new Dialog(this, "Fin");
-	Label lblMensajeFinPartida = new Label("Ha ganado: "); // + jugadorGanador
-	Button btnMensajeFinPartida = new Button("¡Se acabó!");
-	
-	Font fuenteTirada = new Font("Harlow Solid Italic", Font.BOLD, 20);
-	Font fuenteTurno = new Font("Harlow Solid Italic", Font.BOLD, 20);
-	Font fuenteJugadores = new Font("Harlow Solid Italic", Font.PLAIN, 18);
+	Font fuenteTurno = new Font("Harlow Solid Italic", Font.BOLD, 20); // Fuente usada para el turno del jugador actual
+	Font fuenteJugadores = new Font("Harlow Solid Italic", Font.PLAIN, 18); // Fuente usada para el nombre de los jugadores y sus vidas restantes
 	
 	// Constructor
 	public Jugando(int n, String j1, String j2, String j3, String j4)
@@ -122,7 +113,7 @@ public class Jugando extends Frame
 		jugador3 = j3;
 		jugador4 = j4;
 		
-		herramientas = getToolkit();
+		herramientas = getToolkit(); // Imagenes del fondo, el cubilete y las caras de los dados
 		tapete = herramientas.getImage("tapete612x408.jpg");
 		cubileteBocaArriba = herramientas.getImage("cubilete.png");
 		cubileteBocaAbajo = herramientas.getImage("cubilete2.png");
@@ -134,8 +125,8 @@ public class Jugando extends Frame
 		D5 = herramientas.getImage("dadoKing.png");
 		D6 = herramientas.getImage("dadoAce.png");
 		
-		setTitle("Kiriki: Jugando"); // T�tulo
-		setSize(620, 446); // Tamaño del Frame
+		setTitle("Kiriki: Jugando"); // Titulo
+		setSize(620, 446); // Tamanio del Frame
 		setLocationRelativeTo(null); // Centrar la ventana
 		setResizable(false); // Evitar redimensionado
 		
@@ -146,14 +137,6 @@ public class Jugando extends Frame
 		dlgMensajeComienzoPartida.setResizable(false);
 		dlgMensajeComienzoPartida.add(lblMensajeComienzoPartida);
 		dlgMensajeComienzoPartida.add(btnMensajeComienzoPartida);
-		
-		dlgMensajeTurno.setBackground(myColor);
-		dlgMensajeTurno.setLayout(new FlowLayout());
-		dlgMensajeTurno.setSize(300, 80);
-		dlgMensajeTurno.setLocationRelativeTo(null);
-		dlgMensajeTurno.setResizable(false);
-		dlgMensajeTurno.add(lblMensajeTurno);
-		dlgMensajeTurno.add(btnMensajeTurno);
 		
 		dlgMensajeValorTirada.setBackground(myColor);
 		dlgMensajeValorTirada.setLayout(new GridLayout(2, 1));
@@ -179,7 +162,6 @@ public class Jugando extends Frame
 		pnlCheckboxValorTirada.add(chkParejaAces);
 		pnlCheckboxValorTirada.add(btnAnunciarValor);
 		dlgMensajeValorTirada.add(pnlCheckboxValorTirada, "South");
-		//dlgMensajeValorTirada.add(btnAnunciarValor);
 		
 		dlgMensajeValorRecibido.setBackground(myColor);
 		dlgMensajeValorRecibido.setLayout(new FlowLayout());
@@ -221,19 +203,19 @@ public class Jugando extends Frame
 		
 		dlgMensajeFinPartida.setBackground(myColor);
 		dlgMensajeFinPartida.setLayout(new FlowLayout());
-		dlgMensajeFinPartida.setSize(100, 100);
+		dlgMensajeFinPartida.setSize(500, 100);
 		dlgMensajeFinPartida.setLocationRelativeTo(null);
 		dlgMensajeFinPartida.setResizable(false);
 		dlgMensajeFinPartida.add(lblMensajeFinPartida);
 		dlgMensajeFinPartida.add(btnMensajeFinPartida);
 	}
 	
-	// Dibujamos
+	// Dibujamos el fondo, el cubilete, los dados, el turno actual, los nombres y las vidas restantes
 	public void paint(Graphics g)
 	{
-		g.drawImage(tapete,  0,  30,  this);
-		g.setFont(fuenteTurno);
+		g.drawImage(tapete,  0,  30,  this); // Tapete de fondo
 		
+		// Cambio imagen cubilete
 		switch(voltearCubilete)
 		{
 			case 0:
@@ -294,7 +276,7 @@ public class Jugando extends Frame
 		
 		g.setFont(fuenteTurno);
 		
-		// Turno
+		// Turno de jugador actual
 		switch(turnoJugador)
 		{
 			case 1:
@@ -321,7 +303,7 @@ public class Jugando extends Frame
 		
 		g.setFont(fuenteJugadores);
 		
-		// Jugadores
+		// Nombre de ugadores y vidas restantes
 		g.setColor(Color.yellow);
 		g.drawString(jugador1 + ": " + vidasJugador1 + " vidas", 45, 54);
 		g.fillOval(18, 40, 20, 20); // Ficha Amarilla
@@ -346,12 +328,9 @@ public class Jugando extends Frame
 				g.fillOval(18, 130, 20, 20); // Ficha Roja
 				break;
 		}
-		
-		
-		
 	}
 	
-	public void cargarDados() // Ya en el constructor
+	public void cargarDados() // Cargamos en el controlador las imagenes de los dados
 	{
 		D1 = herramientas.getImage("dadoNegro.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
 		D2 = herramientas.getImage("dadoRojo.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
@@ -361,14 +340,14 @@ public class Jugando extends Frame
 		D6 = herramientas.getImage("dadoAce.png").getScaledInstance(50, 50, Image.SCALE_AREA_AVERAGING);
 	}
 	
-	public void mostrarDadoCubiletes(int dado1, int dado2)
+	public void mostrarDadoCubiletes(int dado1, int dado2) // Mostramos el resultado de la tirada, se oculta con: 0, 0 como parametro
 	{
 		imagenAmostrar1 = dado1;
 		imagenAmostrar2 = dado2;
 		repaint();
 	}
 	
-	public void mostrarValorAnunciado(String valorCheckbox)
+	public void mostrarValorAnunciado(String valorCheckbox) // Mostramos mensaje con valor anunciado por jugador anterior y avisamos al siguiente jugador
 	{
 		dlgMensajeValorAnunciado.setBackground(myColor);
 		dlgMensajeValorAnunciado.setLayout(new GridLayout(3, 1));
@@ -438,7 +417,7 @@ public class Jugando extends Frame
 		dlgMensajeValorAnunciado.setVisible(true);
 	}
 	
-	public void actualizarTurno(int turno)
+	public void actualizarTurno(int turno) // Metodo para actualizar el turno actual segun el numero de jugadores
 	{
 		if((numJugadores == 4) && ((turno - 1) < 4))
 		{
@@ -472,7 +451,7 @@ public class Jugando extends Frame
 		}
 	}
 	
-	
+	// Metodos para restarle vidas a los jugadores
 	public void quitarVidasJugador1()
 	{
 		vidasJugador1--;
@@ -497,15 +476,34 @@ public class Jugando extends Frame
 		repaint();
 	}
 	
-	public void resetearContadores()
+	// Metodo para colocar la cantidad de vidas de los jugadores segun el numero de jugadores
+	public void resetearVidas()
 	{
-		vidasJugador1 = 10;
-		vidasJugador2 = 10;
-		vidasJugador3 = 10;
-		vidasJugador4 = 10;
-		repaint();
+		if(numJugadores == 4)
+		{
+			vidasJugador1 = 3;
+			vidasJugador2 = 3;
+			vidasJugador3 = 3;
+			vidasJugador4 = 3;
+			repaint();
+		}
+		else if(numJugadores == 3)
+		{
+			vidasJugador1 = 3;
+			vidasJugador2 = 3;
+			vidasJugador3 = 3;
+			repaint();
+		}
+		else if(numJugadores == 2)
+		{
+			vidasJugador1 = 3;
+			vidasJugador2 = 3;
+			repaint();
+		}
+
 	}
 	
+	// Metodos para mostrar las dos imagenes de la animacion del cubilete
 	public void cambiarCubilete(int voltear)
 	{
 		voltearCubilete = voltear;
@@ -516,20 +514,15 @@ public class Jugando extends Frame
 		recuperarCubilete = recup;
 		repaint();
 	}
+	
+	// Metodo para el sonido de dados que hace el cubilete
 	public void sonidoDados()
 	{
-		//sonido
 		try
 		{
-			// Se obtiene un Clip de sonido
             Clip sonido = AudioSystem.getClip();
-            
-            // Se carga con un fichero wav
             sonido.open(AudioSystem.getAudioInputStream(new File("dados.wav")));
-            
-            // Comienza la reproducción
             sonido.start();
-            
         } 
 		catch (Exception e) 
 		{
