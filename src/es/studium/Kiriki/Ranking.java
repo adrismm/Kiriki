@@ -9,7 +9,6 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Panel;
-// import java.awt.TextArea;
 
 public class Ranking extends Frame
 {
@@ -47,9 +46,9 @@ public class Ranking extends Frame
 	
 	public Ranking()
 	{
-		setTitle("Kiriki: Ranking"); //Título
-		setBackground(Color.YELLOW); //Color de fondo del Frame
-		setLayout(new FlowLayout()); //Layout del Frame
+		setTitle("Kiriki: Ranking"); // Titulo
+		setBackground(Color.YELLOW); // Color de fondo del Frame
+		setLayout(new FlowLayout()); // Layout del Frame
 		add(lblMejoresJugadores);
 //		add(listadoJugadores);
 //		listadoJugadores.append("JUGADOR\tPUNTOS\n");
@@ -90,9 +89,9 @@ public class Ranking extends Frame
 		
 		add(btnVolver);
 		
-		setSize(400,360); //Tamaño del Frame
-		setLocationRelativeTo(null); //Centrar la ventana
-		setResizable(false); //Evitar redimensionado
+		setSize(400,360); // Tamanio del Frame
+		setLocationRelativeTo(null); // Centrar la ventana
+		setResizable(false); // Evitar redimensionado
 	}
 	
 	public void MostrarRanking()

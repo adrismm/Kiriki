@@ -10,28 +10,27 @@ import java.sql.Connection;
 
 public class Controlador implements WindowListener, ActionListener, MouseListener
 {
-	Modelo modelo;
-	MenuInicio vistaMenuInicio;
+	Modelo modelo; // Base de datos ranking y otras operaciones
+	MenuInicio vistaMenuInicio; // Menu principal
 	NuevaPartida vistaNuevaPartida; // Partida nueva
 	Ranking vistaRanking; // Top 10 jugadores
 	Jugando vistaJugando; // Tapete de juego
 	
-	int turno = 1;
-	int tiradaDado1;
-	int tiradaDado2;
-	int voltearCubilete;
+	int turno = 1; // Contador con el que actualizaremos los turnos
+	int tiradaDado1; // Entero que almacena el valor de la tirada del dado 1
+	int tiradaDado2; // Entero que almacena el valor de la tirada del dado 2
 
-
+	String valorTirada; // Cadena para almacenar el valor asociado al resultado de la tirada real
+	String valorAnunciado; // Cadena para almacenar el valor asociado al resultado anunciado por el jugador
 	
+	boolean controlTurno = true; // Boolean de control para dejar a un jugador realizar una tirada o no
+	boolean controlMentira = false; // Boolean de control segun un jugador haya mentido o no
 	
-	String valorTirada;
-	String valorAnunciado;
+	int[] vidasGanador = new int[4]; // Array para almacenar las vidas actuales de los jugadores y comprobar si hay un ganador
 	
-	boolean controlTurno = true;
-	boolean controlMentira = false;
+	Connection conexion = null; // Conectar con la base de datos
 	
-	Connection conexion = null;
-	
+	// Constructor
 	public Controlador(Modelo m, MenuInicio vmi, NuevaPartida vnp, Ranking vr, Jugando vj)
 	{
 		this.modelo = m;
@@ -40,6 +39,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		this.vistaRanking = vr;
 		this.vistaJugando = vj;
 		
+		// Listeners ventana Menu Principal
 		vmi.addWindowListener(this);
 		vmi.btnNuevaPartida.addActionListener(this);	
 		vmi.btnRanking.addActionListener(this);
@@ -47,24 +47,16 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		vmi.btnAyuda.addActionListener(this);
 		vmi.addMouseListener(this);
 		
+		// Listeners ventana Ranking
 		vr.addWindowListener(this);
 		vr.btnVolver.addActionListener(this);
 		
+		// Listeners ventana Crear Partida
 		vnp.pedirNumeroJugadores.addWindowListener(this);
 		vnp.btnContinuar.addActionListener(this);
 		vnp.pedirNombresJugadores.addWindowListener(this);
 		vnp.btnComenzarPartida.addActionListener(this);
 		vnp.dlgMensajeFaltanNombres.addWindowListener(this);
-	
-		vj.dlgMensajeComienzoPartida.addWindowListener(this);
-		vj.dlgMensajeValorTirada.addWindowListener(this);
-		vj.dlgMensajeValorAnunciado.addWindowListener(this);
-		vj.dlgMensajeValorAceptado.addWindowListener(this);
-		vj.dlgMensajeValorRechazado.addWindowListener(this);
-		vj.dlgMensajeKiriki.addWindowListener(this);
-		vj.dlgMensajeFinPartida.addWindowListener(this);
-		
-		
 	}
 
 	@Override
@@ -76,17 +68,18 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		{
 			System.exit(0);
 		}
-		if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) //Ejecutar al pulsar el botón Ranking
+		if(botonPulsado.equals(this.vistaMenuInicio.btnRanking)) // Ejecutar al pulsar el boton Ranking
 		{
-			this.vistaRanking.MostrarRanking(); //Muestra la ventana
+			this.vistaRanking.MostrarRanking(); // Muestra la ventana
 			this.vistaMenuInicio.OcultarInicio();
 			
-			conexion = this.modelo.conectar();// Conectar con la base de datos
+			conexion = this.modelo.conectar(); // Conectar con la base de datos
 			//this.vistaRanking.listadoJugadores.append(consulta);
 			
 			String cogerRanking = this.modelo.mejoresJugadores(conexion);
 			String[] completarRanking = cogerRanking.split("/");
 			
+			// Adaptar espacios ranking segun numero de jugadores ganadores
 			if(completarRanking.length >=2 && completarRanking.length <4)
 				{
 					this.vistaRanking.lblJugador1.setText(completarRanking[0]);
@@ -203,7 +196,6 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					this.vistaRanking.lblPuntos8.setText(completarRanking[15]);
 					this.vistaRanking.lblJugador9.setText(completarRanking[16]);
 					this.vistaRanking.lblPuntos9.setText(completarRanking[17]);
-	
 				}
 			else if(completarRanking.length >=20)
 				{	this.vistaRanking.lblJugador1.setText(completarRanking[0]);
@@ -227,172 +219,175 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 					this.vistaRanking.lblJugador10.setText(completarRanking[18]);
 					this.vistaRanking.lblPuntos10.setText(completarRanking[19]);
 				}
+			
 			this.modelo.desconectar(conexion);
 		}
 		
-		//Lanzar ventana de AYUDA al pulsar el botón de ayuda 
+		// Lanzar ventana de AYUDA al pulsar el boton de ayuda 
 		if(botonPulsado.equals(this.vistaMenuInicio.btnAyuda))
 			{
 				this.modelo.ayuda(conexion);
 				this.modelo.desconectar(conexion);
 			}
-		
-		else if(botonPulsado.equals(this.vistaRanking.btnVolver)) //Gestionar el botón "Volver" de la nueva ventana Ranking
+		else if(botonPulsado.equals(this.vistaRanking.btnVolver)) // Gestionar el boton "Volver" de la nueva ventana Ranking
 		{
 			this.vistaRanking.OcultarRanking();
 			this.vistaMenuInicio.MostrarInicio();
 		}
-		else if(botonPulsado.equals(this.vistaMenuInicio.btnNuevaPartida)) //Al pulsar el bot�n "Nueva Partida", mostrar el di�logo para pedir el n�mero de jugadores mediante un desplegable
+		else if(botonPulsado.equals(this.vistaMenuInicio.btnNuevaPartida)) // Al pulsar el boton "Nueva Partida", mostrar el dialogo para pedir el numero de jugadores mediante un desplegable
 		{
 			this.vistaNuevaPartida.MostrarDialogNumeroJugadores();
 			this.vistaMenuInicio.OcultarInicio();
 		}
-		else if(botonPulsado.equals(this.vistaNuevaPartida.btnContinuar)) //Si ha pulsado el bot�n "Continuar" del di�logo anterior, se llama al m�todo que prepara el siguiente di�logo pas�ndole como par�metro el n�mero de jugadores
+		else if(botonPulsado.equals(this.vistaNuevaPartida.btnContinuar)) // Si ha pulsado el boton "Continuar" del dialogo anterior, llama al metodo que obtiene el numero de jugadores
 		{
-			if(!this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem().equals("Elegir número de jugadores...")) //Este m�todo prepara el contenido del di�logo en funci�n de este valor pasado y muestra dicho di�logo
+			if(!this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem().equals("Elegir numero de jugadores...")) // Este metodo prepara el contenido del dialogo y lo muestra
 			{
 				this.vistaNuevaPartida.PrepararDialogNombresJugadores(Integer.parseInt(this.vistaNuevaPartida.choNumeroJugadores.getSelectedItem()));
 			}
 		}
-		else if(botonPulsado.equals(this.vistaNuevaPartida.btnComenzarPartida)) //Si ha pulsado el botón "Comenzar Partida" del diálogo anterior, ya una vez escritos los nombres de los jugadores
+		else if(botonPulsado.equals(this.vistaNuevaPartida.btnComenzarPartida)) // Si ha pulsado el boton "Comenzar Partida" del dialogo anterior, ya una vez escritos los nombres de los jugadores
 		{			
-			if((this.vistaNuevaPartida.numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) //Si se queda alg�n nombre en blanco no se puede comenzar la partida
+			if((this.vistaNuevaPartida.numJugadores == 4) && (!this.vistaNuevaPartida.txfNombre1.getText().equals("")) // Se crea la partida, obteniendo los nombres de los jugadores y segun cuantos sean
 				&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre3.getText().equals(""))
 				&& (!this.vistaNuevaPartida.txfNombre4.getText().equals("")))
-			{
-					this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
-					this.vistaJugando.addWindowListener(this);
-					this.vistaJugando.addMouseListener(this);
-					this.vistaJugando.dlgMensajeComienzoPartida.addWindowListener(this);
-					this.vistaJugando.dlgMensajeTurno.addWindowListener(this);
-					this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
-					this.vistaJugando.btnAnunciarValor.addActionListener(this);
-					this.vistaJugando.dlgMensajeValorAnunciado.addWindowListener(this);
-					this.vistaJugando.dlgMensajeValorRecibido.addWindowListener(this);
-					this.vistaJugando.dlgMensajeKiriki.addWindowListener(this);
-					this.vistaJugando.btnAceptarValor.addActionListener(this);
-					this.vistaJugando.btnRechazarValor.addActionListener(this);
-					this.vistaJugando.dlgMensajeValorAceptado.addWindowListener(this);
-					this.vistaJugando.dlgMensajeValorRechazado.addWindowListener(this);
-				 	this.vistaJugando.MostrarJugando();
-					this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
-					this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-					this.vistaJugando.lblMensajeComienzoPartida.setText("¡La partida ha comenzado!");
-					this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
-					this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
-					this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
-					this.vistaJugando.btnMensajeKiriki.addActionListener(this);
-					this.vistaJugando.btnMensajeTurno.addActionListener(this);
-					this.vistaJugando.btnMensajeValorRechazado.addActionListener(this);
-					this.vistaJugando.btnMensajeValorAnunciado.addActionListener(this);
-					this.vistaJugando.btnMensajeValorAceptado.addActionListener(this);
-					this.vistaJugando.vidasJugador1 = 3;
-					this.vistaJugando.vidasJugador2 = 3;
-					this.vistaJugando.vidasJugador3 = 3;
-					this.vistaJugando.vidasJugador4 = 3;
-
+			{	
+				// Creamos un objeto de la clase "Jugando" con los nombres de los jugadores como parametros
+				this.vistaJugando = new Jugando(4, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), this.vistaNuevaPartida.txfNombre4.getText());
+				
+				// Mostramos la ventana de juego, ocultamos el resto y un mensaje de aviso al comenzar la partida creada
+			 	this.vistaJugando.MostrarJugando();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
+				this.vistaJugando.lblMensajeComienzoPartida.setText("La partida ha comenzado!");
+				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
+				
+				// Aniadimos los listeners correspondiente al frame, los dialogos y botones
+				this.vistaJugando.addWindowListener(this);
+				this.vistaJugando.addMouseListener(this);
+				this.vistaJugando.dlgMensajeComienzoPartida.addWindowListener(this);
+				this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
+				this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
+				this.vistaJugando.btnAnunciarValor.addActionListener(this);
+				this.vistaJugando.dlgMensajeValorAnunciado.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorAnunciado.addActionListener(this);
+				this.vistaJugando.dlgMensajeValorRecibido.addWindowListener(this);
+				this.vistaJugando.btnAceptarValor.addActionListener(this);
+				this.vistaJugando.btnRechazarValor.addActionListener(this);
+				this.vistaJugando.dlgMensajeValorAceptado.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorAceptado.addActionListener(this);
+				this.vistaJugando.dlgMensajeValorRechazado.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorRechazado.addActionListener(this);
+				this.vistaJugando.dlgMensajeKiriki.addWindowListener(this);
+				this.vistaJugando.btnMensajeKiriki.addActionListener(this);
+				this.vistaJugando.dlgMensajeFinPartida.addWindowListener(this);
+				this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
+				
+				// Llamamos a este metodo para fijar las vidas con la que comienzan los jugadores
+				this.vistaJugando.resetearVidas();
 			}
 			else if((this.vistaNuevaPartida.numJugadores == 3) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre3.getText().equals("")))
 			{
+				// Creamos un objeto de la clase "Jugando" con los nombres de los jugadores como parametros
 				this.vistaJugando = new Jugando(3, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), this.vistaNuevaPartida.txfNombre3.getText(), "");
+				
+				// Mostramos la ventana de juego, ocultamos el resto y un mensaje de aviso al comenzar la partida creada
+			 	this.vistaJugando.MostrarJugando();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
+				this.vistaJugando.lblMensajeComienzoPartida.setText("La partida ha comenzado!");
+				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
+				
+				// Aniadimos los listeners correspondiente al frame, los dialogos y botones
 				this.vistaJugando.addWindowListener(this);
 				this.vistaJugando.addMouseListener(this);
 				this.vistaJugando.dlgMensajeComienzoPartida.addWindowListener(this);
-				this.vistaJugando.dlgMensajeTurno.addWindowListener(this);
+				this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
 				this.vistaJugando.btnAnunciarValor.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorAnunciado.addWindowListener(this);
-				this.vistaJugando.dlgMensajeKiriki.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorAnunciado.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorRecibido.addWindowListener(this);
 				this.vistaJugando.btnAceptarValor.addActionListener(this);
 				this.vistaJugando.btnRechazarValor.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorAceptado.addWindowListener(this);
-				this.vistaJugando.dlgMensajeValorRechazado.addWindowListener(this);
-				this.vistaJugando.MostrarJugando();
-				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
-				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.lblMensajeComienzoPartida.setText("¡La partida ha comenzado!");
-				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
-				this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
-				this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
-				this.vistaJugando.btnMensajeKiriki.addActionListener(this);
-				this.vistaJugando.btnMensajeTurno.addActionListener(this);
-				this.vistaJugando.btnMensajeValorRechazado.addActionListener(this);
-				this.vistaJugando.btnMensajeValorAnunciado.addActionListener(this);
 				this.vistaJugando.btnMensajeValorAceptado.addActionListener(this);
-				this.vistaJugando.vidasJugador1 = 3;
-				this.vistaJugando.vidasJugador2 = 3;
-				this.vistaJugando.vidasJugador3 = 3;
+				this.vistaJugando.dlgMensajeValorRechazado.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorRechazado.addActionListener(this);
+				this.vistaJugando.dlgMensajeKiriki.addWindowListener(this);
+				this.vistaJugando.btnMensajeKiriki.addActionListener(this);
+				this.vistaJugando.dlgMensajeFinPartida.addWindowListener(this);
+				this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
 				
-			
-				
+				// Llamamos a este metodo para fijar las vidas con la que comienzan los jugadores
+				this.vistaJugando.resetearVidas();
 			}
 			else if((this.vistaNuevaPartida.numJugadores == 2) && (!this.vistaNuevaPartida.txfNombre1.getText().equals(""))
 					&& (!this.vistaNuevaPartida.txfNombre2.getText().equals("")))
 			{
+				// Creamos un objeto de la clase "Jugando" con los nombres de los jugadores como parametros
 				this.vistaJugando = new Jugando(2, this.vistaNuevaPartida.txfNombre1.getText(), this.vistaNuevaPartida.txfNombre2.getText(), "", "");
+				
+				// Mostramos la ventana de juego, ocultamos el resto y un mensaje de aviso al comenzar la partida creada
+			 	this.vistaJugando.MostrarJugando();
+				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
+				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
+				this.vistaJugando.lblMensajeComienzoPartida.setText("La partida ha comenzado!");
+				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
+				
+				// Aniadimos los listeners correspondiente al frame, los dialogos y botones
 				this.vistaJugando.addWindowListener(this);
 				this.vistaJugando.addMouseListener(this);
 				this.vistaJugando.dlgMensajeComienzoPartida.addWindowListener(this);
-				this.vistaJugando.dlgMensajeTurno.addWindowListener(this);
+				this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorTirada.addWindowListener(this);
 				this.vistaJugando.btnAnunciarValor.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorAnunciado.addWindowListener(this);
-				this.vistaJugando.dlgMensajeKiriki.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorAnunciado.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorRecibido.addWindowListener(this);
 				this.vistaJugando.btnAceptarValor.addActionListener(this);
 				this.vistaJugando.btnRechazarValor.addActionListener(this);
 				this.vistaJugando.dlgMensajeValorAceptado.addWindowListener(this);
-				this.vistaJugando.dlgMensajeValorRechazado.addWindowListener(this);
-				this.vistaJugando.MostrarJugando();
-				this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
-				this.vistaNuevaPartida.OcultarDialogNombresJugadores();
-				this.vistaJugando.lblMensajeComienzoPartida.setText("�La partida ha comenzado!");
-				this.vistaJugando.dlgMensajeComienzoPartida.setVisible(true);
-				this.vistaJugando.btnMensajeComienzoPartida.addActionListener(this);
-				this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
-				this.vistaJugando.btnMensajeKiriki.addActionListener(this);
-				this.vistaJugando.btnMensajeTurno.addActionListener(this);
-				this.vistaJugando.btnMensajeValorRechazado.addActionListener(this);
-				this.vistaJugando.btnMensajeValorAnunciado.addActionListener(this);
 				this.vistaJugando.btnMensajeValorAceptado.addActionListener(this);
-				this.vistaJugando.vidasJugador1 = 3;
-				this.vistaJugando.vidasJugador2 = 3;
+				this.vistaJugando.dlgMensajeValorRechazado.addWindowListener(this);
+				this.vistaJugando.btnMensajeValorRechazado.addActionListener(this);
+				this.vistaJugando.dlgMensajeKiriki.addWindowListener(this);
+				this.vistaJugando.btnMensajeKiriki.addActionListener(this);
+				this.vistaJugando.dlgMensajeFinPartida.addWindowListener(this);
+				this.vistaJugando.btnMensajeFinPartida.addActionListener(this);
 				
-				
+				// Llamamos a este metodo para fijar las vidas con la que comienzan los jugadores
+				this.vistaJugando.resetearVidas();
 			}
 			else
 			{
-				this.vistaNuevaPartida.MensajeErrorFaltanNombres();
+				this.vistaNuevaPartida.MensajeErrorFaltanNombres(); // Mostramos un error si se deja algun nombre en blanco
 			}
 		}
-		
-		if(botonPulsado.equals(this.vistaJugando.btnMensajeComienzoPartida))
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeComienzoPartida)) // Si pulsamos el boton del aviso de partida comenzada, ocultamos el mensaje
 		{
 			this.vistaJugando.dlgMensajeComienzoPartida.setVisible(false);
-		}
-		
-		else if(botonPulsado.equals(this.vistaJugando.btnAnunciarValor))
+		}	
+		else if(botonPulsado.equals(this.vistaJugando.btnAnunciarValor)) // Si pulsamos el boton y hemos elegido un valor que anunciar en las casillas, anunciamos ese valor elegido
 		{
-
-			if(!this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().equals(null)) // if(chkgrValorTirada.isSelected())
+			if(!this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().equals(null))
 			{
 				this.vistaJugando.dlgMensajeValorTirada.setVisible(false);
 				this.vistaJugando.mostrarValorAnunciado(this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().getLabel());
 				this.vistaJugando.dlgMensajeValorAnunciado.setVisible(true);
 			}
 			
-			this.vistaJugando.cambiarCubilete(0);
+			this.vistaJugando.cambiarCubilete(0); // Tapamos los dados tirados con el cubilete justo antes de pasarselo al siguiente jugador
 			this.vistaJugando.recuperarCubilete(0);
 		}
-		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAnunciado))
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAnunciado)) // Aviso para todos los jugadores del valor anunciado por el jugador que ha tirado los dados
 		{
-			this.vistaJugando.dlgMensajeValorAnunciado.setVisible(false);
+			this.vistaJugando.dlgMensajeValorAnunciado.setVisible(false); // Ocultamos el mensaje del aviso del valor anunciado
 
-			if((this.vistaJugando.numJugadores == 4) && ((turno == 5) || (turno == 8)))
+			if((this.vistaJugando.numJugadores == 4) && ((turno == 5) || (turno == 8))) // Con el contador de turnos nos aseguramos de que se reinicie segun el numero de jugadores
 			{
 				turno = 1;
 			}
@@ -404,98 +399,220 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			{
 				turno = 1;
 			}
+			
 			turno = turno + 1;
-			this.vistaJugando.actualizarTurno(turno);
-			this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador1 + ", ¿intentarás superar la tirada anterior o destaparás los dados?");
+			this.vistaJugando.actualizarTurno(turno); // Actualizamos el turno y pasamos al siguiente jugador que recibe la tirada y el valor anunciado
+			
+			this.vistaJugando.lblMensajeValorRecibido.setText("Intentas superar la tirada anterior o destapas los dados?");
 			this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
 		}
-		else if(botonPulsado.equals(this.vistaJugando.btnAceptarValor))
+		else if(botonPulsado.equals(this.vistaJugando.btnAceptarValor)) // Si pulsamos en el boton "Aceptar", decidimos volver a tirar e intentar superar el valor anunciado por el jugador anterior
 		{
-			controlTurno = true;
+			controlTurno = true; // Habilitamos que se pueda realizar una tirada
 			this.vistaJugando.dlgMensajeValorRecibido.setVisible(false);
-			this.vistaJugando.lblMensajeValorAceptado.setText("Intenta superar la tirada, vuelve a tirar los dados ¡Suerte!");
+			this.vistaJugando.lblMensajeValorAceptado.setText("Suerte superando la tirada! Vuelve a tirar los dados");
 			this.vistaJugando.dlgMensajeValorAceptado.setVisible(true);
-			this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null);
+			this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null); // Limpiamos las casillas elegidas por el jugador anterior al anunciar el valor de su tirada
 		}
-		else if(botonPulsado.equals(this.vistaJugando.btnRechazarValor))
+		else if(botonPulsado.equals(this.vistaJugando.btnRechazarValor)) // Si pulsamos el boton "Rechazar", decidimos levantar el cubilete y comprobar si el jugador anterior miente o no
 		{
 			this.vistaJugando.dlgMensajeValorRecibido.setVisible(false);
-			this.vistaJugando.lblMensajeValorRechazado.setText("Y la tirada anterior es realmente un/a... " + valorTirada); //this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
+			this.vistaJugando.lblMensajeValorRechazado.setText("Y la tirada anterior era realmente un/a... " + valorTirada); // Mostramos el valor de la tirada real
 			this.vistaJugando.dlgMensajeValorRechazado.setVisible(true);
-			this.vistaJugando.cargarDados();
-			this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2);
-			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-			valorAnunciado = this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().getLabel();
-			controlMentira = this.modelo.compararValores(valorTirada, valorAnunciado);
 			
-			if(controlMentira == true)
+			this.vistaJugando.cargarDados();
+			this.vistaJugando.mostrarDadoCubiletes(tiradaDado1, tiradaDado2); // Mostramos a todos las imagenes de la tirada real
+			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2); // Almacenamos el valor de la tirada real
+			valorAnunciado = this.vistaJugando.chkgrValorTirada.getSelectedCheckbox().getLabel(); // Almacenamos el valor anunciado por el jugador anterior
+			controlMentira = this.modelo.compararValores(valorTirada, valorAnunciado); // Comparamos los valores asociados a la tirada y al valor anunciado, para saber si el jugador anterior ha mentido o no
+			
+			if(controlMentira == true) // En caso de que haya mentido, el metodo "compararValores" nos devuelve: true
 			{
-				this.vistaJugando.lblMensajeValorFalso.setText("¡El jugador anterior ha mentido y pierde 1 vida!"); // jugadorAnterior ha mentido
-				this.vistaJugando.lblMensajeValorFalso1.setText("Tú sigues la partida, vuelve a tirar"); // jugadorAnterior ha mentido
-				this.vistaJugando.lblMensajeValorVerdadero.setVisible(false);
+				this.vistaJugando.lblMensajeValorFalso.setText("El jugador anterior ha mentido y pierde 1 vida!");
+				this.vistaJugando.lblMensajeValorFalso1.setText("Tu continuas la partida, vuelve a tirar los dados");
+				this.vistaJugando.lblMensajeValorVerdadero.setVisible(false); // Mostramos un mensaje u otro en el dialogo, segun si ha mentido o no
 				this.vistaJugando.lblMensajeValorVerdadero1.setVisible(false);
 				this.vistaJugando.lblMensajeValorFalso.setVisible(true);
 				this.vistaJugando.lblMensajeValorFalso1.setVisible(true);
-				controlTurno = true;
-				turno = turno -1; 
-				if(turno == 1)
+				
+				controlTurno = true; // Habilitamos que se pueda realizar una tirada
+				turno = turno -1; // Actualizamos el contador para el jugador anterior
+				
+				if(turno == 1) // Ademas el jugador anterior que ha mentido pierde una vida
 				{
-					this.vistaJugando.vidasJugador1 --;
+					this.vistaJugando.quitarVidasJugador1();
 				}
 				else if(turno == 2)
 				{
-					this.vistaJugando.vidasJugador2 --;
+					this.vistaJugando.quitarVidasJugador2();
 				}
 				else if(turno == 3)
 				{
-					this.vistaJugando.vidasJugador3 --;
+					this.vistaJugando.quitarVidasJugador3();
 				}
 				else if(turno == 4)
 				{
-					this.vistaJugando.vidasJugador4 --;
+					this.vistaJugando.quitarVidasJugador4();
+				}
+				
+				// Comprobamos si hay algun ganador despues de actualizar las vidas
+				if(this.vistaJugando.numJugadores == 4)
+				{
+					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
+					
+					if(vidasGanador[0] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[1] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[2] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[3] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador4 + " con " + this.vistaJugando.vidasJugador4 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+				}
+				else if(this.vistaJugando.numJugadores == 3)
+				{
+					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, 0);
+					
+					if(vidasGanador[0] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[1] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[2] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+				}
+				else if(this.vistaJugando.numJugadores == 2)
+				{
+					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, 0, 0);
+					
+					if(vidasGanador[0] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[1] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
 				}
 			}
-			else if(controlMentira == false)
+			else if(controlMentira == false) // En caso de que no haya mentido, el metodo "compararValores" nos devuelve: false
 			{
-				this.vistaJugando.lblMensajeValorVerdadero.setText("¡El jugador anterior decía la verdad y tú pierdes 1 vida!"); // jugadorAnterior + jugadorActual
-				this.vistaJugando.lblMensajeValorVerdadero1.setText("El siguiente jugador continua la partida, él tira"); // jugadorAnterior + jugadorActual
-				this.vistaJugando.lblMensajeValorVerdadero.setVisible(true);
+				this.vistaJugando.lblMensajeValorVerdadero.setText("El jugador anterior ha dicho la verdad y tu pierdes 1 vida!");
+				this.vistaJugando.lblMensajeValorVerdadero1.setText("El siguiente jugador continua la partida, que el vuelva a tirar los dados");
+				this.vistaJugando.lblMensajeValorVerdadero.setVisible(true); // Mostramos un mensaje u otro en el dialogo, segun si ha mentido o no
 				this.vistaJugando.lblMensajeValorVerdadero1.setVisible(true);
 				this.vistaJugando.lblMensajeValorFalso.setVisible(false);
 				this.vistaJugando.lblMensajeValorFalso1.setVisible(false);
-				this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null);
-				controlTurno = true;
-				if(turno == 1)
+				
+				this.vistaJugando.chkgrValorTirada.setSelectedCheckbox(null); // Limpiamos las casillas elegidas por el jugador anterior al anunciar el valor de su tirada
+				controlTurno = true; // Habilitamos que se pueda realizar una tirada
+				
+				if(turno == 1) // Ademas el jugador anterior que ha dicho la verdad hace que el jugador actual pierda una vida
 				{
-					this.vistaJugando.vidasJugador1 --;
+					this.vistaJugando.quitarVidasJugador1();
 				}
 				else if(turno == 2)
 				{
-					this.vistaJugando.vidasJugador2 --;
+					this.vistaJugando.quitarVidasJugador2();
 				}
 				else if(turno == 3)
 				{
-					this.vistaJugando.vidasJugador3 --;
+					this.vistaJugando.quitarVidasJugador3();
 				}
 				else if(turno == 4)
 				{
-					this.vistaJugando.vidasJugador4 --;
+					this.vistaJugando.quitarVidasJugador4();
+				}
+				
+				// Comprobamos si hay algun ganador despues de actualizar las vidas
+				if(this.vistaJugando.numJugadores == 4)
+				{
+					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
+					
+					if(vidasGanador[0] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[1] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[2] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[3] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador4 + " con " + this.vistaJugando.vidasJugador4 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+				}
+				else if(this.vistaJugando.numJugadores == 3)
+				{
+					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, 0);
+					
+					if(vidasGanador[0] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[1] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[2] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+				}
+				else if(this.vistaJugando.numJugadores == 2)
+				{
+					vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, 0, 0);
+					
+					if(vidasGanador[0] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
+					else if(vidasGanador[1] != 0)
+					{
+						this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+						this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+					}
 				}
 			}
 		}
-		
-		//turno jugador 1
-			//comiezo de la ronda
-		if(this.vistaJugando.dlgMensajeValorTirada.isActive() && (turno == 1) && (controlTurno == true))
-			{
-				turno = 2;
-				this.vistaJugando.actualizarTurno(2);
-				System.out.println("tu puta madre 1");
-			}
-		// cuando vienes de un turno de otro jugador y tienes que decidir si levantar o volver a tirar
-		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorRechazado))
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorRechazado)) // Si pulsamos este boton, se ocultan los dados destapados y se actualiza el turno, y el jugador que le corresponda puede realizar una tirada
 		{
 			this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
+			
 			if((controlMentira == false) && (this.vistaJugando.numJugadores == 4) && (turno == 4))
 			{
 				turno = 0;
@@ -508,45 +625,102 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			{
 				turno = 0;
 			}
+			
+			this.vistaJugando.mostrarDadoCubiletes(0, 0);
+			
 			turno = turno + 1;
 			this.vistaJugando.actualizarTurno(turno);
-			
 		}
-		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAceptado))
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeValorAceptado)) // Si pulsamos este boton, ocultamos el mensaje y el jugador actual puede realizar una tirada e intentar superar la anterior
 		{
 			this.vistaJugando.dlgMensajeValorAceptado.setVisible(false);
 		}
-		else if(botonPulsado.equals(this.vistaJugando.btnMensajeKiriki))
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeKiriki)) // En caso de que nos salga el valor especial "Kiriki" en una tirada, automaticamente el siguiente jugador pierde 1 vida y su turno
 		{
-			System.out.println("hola");
 			this.vistaJugando.dlgMensajeKiriki.setVisible(false);
-			turno = turno + 1;
-			if(turno == 1)
+			turno = turno + 1; // Actualizamos el contador para el siguiente jugador
+			
+			if(turno == 1) // El siguiente jugador pierde 1 vida
 			{
-				this.vistaJugando.vidasJugador1 --;
+				this.vistaJugando.quitarVidasJugador1();
 			}
 			else if(turno == 2)
 			{
-				System.out.println("hola2");
-				this.vistaJugando.vidasJugador2 --;
+				this.vistaJugando.quitarVidasJugador2();
 			}
 			else if(turno == 3)
 			{
-				this.vistaJugando.vidasJugador3 --;
+				this.vistaJugando.quitarVidasJugador3();
 			}
 			else if(turno == 4)
 			{
-				this.vistaJugando.vidasJugador4 --;
+				this.vistaJugando.quitarVidasJugador4();
 			}
 			
+			// Comprobamos si hay algun ganador despues de actualizar las vidas
 			if(this.vistaJugando.numJugadores == 4)
 			{
-				this.modelo.finPartida(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
-				this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: ");
-				this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, this.vistaJugando.vidasJugador4);
+				
+				if(vidasGanador[0] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+				else if(vidasGanador[1] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+				else if(vidasGanador[2] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+				else if(vidasGanador[3] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador4 + " con " + this.vistaJugando.vidasJugador4 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+			}
+			else if(this.vistaJugando.numJugadores == 3)
+			{
+				vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, this.vistaJugando.vidasJugador3, 0);
+				
+				if(vidasGanador[0] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+				else if(vidasGanador[1] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+				else if(vidasGanador[2] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador3 + " con " + this.vistaJugando.vidasJugador3 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+			}
+			else if(this.vistaJugando.numJugadores == 2)
+			{
+				vidasGanador = this.modelo.comprobarVidas(this.vistaJugando.vidasJugador1, this.vistaJugando.vidasJugador2, 0, 0);
+				
+				if(vidasGanador[0] != 0)
+				{
+					System.out.println("Aloh");
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador1 + " con " + this.vistaJugando.vidasJugador1 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
+				else if(vidasGanador[1] != 0)
+				{
+					this.vistaJugando.lblMensajeFinPartida.setText("La partida ha terminado y ha ganado: " + this.vistaJugando.jugador2 + " con " + this.vistaJugando.vidasJugador2 + " vidas.");
+					this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
+				}
 			}
 			
-			turno = turno + 1;
+			turno = turno + 1; // Actualizamos de nuevo el contador de turnos, para saltar el turno del jugador que ha perdido la vida
 			
 			if((this.vistaJugando.numJugadores == 4) && ((turno == 5) || (turno == 8)))
 			{
@@ -560,108 +734,21 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			{
 				turno = 1;
 			}
-			this.vistaJugando.actualizarTurno(turno);
-		}
-		
-		
-		
-		
-	}
-
-		//turno jugador 1
-		/*
-		if(this.vistaJugando.dlgMensajeValorTirada.isActive() && (turno == 1) && (controlTurno == false))
-		{
 			
-			if(controlMentira == true) //si levantas compara los valores
-				{
-					this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-					System.out.println("tu puta madre 3");
-					if(this.vistaJugando.numJugadores == 4)
-						{
-							this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador4 + " ha mentido y pierda 1 vida!");
-							this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-						}
-					else if(this.vistaJugando.numJugadores == 3)
-						{
-							this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador3 + " ha mentido y pierda 1 vida!");
-							this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-						}
-					else if(this.vistaJugando.numJugadores == 2)
-						{
-						System.out.println("tu puta madre 4");
-							this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador2 + " ha mentido y pierda 1 vida!");
-							this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-						}
-					
-					controlTurno = true;
-					turno = 1;
-				}
-			else 
-				{
-					System.out.println("tu puta madre 5");
-					this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-					this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador4 + " decía la verdad y " + this.vistaJugando.jugador1 + " pierde 1 vida!");
-					this.vistaJugando.dlgMensajeValorVerdadero.setVisible(true);
-							
-					controlTurno = true;
-					turno = 2;
-					this.vistaJugando.actualizarTurno(2);
-				}
-				
+			this.vistaJugando.actualizarTurno(turno); // Actualizamos el turno, comprobando si tiene que volver al primer jugador o no
 		}
-		*/
-		/*
-		//turno jugador 2
-		if(this.vistaJugando.dlgMensajeValorTirada.isActive() && (turno == 2) && (controlTurno == true))
-			{
-				controlTurno = false;
-				tiradaDado1 = this.modelo.tirada();
-				tiradaDado2 = this.modelo.tirada();
-				valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-				this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
-				this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
-				this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
-				this.vistaJugando.cambiarCubilete(1);
-				this.vistaJugando.recuperarCubilete(1);
-				this.vistaJugando.sonidoDados();
-					
-				controlTurno = false;
-				turno = 3;
-				this.vistaJugando.actualizarTurno(3);
-				System.out.println("tu puta madre 6");
-			}
-		
-		if(((turno == 2) && (controlTurno == false)))
-			{
-				boolean controlMentira = false;
-				this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador2 + ", ¿intentarás superar la tirada anterior o destapar�s los dados?");
-				this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
-				System.out.println("tu puta madre 7");
-				if(controlMentira == true)
-					{
-						this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-						this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador1 + " ha mentido y pierda 1 vida!");
-						
-						
-						controlTurno = true;
-						turno = 2;
-						System.out.println("tu puta madre 8");
-					}
-				else
-					{
-						this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-						this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador1 + " dec�a la verdad y " + this.vistaJugando.jugador2 + " pierde 1 vida!");
-						
-						
-						controlTurno = true;
-						turno = 3;
-						this.vistaJugando.actualizarTurno(3);
-						System.out.println("tu puta madre 9");
-					}
-			}
-		
-	}*/
+		else if(botonPulsado.equals(this.vistaJugando.btnMensajeFinPartida)) // En caso de que haya un ganador, se muestra un mensaje de finalizacion, si pulsamos el boton salimos de la partida
+		{
+			this.vistaJugando.dlgMensajeFinPartida.setVisible(false);
+			
+			// Reiniciamos contadores
+			this.vistaJugando.resetearVidas();
+			turno = 1;
+			
+			this.vistaJugando.OcultarJugando();
+			this.vistaMenuInicio.MostrarInicio(); // Volvemos a mostrar el "Menu Principal"
+		}
+	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0)
@@ -680,78 +767,61 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 	@Override
 	public void windowClosing(WindowEvent arg0)
 	{
-		if(this.vistaRanking.isActive()) //Cerrar ventana Ranking
+		if(this.vistaRanking.isActive()) // Cerrar ventana Ranking
 		{
 			this.vistaRanking.OcultarRanking();
 			this.vistaMenuInicio.MostrarInicio();
 		}
-		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo n�mero jugadores
+		else if(this.vistaNuevaPartida.pedirNumeroJugadores.isActive()) // Cerrar ventana NuevaPartida pidiendo numero jugadores
 		{
 			this.vistaNuevaPartida.OcultarDialogNumeroJugadores();
 			this.vistaMenuInicio.MostrarInicio(); 
 		}
-		else if(this.vistaNuevaPartida.pedirNombresJugadores.isActive()) //Cerrar ventana NuevaPartida pidiendo nombres jugadores
+		else if(this.vistaNuevaPartida.pedirNombresJugadores.isActive()) // Cerrar ventana NuevaPartida pidiendo nombres jugadores
 		{
-			this.vistaNuevaPartida.choNumeroJugadores.select(0); //Reseteamos el desplegable
+			this.vistaNuevaPartida.choNumeroJugadores.select(0); // Reseteamos el desplegable
 			this.vistaNuevaPartida.removeAll();
 			this.vistaNuevaPartida.OcultarDialogNombresJugadores();
 		}
-		else if(this.vistaNuevaPartida.dlgMensajeFaltanNombres.isActive())
+		else if(this.vistaNuevaPartida.dlgMensajeFaltanNombres.isActive()) // Cerrar mensaje error nombre en blanco
 		{
 			this.vistaNuevaPartida.OcultarMensajeError();
 			this.vistaNuevaPartida.txfNombre1.requestFocus();
 		}
-		else if(this.vistaJugando.isActive()) // this.vistaJugando != null
+		else if(this.vistaJugando.isActive()) // Ocultar menu y mostrar tapete de juego
 		{
 			this.vistaJugando.OcultarJugando();
 			this.vistaMenuInicio.MostrarInicio();
 		}
-		else if(this.vistaJugando.dlgMensajeComienzoPartida.isActive())
+		else if(this.vistaJugando.dlgMensajeComienzoPartida.isActive()) // Cerrar aviso partida empezada
 		{
 			this.vistaJugando.dlgMensajeComienzoPartida.setVisible(false);
 		}
-		else if(this.vistaJugando.dlgMensajeTurno.isActive())
-		{
-			this.vistaJugando.dlgMensajeTurno.setVisible(false);
-		}
-		else if(this.vistaJugando.dlgMensajeValorTirada.isActive())
+		else if(this.vistaJugando.dlgMensajeValorTirada.isActive()) // Cerrar aviso valor tirada real
 		{
 			this.vistaJugando.dlgMensajeValorTirada.setVisible(false);
 		}
-		else if(this.vistaJugando.dlgMensajeValorAnunciado.isActive())
+		else if(this.vistaJugando.dlgMensajeValorAnunciado.isActive()) // Cerrar aviso valor anunciado
 		{
 			this.vistaJugando.dlgMensajeValorAnunciado.setVisible(false);
 		}
-		else if(this.vistaJugando.dlgMensajeValorRecibido.isActive())
+		else if(this.vistaJugando.dlgMensajeValorRecibido.isActive()) // Cerrar aviso superar tirada o levantar cubilete
 		{
 			this.vistaJugando.dlgMensajeValorRecibido.setVisible(false);
 		}
-		else if(this.vistaJugando.dlgMensajeValorAceptado.isActive())
+		else if(this.vistaJugando.dlgMensajeValorAceptado.isActive()) // Cerrar aviso superar tirada
 		{
 			this.vistaJugando.dlgMensajeValorAceptado.setVisible(false);
 		}
-		else if(this.vistaJugando.dlgMensajeValorRechazado.isActive())
+		else if(this.vistaJugando.dlgMensajeValorRechazado.isActive()) // Cerrar aviso cubilete levantado
 		{
 			this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
 		}
-		
-		/* else if(this.vistaJugando.dlgMensajeFinPartida.isActive())
+		else if(this.vistaJugando.dlgMensajeFinPartida.isActive()) // Cerrar aviso partida finalizada
 		{
 			this.vistaJugando.dlgMensajeFinPartida.setVisible(false);
-			
-			// Reinicio
-			vidasActualesJugador1 = 10;
-			vidasActualesJugador2 = 10;
-			this.vistaJugando.resetearContadores();
-			turno = 0;
-			this.vistaJugando.esconderDados();
-			this.modelo.agitar(cubilete);
 		}
-		else if(this.vistaJugando.dlgMensajeRonda.isActive())
-		{
-			this.vistaJugando.dlgMensajeRonda.setvisible(false);
-		} */
-		else
+		else // Cerrar programa desde el menu
 		{
 			System.exit(0);
 		}
@@ -791,13 +861,13 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		int x = click.getX();
 		int y = click.getY();
 		
-		// Turno Jugador 1
+		// Lanzamiento de dados al hacer click en la imagen del cubilete
 		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (controlTurno == true))
 		{			
 			tiradaDado1 = this.modelo.tirada();
 			tiradaDado2 = this.modelo.tirada();
 			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-			valorTirada = "Kiriki";
+
 			if(valorTirada.equals("Kiriki"))
 			{
 				this.vistaJugando.dlgMensajeValorTirada.setVisible(false);
@@ -814,221 +884,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 				this.vistaJugando.sonidoDados();
 				controlTurno = false;
 			}
-			
-			
 		}
-		/*
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 1) && (controlTurno == false))
-		{
-			boolean controlMentira = false;
-			this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador1 + ", �intentar�s superar la tirada anterior o destapar�s los dados?");
-			this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
-			
-			if(controlMentira == true)
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				
-				if(this.vistaJugando.numJugadores == 4)
-				{
-					this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador4 + " ha mentido y pierda 1 vida!");
-					this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-				}
-				else if(this.vistaJugando.numJugadores == 3)
-				{
-					this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador3 + " ha mentido y pierda 1 vida!");
-					this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-				}
-				else if(this.vistaJugando.numJugadores == 2)
-				{
-					this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador2 + " ha mentido y pierda 1 vida!");
-					this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-				}
-				
-				controlTurno = true;
-				turno = 1;
-				System.out.println("estoy haciendo lo que me da la gana 2");
-			}
-			else
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador4 + " dec�a la verdad y " + this.vistaJugando.jugador1 + " pierde 1 vida!");
-				this.vistaJugando.dlgMensajeValorVerdadero.setVisible(true);
-				
-				controlTurno = true;
-				turno = 2;
-				this.vistaJugando.actualizarTurno(2);
-				System.out.println("estoy haciendo lo que me da la gana 3");
-			}
-			
-		}
-		
-		// Turno jugador 2
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 2) && (controlTurno == true))
-		{
-			controlTurno = false;
-			tiradaDado1 = this.modelo.tirada();
-			tiradaDado2 = this.modelo.tirada();
-			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-			this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
-			this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
-			this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
-			this.vistaJugando.cambiarCubilete(1);
-			this.vistaJugando.recuperarCubilete(1);
-			this.vistaJugando.sonidoDados();
-				
-			controlTurno = false;
-			turno = 3;
-			if(turno == 3)
-			{
-				this.vistaJugando.actualizarTurno(3);
-			}
-		}
-		
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 2) && (controlTurno == false))
-		{
-			boolean controlMentira = false;
-			this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador2 + ", �intentar�s superar la tirada anterior o destapar�s los dados?");
-			this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
-			
-			if(controlMentira == true)
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador1 + " ha mentido y pierda 1 vida!");
-				this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-				
-				controlTurno = true;
-				turno = 2;
-			}
-			else
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador1 + " dec�a la verdad y " + this.vistaJugando.jugador2 + " pierde 1 vida!");
-				this.vistaJugando.dlgMensajeValorVerdadero.setVisible(true);
-				
-				controlTurno = true;
-				turno = 3;
-				this.vistaJugando.actualizarTurno(3);
-			}
-		}
-		
-		// Turno jugador 3
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 3) && (controlTurno == true))
-		{
-			controlTurno = false;
-			tiradaDado1 = this.modelo.tirada();
-			tiradaDado2 = this.modelo.tirada();
-			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-			this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
-			this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
-			this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
-			this.vistaJugando.cambiarCubilete(1);
-			this.vistaJugando.recuperarCubilete(1);
-			this.vistaJugando.sonidoDados();
-				
-			controlTurno = false;
-			turno = 4;
-			if(turno == 4)
-			{
-				this.vistaJugando.actualizarTurno(4);
-			}
-		}
-		
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 3) && (controlTurno == false))
-		{
-			boolean controlMentira = false;
-			this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador3 + ", �intentar�s superar la tirada anterior o destapar�s los dados?");
-			this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
-			
-			if(controlMentira == true)
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador2 + " ha mentido y pierda 1 vida!");
-				this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-				
-				controlTurno = true;
-				turno = 3;
-			}
-			else
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador2 + " dec�a la verdad y " + this.vistaJugando.jugador3 + " pierde 1 vida!");
-				this.vistaJugando.dlgMensajeValorVerdadero.setVisible(true);
-				
-				controlTurno = true;
-				turno = 4;
-				this.vistaJugando.actualizarTurno(4);
-			}
-		}
-		
-		// Turno jugador 4
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 4) && (controlTurno == true))
-		{
-			controlTurno = false;
-			tiradaDado1 = this.modelo.tirada();
-			tiradaDado2 = this.modelo.tirada();
-			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-			this.vistaJugando.lblMensajeValorTirada.setText("Has obtenido un/a: " + valorTirada);
-			this.vistaJugando.lblMensajeAnunciarValor.setText("Elige uno de los siguientes valores a anunciar: ");
-			this.vistaJugando.dlgMensajeValorTirada.setVisible(true);
-			this.vistaJugando.cambiarCubilete(1);
-			this.vistaJugando.recuperarCubilete(1);
-			this.vistaJugando.sonidoDados();
-				
-			controlTurno = false;
-			turno = 1;
-			if(turno == 1)
-			{
-				this.vistaJugando.actualizarTurno(1);
-			}
-		}
-		
-		if(click.getSource().equals(this.vistaJugando) && (x>320 && x<520) && (y>190 && y<390) && (turno == 4) && (controlTurno == false))
-		{
-			boolean controlMentira = false;
-			this.vistaJugando.lblMensajeValorRecibido.setText(this.vistaJugando.jugador4 + ", �intentar�s superar la tirada anterior o destapar�s los dados?");
-			this.vistaJugando.dlgMensajeValorRecibido.setVisible(true);
-			
-			if(controlMentira == true)
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorFalso.setText(this.vistaJugando.jugador3 + " ha mentido y pierda 1 vida!");
-				this.vistaJugando.dlgMensajeValorFalso.setVisible(true);
-				
-				controlTurno = true;
-				turno = 4;
-			}
-			else
-			{
-				this.vistaJugando.dlgMensajeValorRechazado.setVisible(false);
-				this.vistaJugando.lblMensajeValorVerdadero.setText(this.vistaJugando.jugador3 + " dec�a la verdad y " + this.vistaJugando.jugador4 + " pierde 1 vida!");
-				this.vistaJugando.dlgMensajeValorVerdadero.setVisible(true);
-				
-				controlTurno = true;
-				turno = 1;
-				this.vistaJugando.actualizarTurno(1);
-			}
-		}
-		*/
-	/*	if((vidasJugador1 > 0) && (vidasJugador2 = 0))
-		{
-			this.vistaJugando.lblMensajeFinPartida.setText(jugador1 + "ha ganado!"); // Gana el jugador 1
-			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
-		}
-		else if((vidasJugador2 > 0) && (vidasJugador1 = 0))
-		{
-			this.vistaJugando.lblMensajeFinPartida.setText(jugador2 + "ha ganado!"); // Gana el jugador 2
-			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
-		}
-		else if((vidasJugador3 > 0) && (vidasJugador1 = 0) && (vidasJugador2 = 0))
-		{
-			this.vistaJugando.lblMensajeFinPartida.setText(jugador3 + "ha ganado!"); // Gana el jugador 3
-			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
-		}
-		else if((vidasJugador4 > 0) && (vidasJugador1 = 0) && (vidasJugador2 = 0) && (vidasJugador3 = 0))
-		{
-			this.vistaJugando.lblMensajeFinPartida.setText(jugador4 + "ha ganado!"); // Gana el jugador 4
-			this.vistaJugando.dlgMensajeFinPartida.setVisible(true);
-		} */
 	}
 
 	@Override

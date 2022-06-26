@@ -11,25 +11,25 @@ import java.util.Random;
 public class Modelo
 
 {
-	//CONEXI�N CON LA BASE DE DATOS
+	// CONEXION CON LA BASE DE DATOS
 	
-		//Drivers 
+		// Drivers 
 		String driver = "com.mysql.cj.jdbc.Driver";
-		// Indicamos la direcci�n donde se encuentra la base de datos. 
+		// Indicamos la direccion donde se encuentra la base de datos
 		String url = "jdbc:mysql://localhost:3306/juegoKiriki"; 
-		// Introducimos el usuario por medio del cual se har� la conexi�n 
+		// Introducimos el usuario por medio del cual se hace la conexion 
 		String login = "root";
-		// Indicamos la contrase�a que tiene dicha base de datos. 
+		// Indicamos la contrasenia que tiene dicha base de datos 
 		String password = "Holacaracola"; 
 		String sentencia = "";
 		Connection connection = null; 
 		Statement statement = null; 
 		ResultSet rs = null;
 
-		// Conexi�n con la base de datos
+		// Conexion con la base de datos
 		public Connection conectar()
 			{
-				// Cargar los controladores para el acceso a la base de datos.
+				// Cargar los controladores para el acceso a la base de datos
 				try
 					{
 						Class.forName(driver); 
@@ -37,9 +37,9 @@ public class Modelo
 					}
 				catch (ClassNotFoundException cnfe)
 					{
-						System.out.println("Se ha producido un error al cargar el Driver"); // Error 1-
+						System.out.println("Se ha producido un error al cargar el Driver");
 					}
-				// Establecer la conexi�n con la base de datos, juegoKiriki
+				// Establecer la conexion con la base de datos, juegoKiriki
 				try
 					{
 						connection = DriverManager.getConnection(url, login, password);
@@ -47,13 +47,13 @@ public class Modelo
 					
 				catch (SQLException sqle)
 					{
-						System.out.println("Se ha producido un error al conectar con la base de datos: " + sqle.getMessage()); // Error 2-
+						System.out.println("Se ha producido un error al conectar con la base de datos: " + sqle.getMessage());
 					}
 					
 				return connection;
 			}
 		
-		//Desconectar de la base de datos
+		// Desconectar de la base de datos
 		public void desconectar(Connection c)
 			{
 				try
@@ -89,20 +89,16 @@ public class Modelo
 						}
 				catch (SQLException sqle)
 					{
-						System.out.println(sqle.getMessage()); // sqle.printStackTrace
+						System.out.println(sqle.getMessage());
 					}
 					
 				return (ranking);
 			}
 	
-	// M�todos adicionales
+	// Metodos adicionales
 	Random rnd = new Random();
 	
-	public Modelo()
-	{
-		
-	}
-	
+	// Metodo para obtener los valores de cada dado en la tirada
 	public int tirada()
 	{
 		int t;
@@ -110,6 +106,7 @@ public class Modelo
 		return (t);
 	}
 	
+	// Metodo para asociarle un valor a la tirada de ambos dados
 	public String calcularValorTirada(int tirada1, int tirada2)
 	{
 		String valorTirada;
@@ -162,6 +159,7 @@ public class Modelo
 		return(valorTirada);
 	}
 	
+	// Metodo para comparar los valores de la tirada real y el anunciado por el jugador, y saber si ha mentido o no
 	public boolean compararValores (String valorTirada, String valorAnunciado)
 	{
 		boolean controlMentira;
@@ -261,7 +259,7 @@ public class Modelo
 		return (controlMentira);
 	}
 	
-	//Insertar jugadores que han ganado en la base de datos junto a sus puntos
+	// Insertar jugadores que han ganado en la base de datos junto a sus puntos, segun la cantidad de vidas con las que han ganado 
 	public void insertarJugador(String jugador, int puntos)
 	{
 		Statement statement = null; 
@@ -279,7 +277,7 @@ public class Modelo
 			}
 	}
 	
-	//Programa ayuda del juego
+	// Programa ayuda del juego
 	public void ayuda (Connection connection)
 	{
 		try
@@ -291,31 +289,37 @@ public class Modelo
 				e.printStackTrace();
 			}
 	}
-	public int finPartida(int vidaJug1, int vidaJug2, int vidaJug3, int vidaJug4)
+	
+	// Metodo para comprobar las vidas restantes de los jugadores cada vez que alguno de ellos pierde una vida, para saber si ya tenemos a un ganador
+	public int[] comprobarVidas(int vidaJug1, int vidaJug2, int vidaJug3, int vidaJug4)
 	{
-		int vidasGanador;
-		vidasGanador = 0; 
+		int[] vidasGanador = new int[4];
+		vidasGanador[0] = 0;
+		vidasGanador[1] = 0;
+		vidasGanador[2] = 0;
+		vidasGanador[3] = 0;
+
 		
 		if((vidaJug1 != 0) && (vidaJug2 == 0) && (vidaJug3 == 0) && (vidaJug4 == 0))
 		{
-			vidasGanador = vidaJug1;
-			return vidasGanador;
+			vidasGanador[0] = vidaJug1;
+			return(vidasGanador);
 		}
 		else if((vidaJug1 == 0) && (vidaJug2 != 0) && (vidaJug3 == 0) && (vidaJug4 == 0))
 		{
-			vidasGanador = vidaJug2;
-			return vidasGanador;
+			vidasGanador[1] = vidaJug2;
+			return(vidasGanador);
 		}
 		else if((vidaJug1 == 0) && (vidaJug2 == 0) && (vidaJug3 != 0) && (vidaJug4 == 0))
 		{
-			vidasGanador = vidaJug3;
-			return vidasGanador;
+			vidasGanador[2] = vidaJug3;
+			return(vidasGanador);
 		}
 		else if((vidaJug1 == 0) && (vidaJug2 == 0) && (vidaJug3 == 0) && (vidaJug4 != 0))
 		{
-			vidasGanador = vidaJug4;
-			return vidasGanador;
+			vidasGanador[3] = vidaJug4;
+			return(vidasGanador);
 		}
-		return (vidasGanador);
+		return(vidasGanador);
 	}
 }
