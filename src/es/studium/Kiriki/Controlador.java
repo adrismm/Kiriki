@@ -797,7 +797,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 			tiradaDado1 = this.modelo.tirada();
 			tiradaDado2 = this.modelo.tirada();
 			valorTirada = this.modelo.calcularValorTirada(tiradaDado1, tiradaDado2);
-			valorTirada = "Kiriki";
+			
 			if(valorTirada.equals("Kiriki"))
 			{
 				this.vistaJugando.dlgMensajeValorTirada.setVisible(false);
