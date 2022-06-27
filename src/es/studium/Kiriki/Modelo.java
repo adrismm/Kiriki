@@ -277,7 +277,7 @@ public class Modelo
 	}
 	
 	// Programa ayuda del juego
-	public void ayuda (Connection connection)
+	public void ayuda ()
 	{
 		try
 			{

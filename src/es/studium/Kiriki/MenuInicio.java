@@ -20,7 +20,7 @@ public class MenuInicio extends Frame
 	private static final long serialVersionUID = 1L;
 	
 	// Ventana menu principal
-	Label lblMenuPrincipal = new Label ("MENU PRINCIPAL", 1); // 1 para que salga centrado
+	Label lblMenuPrincipal = new Label ("MENÚ PRINCIPAL", 1); // 1 para que salga centrado
 	Panel pnlBotonera = new Panel(); // Panel para botonera principal
 	Panel pnlBotoneraSalir = new Panel(); // Panel para boton Salir
 	Button btnNuevaPartida = new Button ("Nueva Partida");

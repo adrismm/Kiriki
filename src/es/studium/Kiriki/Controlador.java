@@ -226,8 +226,7 @@ public class Controlador implements WindowListener, ActionListener, MouseListene
 		// Lanzar ventana de AYUDA al pulsar el boton de ayuda 
 		if(botonPulsado.equals(this.vistaMenuInicio.btnAyuda))
 			{
-				this.modelo.ayuda(conexion);
-				this.modelo.desconectar(conexion);
+				this.modelo.ayuda();
 			}
 		else if(botonPulsado.equals(this.vistaRanking.btnVolver)) // Gestionar el boton "Volver" de la nueva ventana Ranking
 		{
